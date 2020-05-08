@@ -1,0 +1,7 @@
+.DS_Store
+/node_modules
+/.next
+/build
+/out
+/.env
+/public/leaflet.js

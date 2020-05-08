@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  node:
+    image: "node:12"
+    env_file:
+      - .env
+    volumes:
+      - .:/app:delegated
+      - next_build:/app/build
+      - next_out:/app/out
+      - node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    networks:
+      - www
+      - default
+    command: sh -c "npm install && npm run dev"
+
+  # nginx:
+  #   image: nginx
+  #   env_file:
+  #     - .env
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./nginx-gzip.conf:/etc/nginx/conf.d/gzip.conf:ro
+  #     - ./out:/usr/share/nginx/html:ro
+  #   networks:
+  #     - default
+  #     - www
+    
+volumes:
+  node_modules:
+  next_build:
+  next_out:
+        
+networks:
+  www:
+    external:
+      name: www
