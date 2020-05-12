@@ -7,11 +7,11 @@ import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import MuiLink from '@material-ui/core/Link';
 
-const NextComposed = React.forwardRef((props, ref) => {
-    const { as, href, ...other } = props;
+const NextComposed = React.forwardRef(function NextComposed(props, ref) {
+    const { as, href, prefetch, ...other } = props;
 
     return (
-        <NextLink href={href} as={as}>
+        <NextLink href={href} prefetch={prefetch} as={as}>
             <a ref={ref} {...other} />
         </NextLink>
     );
@@ -27,6 +27,7 @@ NextComposed.propTypes = {
 // https://nextjs.org/docs/#with-link
 function Link(props) {
     const {
+        component,
         href,
         activeClassName = 'active',
         className: classNameProps,
@@ -45,8 +46,10 @@ function Link(props) {
         return <NextComposed className={className} ref={innerRef} href={href} {...other} />;
     }
 
+    const Wrapper = component || MuiLink;
+
     return (
-        <MuiLink
+        <Wrapper
             component={NextComposed}
             className={className}
             ref={innerRef}
@@ -57,6 +60,7 @@ function Link(props) {
 }
 
 Link.propTypes = {
+    component: PropTypes.object,
     activeClassName: PropTypes.string,
     as: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     className: PropTypes.string,

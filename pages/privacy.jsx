@@ -1,10 +1,10 @@
 import Typography from '@material-ui/core/Typography';
 import Layout from '../components/Layout';
-import { ContentBox, H1, P } from '../components/Typography';
+import { ContentBox, H2, P } from '../components/Typography';
 
 export default () => (
     <Layout title="Privacy" href="/about/">
-        <H1>Privacy</H1>
+        <H2>Privacy</H2>
         <ContentBox>
             <P>This website and app:</P>
             <Typography variant="body1" component="ul">
@@ -25,8 +25,8 @@ export default () => (
                     except for the map background tile images provided by Open Street Map
                 </li>
                 <li>
-                    Does not itself use tracking cookies however cookies may be added by our server provider,
-                    Cloudflare (please see below)
+                    Does not itself use tracking cookies however cookies may be added by our server
+                    provider, Cloudflare (please see below)
                 </li>
                 <li>
                     Uses industry-standard Transport Layer Security (HTTPS) to encrypt data over the

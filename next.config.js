@@ -16,6 +16,9 @@ const nextConfig = {
             '/locations/': {
                 page: '/locations',
             },
+            '/user/': {
+                page: '/user',
+            },
         };
 
         console.log(paths);

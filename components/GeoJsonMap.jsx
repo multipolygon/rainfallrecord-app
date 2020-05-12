@@ -7,11 +7,22 @@ export default ({ center, locations }) => {
 
     useEffect(() => {
         if (typeof window === 'object' && typeof window.L === 'object') {
+            const bounds = window.L.latLngBounds(
+                {
+                    lat: -8.6710393,
+                    lng: 156.185245,
+                },
+                {
+                    lat: -45.277108,
+                    lng: 110.48212,
+                },
+            );
+
             const osmBaseLayer = window.L.tileLayer(
                 'https://osm-tiles.rainfallrecord.info/{z}/{x}/{y}.png',
                 {
                     attribution:
-                    'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+                        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
                 },
             );
 
@@ -19,7 +30,7 @@ export default ({ center, locations }) => {
                 'https://thunderforest-tiles.rainfallrecord.info/{z}/{x}/{y}.png',
                 {
                     attribution:
-                    '<a href="https://www.thunderforest.com/maps/landscape/">thunderforest.com</a>',
+                        '<a href="https://www.thunderforest.com/maps/landscape/">thunderforest.com</a>',
                 },
             );
 
@@ -42,11 +53,10 @@ export default ({ center, locations }) => {
             geoBaseLayer.current.on('clusterclick', (e) => {
                 e.layer.zoomToBounds({ padding: [20, 20], animate: true });
             });
-            
+
             window.L.layerGroup();
 
-            featureLayers.Locations =
-                geoBaseLayer.current;
+            featureLayers.Locations = geoBaseLayer.current;
 
             const lMap = window.L.map('mapContainer', {
                 center,
@@ -58,6 +68,11 @@ export default ({ center, locations }) => {
                 layers: [thuderforestBaseLayer, ...Object.values(featureLayers)],
             });
 
+            lMap.fitBounds(bounds, {
+                animate: false,
+                padding: [10, 10],
+            });
+
             mapRef.current = lMap;
 
             window.L.control
@@ -66,9 +81,12 @@ export default ({ center, locations }) => {
         }
     }, []);
 
-
     useEffect(() => {
-        if (locations.type && locations.type === 'FeatureCollection' && locations.features.length > 0) {
+        if (
+            locations.type &&
+            locations.type === 'FeatureCollection' &&
+            locations.features.length > 0
+        ) {
             if (typeof window === 'object' && typeof window.L === 'object') {
                 window.L.geoJSON(locations, {
                     pointToLayer: (feature, latlng) => {
@@ -77,9 +95,10 @@ export default ({ center, locations }) => {
                     style: {
                         fillOpacity: 0.6,
                     },
-                    onEachFeature: ({properties}, featureLayer) => {
+                    onEachFeature: ({ properties }, featureLayer) => {
                         featureLayer.bindPopup(
-                            () => `<a href="/locations/${properties.id}/">${properties.title}, ${properties.location}</a>`,
+                            () =>
+                                `<a href="/locations/${properties.id}/">${properties.title}, ${properties.location}</a>`,
                             {
                                 autoPan: true,
                                 autoPanPadding: [40, 10],

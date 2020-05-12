@@ -9,6 +9,7 @@ import App from 'next/app';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './_theme';
+import { UserContextProvider } from '../components/User';
 
 export default class CustomApp extends App {
     componentDidMount() {
@@ -26,7 +27,9 @@ export default class CustomApp extends App {
             <ThemeProvider theme={responsiveFontSizes(createMuiTheme(theme))}>
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
-                <Component {...pageProps} />
+                <UserContextProvider>
+                    <Component {...pageProps} />
+                </UserContextProvider>
             </ThemeProvider>
         );
     }

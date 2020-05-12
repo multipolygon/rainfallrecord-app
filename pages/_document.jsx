@@ -17,10 +17,7 @@ export default class CustomDocument extends Document {
                     <meta name="apple-mobile-web-app-capable" content="yes" />
                     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
                     <meta name="apple-mobile-web-app-title" content="RainfallRecord" />
-                    <meta
-                        name="description"
-                        content="-"
-                    />
+                    <meta name="description" content="-" />
                     <meta name="format-detection" content="telephone=no" />
                     <meta name="mobile-web-app-capable" content="yes" />
                     <meta
@@ -73,11 +70,12 @@ export default class CustomDocument extends Document {
                     />
                 </Head>
                 <body>
-                    <Main />
+                    <div className="backgroundImage">
+                        <Main />
+                    </div>
                     {/* See leaflet.webpack.config.js */}
                     <script src="/leaflet.js" />
                     <NextScript />
-                    <div className="fogOverlay" />
                 </body>
             </Html>
         );

@@ -1,13 +1,11 @@
 import Layout from '../components/Layout';
-import { ContentBox, H1, P } from '../components/Typography';
+import { ContentBox, H2, P } from '../components/Typography';
 
 export default () => (
     <Layout title="About" href="/about/">
-        <H1>About</H1>
+        <H2>About</H2>
         <ContentBox>
-            <P>
-                to-do
-            </P>
+            <P>to-do</P>
         </ContentBox>
     </Layout>
 );
