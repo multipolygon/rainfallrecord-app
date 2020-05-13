@@ -22,7 +22,7 @@ export default ({ locations }) => (
                 {locations.map((properties) => (
                     <TableRow key={properties.id}>
                         <TableCell component="th" scope="row">
-                            <Link href="/locations/[id]" as={`/locations/${properties.id}/`}>
+                            <Link href="/location" as={`/location/?id=${properties.id}`}>
                                 {properties.title}
                             </Link>
                         </TableCell>

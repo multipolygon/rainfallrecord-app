@@ -5,14 +5,16 @@ import Moment from 'moment';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import clsx from 'clsx';
-import { ContentBox, H2, P } from '../../components/Typography';
-import Layout from '../../components/Layout';
-import DateInput from '../../components/DateInput';
-import { UserContext } from '../../components/User';
+import { useRouter } from 'next/router';
+import queryString from 'query-string';
+import { ContentBox, H2, P } from '../components/Typography';
+import Layout from '../components/Layout';
+import DateInput from '../components/DateInput';
+import { UserContext } from '../components/User';
 
-const Page = ({ id }) => {
-    // TODO static:
-    const src = `//${process.env.apiHost}/locations/${id}.json`;
+export default () => {
+    const router = useRouter();
+    const [id, setId] = useState(null);
     const [user] = useContext(UserContext);
     const [selectedDate, setSelectedDate] = useState({
         year: Moment().year(),
@@ -266,7 +268,16 @@ const Page = ({ id }) => {
     }, [yearlyTotals, yearlyTotals]);
 
     useEffect(() => {
-        if (typeof window === 'object') {
+        const query = queryString.parse(router.asPath.split(/\?/)[1]);
+        if (query.id) {
+            setId(parseInt(query.id, 10));
+        }
+    }, []);
+
+    useEffect(() => {
+        if (id !== null && typeof window === 'object') {
+            // TODO static:
+            const src = `//${process.env.apiHost}/locations/${id}.json`;
             window.fetch(src).then((response) => {
                 if (response.ok) {
                     response.json().then((obj) => {
@@ -275,7 +286,7 @@ const Page = ({ id }) => {
                 }
             });
         }
-    }, []);
+    }, [id]);
 
     function tdOnClick() {
         if (this !== null) {
@@ -321,7 +332,7 @@ const Page = ({ id }) => {
                         ))}
                     </ButtonGroup>
                 </Box>
-                {user !== null && user.locations.map((i) => i.id).includes(parseInt(id, 10)) && (
+                {user !== null && user.locations.map((i) => i.id).includes(id) && (
                     <Box mt={3}>
                         <DateInput
                             inputRef={inputRef}
@@ -395,10 +406,3 @@ const Page = ({ id }) => {
         </Layout>
     );
 };
-
-Page.getInitialProps = async function loadData(context) {
-    const { id } = context.query;
-    return { id };
-};
-
-export default Page;
