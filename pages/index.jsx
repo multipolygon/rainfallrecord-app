@@ -1,5 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import NextLink from 'next/link';
+import Button from '@material-ui/core/Button';
 import Layout from '../components/Layout';
 import { ContentBox, H2, P } from '../components/Typography';
 
@@ -13,6 +15,11 @@ export default function Index() {
                         <P>
                             You can create a record sheet on this website for your own rain gauge
                             measurements.
+                        </P>
+                        <P>
+                            <NextLink href="/location" as="/location/?id=0">
+                                <Button variant="outlined">Try a Live Demo</Button>
+                            </NextLink>
                         </P>
                         <H2>Easy to Use</H2>
                         <P>
@@ -34,7 +41,7 @@ export default function Index() {
                         </P>
                         <H2>Creative Commons license</H2>
                         <P>
-                            All data collected by this service is provided under the
+                            All data collected by this service is provided under the{' '}
                             <a href="http://creativecommons.org/licenses/by-sa/2.5/au/">
                                 Creative Commons Attribution-Share Alike 2.5 Australia License
                             </a>
@@ -53,13 +60,15 @@ export default function Index() {
                         </P>
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                        <H2>Example:</H2>
-                        <Paper
-                            component="img"
-                            src="/assets/example.png"
-                            style={{ maxWidth: '100%' }}
-                            alt="screen shot"
-                        />
+                        <H2>Demo:</H2>
+                        <NextLink href="/location" as="/location/?id=0">
+                            <Paper
+                                component="img"
+                                src="/assets/example.png"
+                                style={{ maxWidth: '100%', cursor: 'pointer' }}
+                                alt="demo screen shot"
+                            />
+                        </NextLink>
                     </Grid>
                 </Grid>
             </ContentBox>

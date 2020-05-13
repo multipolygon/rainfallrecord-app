@@ -4,7 +4,7 @@ import Moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-export default ({ inputRef, date, setDate, data, setData, modified, setModified }) => {
+export default ({ id, inputRef, date, setDate, data, setData, modified, setModified }) => {
     const isDateValid = (d) => {
         const m = Moment(d);
         return m.isValid() && m.isSameOrBefore(Moment(), 'day');
@@ -55,7 +55,9 @@ export default ({ inputRef, date, setDate, data, setData, modified, setModified 
                     },
                 },
             });
-            setModified({ key: [date.year, date.month, date.day], status: 'pending' });
+            if (id !== 0) {
+                setModified({ key: [date.year, date.month, date.day], status: 'pending' });
+            }
         }
         nextDate();
     };
@@ -75,7 +77,7 @@ export default ({ inputRef, date, setDate, data, setData, modified, setModified 
             );
             setModified({ key: [y, m, d], status: 'sending' });
             window
-                .fetch(`//${process.env.apiHost}/locations/${data.id}/record.json`, {
+                .fetch(`//${process.env.apiHost}/locations/${id}/record.json`, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',

@@ -5,6 +5,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import NextLink from 'next/link';
 import Link from './Link';
 
 export default ({ locations }) => (
@@ -20,16 +21,26 @@ export default ({ locations }) => (
             </TableHead>
             <TableBody>
                 {locations.map((properties) => (
-                    <TableRow key={properties.id}>
-                        <TableCell component="th" scope="row">
-                            <Link href="/location" as={`/location/?id=${properties.id}`}>
-                                {properties.title}
-                            </Link>
-                        </TableCell>
-                        <TableCell>{properties.location}</TableCell>
-                        <TableCell align="right">{properties.total_7_days}</TableCell>
-                        <TableCell align="right">{properties.total_30_days}</TableCell>
-                    </TableRow>
+                    <NextLink
+                        key={properties.id}
+                        href="/location"
+                        as={`/location/?id=${properties.id}`}
+                    >
+                        <TableRow style={{ cursor: 'pointer' }}>
+                            <TableCell component="th" scope="row">
+                                <Link
+                                    href="/location"
+                                    as={`/location/?id=${properties.id}`}
+                                    style={{ fontWeight: 'bold' }}
+                                >
+                                    {properties.title}
+                                </Link>
+                            </TableCell>
+                            <TableCell>{properties.location}</TableCell>
+                            <TableCell align="right">{properties.total_7_days}</TableCell>
+                            <TableCell align="right">{properties.total_30_days}</TableCell>
+                        </TableRow>
+                    </NextLink>
                 ))}
             </TableBody>
         </Table>

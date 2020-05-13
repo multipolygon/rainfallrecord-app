@@ -274,8 +274,27 @@ export default () => {
         }
     }, []);
 
+    const randomData = (max) =>
+        [...Array(50).keys()].reduce((obj) => {
+            const y = Math.ceil(Math.random() * 3) + max.year() - 3;
+            const m = Math.ceil(Math.random() * (max.year() === y ? max.month() + 1 : 12));
+            const d = Math.ceil(Math.random() * (max.year() === y ? max.date() : 30));
+            return {
+                ...obj,
+                [y]: {
+                    ...(obj[y] || {}),
+                    [m]: { ...(obj[m] || {}), [d]: parseFloat((Math.random() * 50).toFixed(1)) },
+                },
+            };
+        }, {});
+
     useEffect(() => {
-        if (id !== null && typeof window === 'object') {
+        if (id === 0) {
+            setData({
+                title: 'Live Demo',
+                records: randomData(Moment()),
+            }); // TODO: Some random data
+        } else if (id !== null && typeof window === 'object') {
             // TODO static:
             const src = `//${process.env.apiHost}/locations/${id}.json`;
             window.fetch(src).then((response) => {
@@ -317,7 +336,10 @@ export default () => {
         <Layout title={data.title || 'Loading...'}>
             <ContentBox>
                 <H2>{data.title}</H2>
-                <P>{[data.town_suburb, data.region].filter(Boolean).join(', ')}</P>
+                {id === 0 && <P>Data will not be saved! Sign up here.</P>}
+                {id !== null && id !== 0 && (
+                    <P>{[data.town_suburb, data.region].filter(Boolean).join(', ')}</P>
+                )}
                 <Box mt={3}>
                     <ButtonGroup size="small">
                         {yearLabels.map((y) => (
@@ -332,9 +354,10 @@ export default () => {
                         ))}
                     </ButtonGroup>
                 </Box>
-                {user !== null && user.locations.map((i) => i.id).includes(id) && (
+                {(id === 0 || (user !== null && user.locations.map((i) => i.id).includes(id))) && (
                     <Box mt={3}>
                         <DateInput
+                            id={id}
                             inputRef={inputRef}
                             date={selectedDate}
                             setDate={setSelectedDate}
@@ -375,7 +398,7 @@ export default () => {
                                 >
                                     Total:&nbsp;
                                 </td>
-                                <td style={{ textAlign: 'right' }}>{yearTotal}</td>
+                                <td style={{ textAlign: 'right' }}>{yearTotal.toFixed(2)}</td>
                             </tr>
                         </tbody>
                     </table>
