@@ -75,7 +75,7 @@ export default ({ inputRef, date, setDate, data, setData, modified, setModified 
             );
             setModified({ key: [y, m, d], status: 'sending' });
             window
-                .fetch(`//api.rainfallrecord.localhost/locations/${data.id}/record.json`, {
+                .fetch(`//${process.env.apiHost}/locations/${data.id}/record.json`, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',

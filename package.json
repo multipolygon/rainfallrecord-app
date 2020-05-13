@@ -6,6 +6,7 @@
         "dev": "next",
         "build": "webpack --config leaflet.webpack.config.cjs && next build",
         "export": "next export",
+        "serve": "serve -l 3000 out",
         "prod": "next start",
         "routes": "node -e 'require(\"./next.config.js\").exportPathMap()'",
         "prettier": "prettier --write '*.js' '{components,pages,scripts,utils}/**/*.{js,jsx,mjs,cjs}'",
@@ -52,6 +53,7 @@
         "eslint-plugin-react": "^7.19.0",
         "eslint-plugin-react-hooks": "^2.5.0",
         "prettier": "^2.0.5",
+        "serve": "^11.3.0",
         "standard": "^14.3.3"
     }
 }

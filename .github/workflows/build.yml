@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: NPM Install
-        run: npm ci
+        run: npm ci --only=production
         
       - name: Next.js build
         run: npm run build

@@ -7,7 +7,7 @@ import LocationsTable from '../components/LocationsTable';
 
 export default () => {
     // TODO Static:
-    const src = 'http://api.rainfallrecord.localhost/locations.json';
+    const src = `//${process.env.apiHost}/locations.json`;
 
     const [locations, setLocations] = useState({
         type: 'FeatureCollection',

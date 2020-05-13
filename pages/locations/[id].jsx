@@ -12,7 +12,7 @@ import { UserContext } from '../../components/User';
 
 const Page = ({ id }) => {
     // TODO static:
-    const src = `http://api.rainfallrecord.localhost/locations/${id}.json`;
+    const src = `//${process.env.apiHost}/locations/${id}.json`;
     const [user] = useContext(UserContext);
     const [selectedDate, setSelectedDate] = useState({
         year: Moment().year(),

@@ -4,8 +4,7 @@ export const UserContext = createContext([null, () => null]);
 
 export const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-
-    const src = `http://api.rainfallrecord.localhost/user.json`;
+    const src = `//${process.env.apiHost}/user.json`;
 
     useEffect(() => {
         if (user === null && typeof window === 'object') {

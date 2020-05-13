@@ -3,6 +3,9 @@ const withOffline = require('next-offline');
 
 const nextConfig = {
     distDir: 'build',
+    env: {
+        apiHost: process.env.NODE_ENV === 'development' ? 'api.rainfallrecord.localhost' : 'api.rainfallrecord.info',
+    },
     exportTrailingSlash: true,
     exportPathMap() {
         const paths = {

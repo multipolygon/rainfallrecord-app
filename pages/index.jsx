@@ -9,7 +9,7 @@ export default function Index() {
             <ContentBox>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={8}>
-                        <H2>Free Service</H2>
+                        <H2>Free and No Ads!</H2>
                         <P>
                             You can create a record sheet on this website for your own rain gauge
                             measurements.
