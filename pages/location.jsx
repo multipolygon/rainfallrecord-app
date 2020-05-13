@@ -11,6 +11,7 @@ import { ContentBox, H2, P } from '../components/Typography';
 import Layout from '../components/Layout';
 import DateInput from '../components/DateInput';
 import { UserContext } from '../components/User';
+import FormDialog from '../components/FormDialog';
 
 export default () => {
     const router = useRouter();
@@ -25,6 +26,17 @@ export default () => {
     const yearChart = useRef(null);
     const allYearsChart = useRef(null);
     const inputRef = useRef();
+
+    const [locationFormDialog, setLocationFormDialog] = useState(false);
+    const locationFields = {
+        title: { required: true },
+        street_address: {},
+        town_suburb: { required: true },
+        region: { required: true, helperText: 'region/state/territory/etc' },
+        country: { required: true },
+        latitude: {},
+        longitude: {},
+    };
 
     const [modified, setModified] = useReducer(
         (state, item) => ({
@@ -335,12 +347,36 @@ export default () => {
     return (
         <Layout title={data.title || 'Loading...'}>
             <ContentBox>
-                <H2>{data.title}</H2>
-                {id === 0 && <P>Data will not be saved! Sign up here.</P>}
-                {id !== null && id !== 0 && (
-                    <P>{[data.town_suburb, data.region].filter(Boolean).join(', ')}</P>
-                )}
-                <Box mt={3}>
+                <div style={{ textAlign: 'center' }}>
+                    <H2>{data.title}</H2>
+                    {id === 0 && <P>Data will not be saved! Sign up here.</P>}
+                    {id !== null && id !== 0 && (
+                        <P>{[data.town_suburb, data.region].filter(Boolean).join(', ')}</P>
+                    )}
+                    {user !== null && user.locations.map((i) => i.id).includes(id) && (
+                        <>
+                            <Button
+                                onClick={() => setLocationFormDialog(true)}
+                                variant="outlined"
+                                size="small"
+                            >
+                                Edit Details
+                            </Button>
+                            <FormDialog
+                                open={locationFormDialog}
+                                setOpen={setLocationFormDialog}
+                                title="Location Details"
+                                fields={locationFields}
+                                namespace="location"
+                                method="PUT"
+                                url={`locations/${id}.json`}
+                                source={data}
+                                setSource={setData}
+                            />
+                        </>
+                    )}
+                </div>
+                <Box mt={3} style={{ textAlign: 'center' }}>
                     <ButtonGroup size="small">
                         {yearLabels.map((y) => (
                             <Button

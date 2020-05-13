@@ -30,7 +30,9 @@ export default ({ title, windowTitle, children }) => (
                     spacing={1}
                 >
                     <Grid item>
-                        <Typography variant="h1">RainfallRecord.info</Typography>
+                        <Typography variant="h1" style={{ color: '#c2c4d9', fontWeight: 'bold' }}>
+                            RainfallRecord.info
+                        </Typography>
                     </Grid>
                     <Grid item>
                         <Nav />
