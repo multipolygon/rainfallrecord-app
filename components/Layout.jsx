@@ -50,8 +50,10 @@ export default ({ title, windowTitle, children }) => (
                             services is at your sole risk. I do not guarantee the accuracy or
                             timeliness of information available from the service.
                             <br />
-                            Background photo by
-                            <a href="http://www.flickr.com/photos/marj_k/3352492089/">Marj Kibby</a>
+                            Background photo by{' '}
+                            <a href="http://www.flickr.com/photos/marj_k/3352492089/">
+                                Marj Kibby
+                            </a>{' '}
                             under Creative Commons Share-Remix-Attribution-Noncommercial as at Mar
                             2009
                             <br />

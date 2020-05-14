@@ -18,7 +18,7 @@ export const UserContextProvider = ({ children }) => {
                         }
                     });
                 } else {
-                    setUser(null);
+                    setUser({});
                 }
             });
         }

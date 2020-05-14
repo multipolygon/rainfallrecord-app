@@ -1,5 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,11 +11,10 @@ import TextField from '@material-ui/core/TextField';
 import humanize from 'underscore.string/humanize';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
+import { FeedbackContext } from './Feedback';
 
 export default ({
     open,
@@ -31,7 +30,7 @@ export default ({
 }) => {
     const [data, setData] = useState({});
     const [active, setActive] = useState(false);
-    const [success, setSuccess] = useState(null);
+    const [, setFeedback] = useContext(FeedbackContext);
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
@@ -66,7 +65,11 @@ export default ({
                 },
                 body: JSON.stringify({
                     utf8: '✓',
-                    [namespace]: { ...data },
+                    ...(namespace
+                        ? {
+                              [namespace]: { ...data },
+                          }
+                        : data),
                 }),
             })
             .then((response) => {
@@ -76,7 +79,7 @@ export default ({
                         setActive(false);
                         if (response.ok) {
                             setOpen(false);
-                            setSuccess('Saved.');
+                            setFeedback({ ok: true, msg: 'Success.' });
                             if (setSource) {
                                 setSource({
                                     ...source,
@@ -87,12 +90,19 @@ export default ({
                                 onSave({ data, body });
                             }
                         } else {
+                            setFeedback({ ok: false, msg: 'Not saved!' });
                             setErrors(body.errors || {});
                         }
                     })
-                    .catch(() => setActive(false));
+                    .catch(() => {
+                        setActive(false);
+                        setFeedback({ ok: false, msg: 'Response error!' });
+                    });
             })
-            .catch(() => setActive(false));
+            .catch(() => {
+                setActive(false);
+                setFeedback({ ok: false, msg: 'Request failed!' });
+            });
     };
 
     const WhiteCircularProgress = withStyles({
@@ -172,20 +182,6 @@ export default ({
             <Backdrop open={active} style={{ zIndex: 1 }}>
                 <WhiteCircularProgress />
             </Backdrop>
-            <Snackbar
-                open={success !== null}
-                autoHideDuration={5000}
-                onClose={() => setSuccess(null)}
-            >
-                <MuiAlert
-                    elevation={6}
-                    variant="filled"
-                    severity="success"
-                    onClose={() => setSuccess(null)}
-                >
-                    {success}
-                </MuiAlert>
-            </Snackbar>
         </>
     );
 };

@@ -10,6 +10,7 @@ import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './_theme';
 import { UserContextProvider } from '../components/User';
+import { FeedbackContextProvider } from '../components/Feedback';
 
 export default class CustomApp extends App {
     componentDidMount() {
@@ -28,7 +29,9 @@ export default class CustomApp extends App {
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
                 <UserContextProvider>
-                    <Component {...pageProps} />
+                    <FeedbackContextProvider>
+                        <Component {...pageProps} />
+                    </FeedbackContextProvider>
                 </UserContextProvider>
             </ThemeProvider>
         );

@@ -2,6 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import NextLink from 'next/link';
 import Button from '@material-ui/core/Button';
+import Link from '../components/Link';
 import Layout from '../components/Layout';
 import { ContentBox, H2, P } from '../components/Typography';
 
@@ -16,18 +17,23 @@ export default function Index() {
                             You can create a record sheet on this website for your own rain gauge
                             measurements.
                         </P>
-                        <P>
-                            <NextLink href="/location" as="/location/?id=0">
-                                <Button variant="outlined">Try a Live Demo</Button>
-                            </NextLink>
-                        </P>
+                        <ContentBox>
+                            <Link
+                                component={Button}
+                                variant="outlined"
+                                href="/location"
+                                as="/location/?id=0"
+                            >
+                                Try a Live Demo
+                            </Link>
+                        </ContentBox>
                         <H2>Easy to Use</H2>
                         <P>
                             There is no software to download or install. Simply register and start
                             entering data on this website.
                         </P>
                         <P>Graphs are automatically displayed for your data.</P>
-                        <P>You will get a direct, sharable, public URL linking to your records.</P>
+                        <P>You will get a direct, shareable, public URL linking to your records.</P>
                         <H2>Crowd-Sourcing and Web 2.0</H2>
                         <P>
                             This service aims to assist individuals in the recording, analysis and

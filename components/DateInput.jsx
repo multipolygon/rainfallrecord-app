@@ -66,6 +66,7 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
         if (e.keyCode === 13) {
             submit();
         }
+        return true;
     };
 
     useEffect(() => {

@@ -13,15 +13,9 @@ export default () => (
                 <Link component={Button} href="/locations" as="/locations/">
                     Locations
                 </Link>
-                {user === null ? (
-                    <Button component="a" href="//api.rainfallrecord.localhost/login">
-                        Log In
-                    </Button>
-                ) : (
-                    <Link component={Button} href="/user" as="/user/">
-                        {user.username}
-                    </Link>
-                )}
+                <Link component={Button} href="/user" as="/user/">
+                    {(user && user.username) || 'Log In / Sign Up'}
+                </Link>
             </ButtonGroup>
         )}
     </UserContext.Consumer>
