@@ -37,7 +37,7 @@ export default () => {
     );
 
     const getMeasurement = (y, m, d) =>
-        (data.records[y] && data.records[y][m + 1] && data.records[y][m + 1][d]) || null;
+          (data.records[y] && data.records[y][m + 1] && data.records[y][m + 1][d]) || null;
 
     const daysTimeSeries = useMemo(
         () =>
@@ -49,10 +49,10 @@ export default () => {
                                 const t = Moment([selectedDate.year, m, d]);
                                 return t.isValid()
                                     ? {
-                                          t,
-                                          y: getMeasurement(selectedDate.year, m, d) || 0,
-                                      }
-                                    : null;
+                                        t,
+                                        y: getMeasurement(selectedDate.year, m, d) || 0,
+                                    }
+                                : null;
                             })
                             .filter((i) => i !== null),
                     ),
@@ -64,11 +64,11 @@ export default () => {
     const monthlyTotals = useMemo(
         () =>
             [...Array(12).keys()].map((m) =>
-                Object.values((data.records[selectedDate.year] || {})[m + 1] || {}).reduce(
-                    (a, b) => a + b,
-                    0,
-                ),
-            ),
+                                      Object.values((data.records[selectedDate.year] || {})[m + 1] || {}).reduce(
+                                          (a, b) => a + b,
+                                          0,
+                                      ),
+                                     ),
         [data, selectedDate.year],
     );
 
@@ -117,11 +117,11 @@ export default () => {
     const yearlyTotals = useMemo(
         () =>
             yearLabels.map((y) =>
-                Object.keys(data.records[y] || {}).reduce(
-                    (acc, m) => acc + Object.values(data.records[y][m]).reduce((a, b) => a + b, 0),
-                    0,
-                ),
-            ),
+                           Object.keys(data.records[y] || {}).reduce(
+                               (acc, m) => acc + Object.values(data.records[y][m]).reduce((a, b) => a + b, 0),
+                               0,
+                           ),
+                          ),
         [data, yearLabels],
     );
 
@@ -277,18 +277,20 @@ export default () => {
     }, []);
 
     const randomData = (max) =>
-        [...Array(50).keys()].reduce((obj) => {
-            const y = Math.ceil(Math.random() * 3) + max.year() - 3;
-            const m = Math.ceil(Math.random() * (max.year() === y ? max.month() + 1 : 12));
-            const d = Math.ceil(Math.random() * (max.year() === y ? max.date() : 30));
-            return {
-                ...obj,
-                [y]: {
-                    ...(obj[y] || {}),
-                    [m]: { ...(obj[m] || {}), [d]: parseFloat((Math.random() * 50).toFixed(1)) },
-                },
-            };
-        }, {});
+          [...Array(50).keys()].reduce((obj) => {
+              const y = Math.ceil(Math.random() * 3) + max.year() - 3;
+              const m = Math.ceil(Math.random() * (max.year() === y ? max.month() + 1 : 12));
+              const d = Math.ceil(Math.random() * (max.year() === y ? max.date() : 30));
+              return {
+                  ...obj,
+                  [y]: {
+                      ...(obj[y] || {}),
+                      [m]: { ...(obj[m] || {}), [d]: parseFloat((Math.random() * 50).toFixed(1)) },
+                  },
+              };
+          }, {});
+
+    const jsonSrc = useMemo(() => `//${process.env.apiHost}/locations/${id}.json`, [id]);
 
     useEffect(() => {
         if (id === 0) {
@@ -298,8 +300,7 @@ export default () => {
             }); // TODO: Some random data
         } else if (id !== null && typeof window === 'object') {
             // TODO static:
-            const src = `//${process.env.apiHost}/locations/${id}.json`;
-            window.fetch(src).then((response) => {
+            window.fetch(jsonSrc).then((response) => {
                 if (response.ok) {
                     response.json().then((obj) => {
                         setData(obj);
@@ -358,7 +359,7 @@ export default () => {
                         </>
                     )}
                 </div>
-                <Box mt={3} style={{ textAlign: 'center' }}>
+                <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }}>
                     <ButtonGroup size="small">
                         {yearLabels.map((y) => (
                             <Button
@@ -373,20 +374,20 @@ export default () => {
                     </ButtonGroup>
                 </Box>
                 {(id === 0 ||
-                    (user && user.locations && user.locations.map((i) => i.id).includes(id))) && (
-                    <Box mt={3}>
-                        <DateInput
-                            id={id}
-                            inputRef={inputRef}
-                            date={selectedDate}
-                            setDate={setSelectedDate}
-                            data={data}
-                            setData={setData}
-                            modified={modified}
-                            setModified={setModified}
-                        />
-                    </Box>
-                )}
+                  (user && user.locations && user.locations.map((i) => i.id).includes(id))) && (
+                      <Box mt={3}>
+                          <DateInput
+                              id={id}
+                              inputRef={inputRef}
+                              date={selectedDate}
+                              setDate={setSelectedDate}
+                              data={data}
+                              setData={setData}
+                              modified={modified}
+                              setModified={setModified}
+                          />
+                      </Box>
+                  )}
                 <Box mt={3} style={{ overflowX: 'auto' }}>
                     <table className="calendar-table">
                         <thead>
@@ -415,7 +416,7 @@ export default () => {
                                     colSpan="32"
                                     style={{ textAlign: 'right', border: 0, fontWeight: 'bold' }}
                                 >
-                                    Total:&nbsp;
+                                    &nbsp;
                                 </td>
                                 <td style={{ textAlign: 'right' }}>{yearTotal.toFixed(2)}</td>
                             </tr>
@@ -444,6 +445,13 @@ export default () => {
                         <canvas id="allYearsChart" />
                     </div>
                 </Box>
+                <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }}>
+                    <ButtonGroup size="small">
+                        <Link component={Button} size="small" href={jsonSrc.replace('.json', '.csv')}>CSV</Link>
+                        <Link component={Button} size="small" href={jsonSrc}>JSON</Link>
+                    </ButtonGroup>
+                </Box>
+                
             </ContentBox>
         </Layout>
     );
