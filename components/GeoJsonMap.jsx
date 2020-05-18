@@ -98,7 +98,7 @@ export default ({ center, locations }) => {
                     onEachFeature: ({ properties }, featureLayer) => {
                         featureLayer.bindPopup(
                             () =>
-                                `<a href="/locations/${properties.id}/">${properties.title}, ${properties.location}</a>`,
+                                `<a href="/location/?id=${properties.id}">${properties.title}, ${properties.location}</a>`,
                             {
                                 autoPan: true,
                                 autoPanPadding: [40, 10],
