@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { FeedbackContext } from './Feedback';
 
-export default function Index({ body, url, method, onSuccess, children }) {
+export default function Index({ body, url, method, onSuccess, confirm, color, children }) {
     const [active, setActive] = useState(false);
     const [, setFeedback] = useContext(FeedbackContext);
 
@@ -34,9 +34,9 @@ export default function Index({ body, url, method, onSuccess, children }) {
             .then((response) => {
                 if (response.ok) {
                     setFeedback({ ok: true, msg: 'Done.' });
-                }
-                if (onSuccess) {
-                    onSuccess();
+                    if (onSuccess) {
+                        onSuccess();
+                    }
                 }
                 setActive(false);
             })
@@ -46,9 +46,19 @@ export default function Index({ body, url, method, onSuccess, children }) {
             });
     };
 
+    const click = () => {
+        if (confirm) {
+            if (window.confirm(confirm)) {
+                post();
+            }
+        } else {
+            post();
+        }
+    };
+
     return (
         <>
-            <Button variant="outlined" size="small" onClick={post}>
+            <Button variant="outlined" size="small" color={color} onClick={click}>
                 {children}
             </Button>
             <Backdrop open={active} style={{ zIndex: 1 }}>

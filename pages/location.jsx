@@ -13,11 +13,12 @@ import DateInput from '../components/DateInput';
 import { UserContext } from '../components/User';
 import LocationFormDialog from '../components/LocationFormDialog';
 import Link from '../components/Link';
+import ActionButton from '../components/ActionButton';
 
 export default () => {
     const router = useRouter();
     const [id, setId] = useState(null);
-    const [user] = useContext(UserContext);
+    const [user, setUser] = useContext(UserContext);
     const [selectedDate, setSelectedDate] = useState({
         year: Moment().year(),
         month: Moment().month(),
@@ -292,6 +293,8 @@ export default () => {
 
     const jsonSrc = useMemo(() => `//${process.env.apiHost}/locations/${id}.json`, [id]);
 
+    const userIsOwner = useMemo(() => user && user.locations && user.locations.map((i) => i.id).includes(id), [user, id]);
+
     useEffect(() => {
         if (id === 0) {
             setData({
@@ -309,6 +312,11 @@ export default () => {
             });
         }
     }, [id]);
+
+    const onDelete = () => {
+        setUser(null);
+        router.push("/user/");
+    };
 
     function tdOnClick() {
         if (this !== null) {
@@ -353,7 +361,7 @@ export default () => {
                     {id !== null && id !== 0 && (
                         <P>{[data.town_suburb, data.region].filter(Boolean).join(', ')}</P>
                     )}
-                    {user && user.locations && user.locations.map((i) => i.id).includes(id) && (
+                    {userIsOwner && (
                         <>
                             <LocationFormDialog id={id} source={data} setSource={setData} />
                         </>
@@ -447,11 +455,19 @@ export default () => {
                 </Box>
                 <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }}>
                     <ButtonGroup size="small">
-                        <Link component={Button} size="small" href={jsonSrc.replace('.json', '.csv')}>CSV</Link>
-                        <Link component={Button} size="small" href={jsonSrc}>JSON</Link>
+                        <Link component={Button} size="small" title="Download CSV File" href={jsonSrc.replace('.json', '.csv')}>CSV</Link>
+                        <Link component={Button} size="small" title="Download JSON File" href={jsonSrc}>JSON</Link>
                     </ButtonGroup>
+                    {userIsOwner &&
+                     <Box component="span" ml={2}>
+                         <ButtonGroup size="small">
+                             <ActionButton confirm="Really delete?" url={`/locations/${id}.json`} method="DELETE" onSuccess={onDelete} color="secondary">
+                                 Delete Location
+                             </ActionButton>
+                         </ButtonGroup> 
+                     </Box>
+                    }
                 </Box>
-                
             </ContentBox>
         </Layout>
     );
