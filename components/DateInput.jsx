@@ -40,7 +40,7 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
     };
 
     const submit = () => {
-        const v = parseInt(inputRef.current.value, 10) || 0;
+        const v = parseFloat(inputRef.current.value, 10) || 0;
         if (v !== getValue(date)) {
             setData({
                 ...data,
