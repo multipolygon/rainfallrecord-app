@@ -30,15 +30,22 @@ export default () => {
     const inputRef = useRef();
 
     const [modified, setModified] = useReducer(
-        (state, item) => ({
-            ...state,
-            [JSON.stringify(item.key)]: item.status,
-        }),
+        (state, item) => {
+            const key = JSON.stringify(item.key);
+            const current = state[key];
+            if ((item.status === 'sent' || item.status === 'error') && current !== 'sending') {
+                return state;
+            }
+            return {
+                ...state,
+                [key]: item.status,
+            };
+        },
         {},
     );
 
     const getMeasurement = (y, m, d) =>
-          (data.records[y] && data.records[y][m + 1] && data.records[y][m + 1][d]) || null;
+          data.records[y] !== undefined && data.records[y][m + 1] !== undefined && data.records[y][m + 1][d];
 
     const daysTimeSeries = useMemo(
         () =>
@@ -331,6 +338,7 @@ export default () => {
         const isValid = td.isValid() && td.isSameOrBefore(Moment(), 'day');
         const isActive = isValid && sd.isValid() && td.isSame(sd, 'day');
         const status = modified[JSON.stringify([selectedDate.year, m, d])];
+        const measurement = isValid ? getMeasurement(selectedDate.year, m, d) : undefined;
         return (
             <td
                 onClick={tdOnClick.bind(
@@ -338,7 +346,7 @@ export default () => {
                 )}
                 className={clsx(isValid ? 'date' : 'no-date', status, { active: isActive })}
             >
-                {(isValid && getMeasurement(selectedDate.year, m, d)) || ' '}
+            {measurement !== undefined ? measurement : ' '}
             </td>
         );
     };

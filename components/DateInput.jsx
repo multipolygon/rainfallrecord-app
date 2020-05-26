@@ -12,17 +12,15 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
 
     const isValid = useMemo(() => isDateValid(date), [date]);
 
-    const getValue = (d) =>
-        (isDateValid(d) &&
-            data.records[d.year] &&
-            data.records[d.year][d.month + 1] &&
-            data.records[d.year][d.month + 1][d.day]) ||
-        0;
+    const getValue = (date) =>
+          data.records[date.year] !== undefined &&
+          data.records[date.year][date.month + 1] !== undefined &&
+          data.records[date.year][date.month + 1][date.day];
 
     useEffect(() => {
         const v = getValue(date);
         /* eslint-disable no-param-reassign */
-        inputRef.current.value = v === 0 ? '' : v;
+        inputRef.current.value = v === undefined ? '' : v;
         /* eslint-enable no-param-reassign */
     }, [data, date]);
 
@@ -40,24 +38,22 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
     };
 
     const submit = () => {
-        const v = parseFloat(inputRef.current.value, 10) || 0;
-        if (v !== getValue(date)) {
-            setData({
-                ...data,
-                records: {
-                    ...data.records,
-                    [date.year]: {
-                        ...(data.records[date.year] || {}),
-                        [date.month + 1]: {
-                            ...((data.records[date.year] || {})[date.month + 1] || {}),
-                            [date.day]: v,
-                        },
+        const v = inputRef.current.value === '' ? undefined : parseFloat(inputRef.current.value, 10);
+        setData({
+            ...data,
+            records: {
+                ...data.records,
+                [date.year]: {
+                    ...(data.records[date.year] || {}),
+                    [date.month + 1]: {
+                        ...((data.records[date.year] || {})[date.month + 1] || {}),
+                        [date.day]: v,
                     },
                 },
-            });
-            if (id !== 0) {
-                setModified({ key: [date.year, date.month, date.day], status: 'pending' });
-            }
+            },
+        });
+        if (id !== 0) {
+            setModified({ key: [date.year, date.month, date.day], status: 'pending' });
         }
         nextDate();
     };
