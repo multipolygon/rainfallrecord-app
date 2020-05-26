@@ -15,7 +15,10 @@ export default () => {
 
     useEffect(() => {
         if (typeof window === 'object' && typeof window.L === 'object') {
-            window.fetch(src).then((response) => {
+            window.fetch(src, {
+                cache: 'default',
+                credentials: 'omit',
+            }).then((response) => {
                 if (response.ok) {
                     response.json().then((obj) => {
                         setLocations(obj);

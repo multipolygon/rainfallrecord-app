@@ -315,7 +315,14 @@ export default () => {
                 records: randomData(Moment()),
             });
         } else if (user !== null && id !== null && typeof window === 'object') {
-            window.fetch(jsonSrc).then((response) => {
+            const opt = userIsOwner ? {
+                cache: 'no-cache',
+                credentials: 'include',                
+            } : {
+                cache: 'default',
+                credentials: 'omit',
+            };
+            window.fetch(jsonSrc, opt).then((response) => {
                 if (response.ok) {
                     response.json().then((obj) => {
                         setData(obj);
