@@ -12,10 +12,10 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
 
     const isValid = useMemo(() => isDateValid(date), [date]);
 
-    const getValue = (date) =>
-          data.records[date.year] !== undefined &&
-          data.records[date.year][date.month + 1] !== undefined &&
-          data.records[date.year][date.month + 1][date.day];
+    const getValue = (d) =>
+        data.records[d.year] !== undefined &&
+        data.records[d.year][d.month + 1] !== undefined &&
+        data.records[d.year][d.month + 1][d.day];
 
     useEffect(() => {
         const v = getValue(date);
@@ -38,7 +38,8 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
     };
 
     const submit = () => {
-        const v = inputRef.current.value === '' ? undefined : parseFloat(inputRef.current.value, 10);
+        const v =
+            inputRef.current.value === '' ? undefined : parseFloat(inputRef.current.value, 10);
         setData({
             ...data,
             records: {

@@ -7,6 +7,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import queryString from 'query-string';
+import cleanStr from 'underscore.string/clean';
 import { ContentBox, H2, P } from '../components/Typography';
 import Layout from '../components/Layout';
 import DateInput from '../components/DateInput';
@@ -29,23 +30,22 @@ export default () => {
     const allYearsChart = useRef(null);
     const inputRef = useRef();
 
-    const [modified, setModified] = useReducer(
-        (state, item) => {
-            const key = JSON.stringify(item.key);
-            const current = state[key];
-            if ((item.status === 'sent' || item.status === 'error') && current !== 'sending') {
-                return state;
-            }
-            return {
-                ...state,
-                [key]: item.status,
-            };
-        },
-        {},
-    );
+    const [modified, setModified] = useReducer((state, item) => {
+        const key = JSON.stringify(item.key);
+        const current = state[key];
+        if ((item.status === 'sent' || item.status === 'error') && current !== 'sending') {
+            return state;
+        }
+        return {
+            ...state,
+            [key]: item.status,
+        };
+    }, {});
 
     const getMeasurement = (y, m, d) =>
-          data.records[y] !== undefined && data.records[y][m + 1] !== undefined && data.records[y][m + 1][d];
+        data.records[y] !== undefined &&
+        data.records[y][m + 1] !== undefined &&
+        data.records[y][m + 1][d];
 
     const daysTimeSeries = useMemo(
         () =>
@@ -57,10 +57,10 @@ export default () => {
                                 const t = Moment([selectedDate.year, m, d]);
                                 return t.isValid()
                                     ? {
-                                        t,
-                                        y: getMeasurement(selectedDate.year, m, d) || 0,
-                                    }
-                                : null;
+                                          t,
+                                          y: getMeasurement(selectedDate.year, m, d) || 0,
+                                      }
+                                    : null;
                             })
                             .filter((i) => i !== null),
                     ),
@@ -72,11 +72,11 @@ export default () => {
     const monthlyTotals = useMemo(
         () =>
             [...Array(12).keys()].map((m) =>
-                                      Object.values((data.records[selectedDate.year] || {})[m + 1] || {}).reduce(
-                                          (a, b) => a + b,
-                                          0,
-                                      ),
-                                     ),
+                Object.values((data.records[selectedDate.year] || {})[m + 1] || {}).reduce(
+                    (a, b) => a + b,
+                    0,
+                ),
+            ),
         [data, selectedDate.year],
     );
 
@@ -125,11 +125,11 @@ export default () => {
     const yearlyTotals = useMemo(
         () =>
             yearLabels.map((y) =>
-                           Object.keys(data.records[y] || {}).reduce(
-                               (acc, m) => acc + Object.values(data.records[y][m]).reduce((a, b) => a + b, 0),
-                               0,
-                           ),
-                          ),
+                Object.keys(data.records[y] || {}).reduce(
+                    (acc, m) => acc + Object.values(data.records[y][m]).reduce((a, b) => a + b, 0),
+                    0,
+                ),
+            ),
         [data, yearLabels],
     );
 
@@ -285,22 +285,25 @@ export default () => {
     }, []);
 
     const randomData = (max) =>
-          [...Array(50).keys()].reduce((obj) => {
-              const y = Math.ceil(Math.random() * 3) + max.year() - 3;
-              const m = Math.ceil(Math.random() * (max.year() === y ? max.month() + 1 : 12));
-              const d = Math.ceil(Math.random() * (max.year() === y ? max.date() : 30));
-              return {
-                  ...obj,
-                  [y]: {
-                      ...(obj[y] || {}),
-                      [m]: { ...(obj[m] || {}), [d]: parseFloat((Math.random() * 50).toFixed(1)) },
-                  },
-              };
-          }, {});
+        [...Array(50).keys()].reduce((obj) => {
+            const y = Math.ceil(Math.random() * 3) + max.year() - 3;
+            const m = Math.ceil(Math.random() * (max.year() === y ? max.month() + 1 : 12));
+            const d = Math.ceil(Math.random() * (max.year() === y ? max.date() : 30));
+            return {
+                ...obj,
+                [y]: {
+                    ...(obj[y] || {}),
+                    [m]: { ...(obj[m] || {}), [d]: parseFloat((Math.random() * 50).toFixed(1)) },
+                },
+            };
+        }, {});
 
     const jsonSrc = useMemo(() => `//${process.env.apiHost}/locations/${id}.json`, [id]);
 
-    const userIsOwner = useMemo(() => user && user.locations && user.locations.map((i) => i.id).includes(id), [user, id]);
+    const userIsOwner = useMemo(
+        () => user && user.locations && user.locations.map((i) => i.id).includes(id),
+        [user, id],
+    );
 
     useEffect(() => {
         if (id === 0) {
@@ -322,7 +325,7 @@ export default () => {
 
     const onDelete = () => {
         setUser(null);
-        router.push("/user/");
+        router.push('/user/');
     };
 
     function tdOnClick() {
@@ -346,16 +349,30 @@ export default () => {
                 )}
                 className={clsx(isValid ? 'date' : 'no-date', status, { active: isActive })}
             >
-            {measurement !== undefined ? measurement : ' '}
+                {measurement !== undefined ? measurement : ' '}
             </td>
         );
     };
 
+    const DownloadButton = ({ ext }) => (
+        <Button
+            component="a"
+            size="small"
+            variant="outlined"
+            target="_blank"
+            title={`Download ${ext.toUpperCase()} File`}
+            href={jsonSrc.replace('.json', `.${ext}?download=1`)}
+            download
+        >
+            {ext}
+        </Button>
+    );
+
     return (
-        <Layout title={data.title || 'Loading...'}>
+        <Layout title={cleanStr(data.title || 'Loading...')}>
             <ContentBox>
                 <div style={{ textAlign: 'center' }}>
-                    <H2>{data.title}</H2>
+                    <H2>{cleanStr(data.title)}</H2>
                     {id === 0 && (
                         <P>
                             Data will not be saved!
@@ -390,20 +407,20 @@ export default () => {
                     </ButtonGroup>
                 </Box>
                 {(id === 0 ||
-                  (user && user.locations && user.locations.map((i) => i.id).includes(id))) && (
-                      <Box mt={3}>
-                          <DateInput
-                              id={id}
-                              inputRef={inputRef}
-                              date={selectedDate}
-                              setDate={setSelectedDate}
-                              data={data}
-                              setData={setData}
-                              modified={modified}
-                              setModified={setModified}
-                          />
-                      </Box>
-                  )}
+                    (user && user.locations && user.locations.map((i) => i.id).includes(id))) && (
+                    <Box mt={3}>
+                        <DateInput
+                            id={id}
+                            inputRef={inputRef}
+                            date={selectedDate}
+                            setDate={setSelectedDate}
+                            data={data}
+                            setData={setData}
+                            modified={modified}
+                            setModified={setModified}
+                        />
+                    </Box>
+                )}
                 <Box mt={3} style={{ overflowX: 'auto' }}>
                     <table className="calendar-table">
                         <thead>
@@ -462,19 +479,24 @@ export default () => {
                     </div>
                 </Box>
                 <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }}>
-                    <ButtonGroup size="small">
-                        <Link component={Button} size="small" title="Download CSV File" href={jsonSrc.replace('.json', '.csv')}>CSV</Link>
-                        <Link component={Button} size="small" title="Download JSON File" href={jsonSrc}>JSON</Link>
-                    </ButtonGroup>
-                    {userIsOwner &&
-                     <Box component="span" ml={2}>
-                         <ButtonGroup size="small">
-                             <ActionButton confirm="Really delete?" url={`/locations/${id}.json`} method="DELETE" onSuccess={onDelete} color="secondary">
-                                 Delete Location
-                             </ActionButton>
-                         </ButtonGroup> 
-                     </Box>
-                    }
+                    Data download: <DownloadButton ext="csv" />
+                    {' or '}
+                    <DownloadButton ext="json" />
+                    {userIsOwner && (
+                        <Box component="span" ml={2}>
+                            <ButtonGroup size="small">
+                                <ActionButton
+                                    confirm="Really delete?"
+                                    url={`/locations/${id}.json`}
+                                    method="DELETE"
+                                    onSuccess={onDelete}
+                                    color="secondary"
+                                >
+                                    Delete Location
+                                </ActionButton>
+                            </ButtonGroup>
+                        </Box>
+                    )}
                 </Box>
             </ContentBox>
         </Layout>

@@ -61,8 +61,7 @@ export default () => {
                         <ContentBox>
                             <ActionButton url="logout" onSuccess={() => setUser(null)}>
                                 Log Out
-                            </ActionButton>
-                            {' '}
+                            </ActionButton>{' '}
                             <Button variant="outlined" size="small" onClick={() => setUser(null)}>
                                 Refresh
                             </Button>

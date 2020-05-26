@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useState, useContext } from 'react';
