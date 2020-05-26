@@ -298,10 +298,13 @@ export default () => {
             };
         }, {});
 
-    const jsonSrc = useMemo(() => `//${process.env.apiHost}/locations/${id}.json`, [id]);
-
     const userIsOwner = useMemo(
         () => user && user.locations && user.locations.map((i) => i.id).includes(id),
+        [user, id],
+    );
+
+    const jsonSrc = useMemo(
+        () => `//${userIsOwner ? process.env.apiHost : process.env.cacheHost}/locations/${id}.json`,
         [user, id],
     );
 
@@ -310,9 +313,8 @@ export default () => {
             setData({
                 title: 'Live Demo',
                 records: randomData(Moment()),
-            }); // TODO: Some random data
-        } else if (id !== null && typeof window === 'object') {
-            // TODO static:
+            });
+        } else if (user !== null && id !== null && typeof window === 'object') {
             window.fetch(jsonSrc).then((response) => {
                 if (response.ok) {
                     response.json().then((obj) => {
@@ -321,7 +323,7 @@ export default () => {
                 }
             });
         }
-    }, [id]);
+    }, [user, id]);
 
     const onDelete = () => {
         setUser(null);

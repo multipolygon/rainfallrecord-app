@@ -14,7 +14,9 @@ export default () => (
                     Locations
                 </Link>
                 <Link component={Button} href="/user" as="/user/">
-                    {(user && user.username) || 'Log In / Sign Up'}
+                    {(user === null && '[Loading]') ||
+                        (user && user.username) ||
+                        'Log In / Sign Up'}
                 </Link>
             </ButtonGroup>
         )}

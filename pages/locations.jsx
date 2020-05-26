@@ -6,8 +6,7 @@ import Layout from '../components/Layout';
 import LocationsTable from '../components/LocationsTable';
 
 export default () => {
-    // TODO Static:
-    const src = `//${process.env.apiHost}/locations.json`;
+    const src = `//${process.env.cacheHost}/locations.json`;
 
     const [locations, setLocations] = useState({
         type: 'FeatureCollection',
