@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-const withOffline = require('next-offline');
 
 const nextConfig = {
     distDir: 'build',
@@ -40,5 +39,4 @@ const nextConfig = {
     },
 };
 
-// module.exports = withOffline(nextConfig);
 module.exports = nextConfig;

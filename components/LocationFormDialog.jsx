@@ -15,13 +15,14 @@ export default ({ id, title, buttonText, source, setSource, onSave }) => {
         country: { required: true },
         latitude: {
             type: 'number',
-            inputProps: { min: -90, max: 90, step: 0.000001 },
+            inputProps: { min: -90, max: 90, step: 0.001 },
             helperText: 'as decimal degrees (optional)',
         },
         longitude: {
             type: 'number',
-            inputProps: { min: -180, max: 180, step: 0.000001 },
+            inputProps: { min: -180, max: 180, step: 0.001 },
             helperText: 'as decimal degrees (optional)',
+            markerMap: true,
         },
         ...(id
             ? {}

@@ -29,6 +29,7 @@ export default () => {
     const yearChart = useRef(null);
     const allYearsChart = useRef(null);
     const inputRef = useRef();
+    const yearTabsRef = useRef();
 
     const [modified, setModified] = useReducer((state, item) => {
         const key = JSON.stringify(item.key);
@@ -132,6 +133,19 @@ export default () => {
             ),
         [data, yearLabels],
     );
+
+    useEffect(() => {
+        const div = yearTabsRef.current;
+        if (div) {
+            const i = yearLabels.indexOf(selectedDate.year);
+            if (i !== -1) {
+                const left = (div.scrollWidth / yearLabels.length) * i;
+                if (left < div.scrollLeft || left > div.scrollLeft + div.offsetWidth) {
+                    yearTabsRef.current.scrollLeft = left;
+                }
+            }
+        }
+    }, [selectedDate.year, yearLabels, yearTabsRef.current]);
 
     useEffect(() => {
         yearChart.current = new Chart(document.getElementById('yearChart'), {
@@ -315,13 +329,15 @@ export default () => {
                 records: randomData(Moment()),
             });
         } else if (user !== null && id !== null && typeof window === 'object') {
-            const opt = userIsOwner ? {
-                cache: 'no-cache',
-                credentials: 'include',                
-            } : {
-                cache: 'default',
-                credentials: 'omit',
-            };
+            const opt = userIsOwner
+                ? {
+                      cache: 'no-cache',
+                      credentials: 'include',
+                  }
+                : {
+                      cache: 'default',
+                      credentials: 'omit',
+                  };
             window.fetch(jsonSrc, opt).then((response) => {
                 if (response.ok) {
                     response.json().then((obj) => {
@@ -401,7 +417,7 @@ export default () => {
                         </>
                     )}
                 </div>
-                <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }}>
+                <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }} ref={yearTabsRef}>
                     <ButtonGroup size="small">
                         {yearLabels.map((y) => (
                             <Button

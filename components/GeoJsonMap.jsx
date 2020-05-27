@@ -1,12 +1,11 @@
 import Paper from '@material-ui/core/Paper';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 export default ({ center, locations }) => {
-    const mapRef = useRef(null);
-    const geoBaseLayer = useRef(null);
+    const geoBaseLayer = useRef();
 
-    useEffect(() => {
-        if (typeof window === 'object' && typeof window.L === 'object') {
+    const drawMap = useCallback((container) => {
+        if (container !== null && typeof window === 'object' && typeof window.L === 'object') {
             const bounds = window.L.latLngBounds(
                 {
                     lat: -8.6710393,
@@ -58,7 +57,7 @@ export default ({ center, locations }) => {
 
             featureLayers.Locations = geoBaseLayer.current;
 
-            const lMap = window.L.map('mapContainer', {
+            const lMap = window.L.map(container, {
                 center,
                 zoom: 4,
                 scrollWheelZoom: false,
@@ -73,8 +72,6 @@ export default ({ center, locations }) => {
                 padding: [10, 10],
             });
 
-            mapRef.current = lMap;
-
             window.L.control
                 .layers(baseLayers, featureLayers, { autoZIndex: false, hideSingleBase: true })
                 .addTo(lMap);
@@ -88,9 +85,17 @@ export default ({ center, locations }) => {
             locations.features.length > 0
         ) {
             if (typeof window === 'object' && typeof window.L === 'object') {
+                const divIcon = window.L.divIcon({
+                    html: '&#9679;',
+                    className: 'mapicon',
+                    iconSize: [20, 20],
+                });
+
                 window.L.geoJSON(locations, {
                     pointToLayer: (feature, latlng) => {
-                        return window.L.circleMarker(latlng, { radius: 10 });
+                        return window.L.marker(latlng, {
+                            icon: divIcon,
+                        });
                     },
                     style: {
                         fillOpacity: 0.6,
@@ -115,9 +120,5 @@ export default ({ center, locations }) => {
         }
     }, [locations]);
 
-    return (
-        <Paper elevation={1}>
-            <div id="mapContainer" style={{ height: '40vh', minHeight: '240px' }} />
-        </Paper>
-    );
+    return <Paper ref={drawMap} elevation={1} style={{ height: '40vh', minHeight: '240px' }} />;
 };

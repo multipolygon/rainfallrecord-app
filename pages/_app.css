@@ -29,11 +29,6 @@ a {
     color: #504c49;
 }
 
-.mapicon-parent {
-    border: 0px;
-    background-color: transparent;
-}
-
 .mapicon {
     display: block;
     box-sizing: border-box;
@@ -45,22 +40,9 @@ a {
     border: 0px;
     border-radius: 5px;
     overflow: hidden;
-    color: #000;
-    background-color: #fff;
-    transform-origin: center center;
-}
-
-.mapicon-cluster {
     color: #fff;
     background-color: #f00;
-    width: auto;
-    height: 24px;
-    line-height: 22px;
-}
-
-.mapicon-key {
-    display: inline-block;
-    margin: 5px 2px 0 2px;
+    transform-origin: center center;
 }
 
 .calendar-table { font-size: 0.75rem; min-width: 100%; padding: 0 !important; margin: 0 !important; border-collapse: collapse; }
