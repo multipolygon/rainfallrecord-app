@@ -74,7 +74,7 @@ export default () => {
         () =>
             [...Array(12).keys()].map((m) =>
                 Object.values((data.records[selectedDate.year] || {})[m + 1] || {}).reduce(
-                    (a, b) => a + b,
+                    (acc, val) => acc + (val ? parseFloat(val) : 0),
                     0,
                 ),
             ),
