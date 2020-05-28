@@ -514,9 +514,8 @@ export default () => {
                     </div>
                 </Box>
                 <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }}>
-                    Data download: <DownloadButton ext="csv" />
-                    {' or '}
-                    <DownloadButton ext="json" />
+                    Data download: <DownloadButton ext="csv" /> <DownloadButton ext="json" />{' '}
+                    <DownloadButton ext="xml" />
                     {userIsOwner && (
                         <Box component="span" ml={2}>
                             <ButtonGroup size="small">

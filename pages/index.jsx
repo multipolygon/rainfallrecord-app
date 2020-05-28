@@ -61,8 +61,15 @@ export default function Index() {
                             in most spread sheet software.
                         </P>
                         <P>
-                            You should regularly back-up you data by choosing to download the CSV
-                            from your record-sheet page.
+                            You should regularly back-up your own data clicking the buttons found at
+                            the bottom of the record page (below the charts).
+                        </P>
+                        <P>
+                            A daily backup is available at{' '}
+                            <a href="https://github.com/multipolygon/rainfallrecord_data/tree/master/locations">
+                                GitHub
+                            </a>
+                            .
                         </P>
                     </Grid>
                     <Grid item xs={12} sm={4}>
