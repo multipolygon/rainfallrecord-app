@@ -1,20 +1,22 @@
 import Box from '@material-ui/core/Box';
 import { useRef, useState, useEffect, useMemo, useContext, useReducer } from 'react';
-import Chart from 'chart.js';
 import Moment from 'moment';
-import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import queryString from 'query-string';
 import cleanStr from 'underscore.string/clean';
 import { ContentBox, H2, P } from '../components/Typography';
 import Layout from '../components/Layout';
-import DateInput from '../components/DateInput';
+import DateInput from '../components/location/DateInput';
 import { UserContext } from '../components/User';
 import LocationFormDialog from '../components/LocationFormDialog';
 import Link from '../components/Link';
 import ActionButton from '../components/ActionButton';
+import CalendarTable from '../components/location/CalendarTable';
+import YearChart from '../components/location/YearChart';
+import AllYearsChart from '../components/location/AllYearsChart';
+import YearTabs from '../components/location/YearTabs';
+import DownloadButtons from '../components/location/DownloadButtons';
 
 export default () => {
     const router = useRouter();
@@ -26,10 +28,7 @@ export default () => {
         day: Moment().date(),
     });
     const [data, setData] = useState({ title: '[Loading]', records: {} });
-    const yearChart = useRef(null);
-    const allYearsChart = useRef(null);
     const inputRef = useRef();
-    const yearTabsRef = useRef();
 
     const [modified, setModified] = useReducer((state, item) => {
         const key = JSON.stringify(item.key);
@@ -48,28 +47,6 @@ export default () => {
         data.records[y][m + 1] !== undefined &&
         data.records[y][m + 1][d];
 
-    const daysTimeSeries = useMemo(
-        () =>
-            [...Array(12).keys()].reduce(
-                (acc, m) =>
-                    acc.concat(
-                        [...Array(31).keys()]
-                            .map((d) => {
-                                const t = Moment([selectedDate.year, m, d]);
-                                return t.isValid()
-                                    ? {
-                                          t,
-                                          y: getMeasurement(selectedDate.year, m, d) || 0,
-                                      }
-                                    : null;
-                            })
-                            .filter((i) => i !== null),
-                    ),
-                [],
-            ),
-        [data, selectedDate.year],
-    );
-
     const monthlyTotals = useMemo(
         () =>
             [...Array(12).keys()].map((m) =>
@@ -79,32 +56,6 @@ export default () => {
                 ),
             ),
         [data, selectedDate.year],
-    );
-
-    const yAxesMax = useMemo(
-        () =>
-            Object.keys(data.records).reduce(
-                (max, y) =>
-                    Object.keys(data.records[y]).reduce(
-                        (max2, m) =>
-                            Math.max(
-                                Object.values(data.records[y][m]).reduce((sum, d) => sum + d, 0),
-                                max2,
-                            ),
-                        max,
-                    ),
-                10,
-            ),
-        [monthlyTotals],
-    );
-
-    const monthlyTotalsTimeSeries = useMemo(
-        () =>
-            monthlyTotals.map((t, m) => ({
-                t: Moment([selectedDate.year, m, 15]),
-                y: t,
-            })),
-        [monthlyTotals],
     );
 
     const yearMin = useMemo(
@@ -122,174 +73,6 @@ export default () => {
         () => [...Array(Moment().year() - yearMin + 1).keys()].map((y) => yearMin + y),
         [yearMin],
     );
-
-    const yearlyTotals = useMemo(
-        () =>
-            yearLabels.map((y) =>
-                Object.keys(data.records[y] || {}).reduce(
-                    (acc, m) => acc + Object.values(data.records[y][m]).reduce((a, b) => a + b, 0),
-                    0,
-                ),
-            ),
-        [data, yearLabels],
-    );
-
-    useEffect(() => {
-        const div = yearTabsRef.current;
-        if (div) {
-            const i = yearLabels.indexOf(selectedDate.year);
-            if (i !== -1) {
-                const left = (div.scrollWidth / yearLabels.length) * i;
-                if (left < div.scrollLeft || left > div.scrollLeft + div.offsetWidth) {
-                    yearTabsRef.current.scrollLeft = left;
-                }
-            }
-        }
-    }, [selectedDate.year, yearLabels, yearTabsRef.current]);
-
-    useEffect(() => {
-        yearChart.current = new Chart(document.getElementById('yearChart'), {
-            type: 'bar',
-            data: {
-                datasets: [
-                    {
-                        data: [],
-                        backgroundColor: '#f7e6b1',
-                        borderColor: '#edc240',
-                        order: 2,
-                        type: 'line',
-                        fill: false,
-                        cubicInterpolationMode: 'monotone',
-                    },
-                    {
-                        data: [],
-                        backgroundColor: '#bcdbed',
-                        borderColor: '#afd8f8',
-                        order: 1,
-                    },
-                ],
-            },
-            options: {
-                // responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    display: false,
-                },
-                scales: {
-                    xAxes: [
-                        {
-                            type: 'time',
-                            distribution: 'linear',
-                            ticks: {
-                                min: Moment([selectedDate.year, 0, 1]),
-                                max: Moment([selectedDate.year, 11, 31]),
-                            },
-                            time: {
-                                unit: 'month',
-                                displayFormats: {
-                                    month: 'MMM',
-                                },
-                            },
-                        },
-                        {
-                            display: false,
-                            gridLines: {
-                                display: false,
-                                drawTicks: false,
-                            },
-                            type: 'time',
-                            distribution: 'linear',
-                            ticks: {
-                                min: Moment([selectedDate.year, 0, 1]),
-                                max: Moment([selectedDate.year, 11, 31]),
-                            },
-                            time: {
-                                unit: 'day',
-                                displayFormats: {
-                                    day: 'D',
-                                },
-                            },
-                        },
-                    ],
-                    yAxes: [
-                        {
-                            ticks: {
-                                min: 0,
-                                max: yAxesMax,
-                            },
-                        },
-                        {
-                            display: false,
-                            ticks: {
-                                min: 0,
-                                max: yAxesMax,
-                            },
-                        },
-                    ],
-                },
-            },
-        });
-    }, []);
-
-    useEffect(() => {
-        allYearsChart.current = new Chart(document.getElementById('allYearsChart'), {
-            type: 'bar',
-            data: {
-                datasets: [
-                    {
-                        data: [],
-                        backgroundColor: '#f7e6b1',
-                        borderColor: '#edc240',
-                    },
-                ],
-                labels: Object.keys(data.records),
-            },
-            options: {
-                // responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    display: false,
-                },
-                scales: {
-                    xAxes: [
-                        {
-                            distribution: 'series',
-                        },
-                    ],
-                    yAxes: [
-                        {
-                            ticks: {
-                                beginAtZero: true,
-                            },
-                        },
-                    ],
-                },
-            },
-        });
-    }, []);
-
-    useEffect(() => {
-        yearChart.current.config.data.datasets[0].data = monthlyTotalsTimeSeries;
-        yearChart.current.config.data.datasets[1].data = daysTimeSeries;
-        yearChart.current.options.scales.xAxes.forEach((axes) => {
-            /* eslint-disable no-param-reassign */
-            axes.ticks.min = Moment([selectedDate.year, 0, 1]);
-            axes.ticks.max = Moment([selectedDate.year, 11, 31]);
-            /* eslint-enable no-param-reassign */
-        });
-        yearChart.current.options.scales.yAxes.forEach((axes) => {
-            /* eslint-disable no-param-reassign */
-            axes.ticks.max = yAxesMax;
-            /* eslint-enable no-param-reassign */
-        });
-        yearChart.current.update();
-    }, [selectedDate, monthlyTotalsTimeSeries, daysTimeSeries]);
-
-    useEffect(() => {
-        allYearsChart.current.config.data.labels = yearLabels;
-        allYearsChart.current.config.data.datasets[0].data = yearlyTotals;
-        allYearsChart.current.update();
-    }, [yearlyTotals, yearlyTotals]);
 
     useEffect(() => {
         const query = queryString.parse(router.asPath.split(/\?/)[1]);
@@ -321,7 +104,7 @@ export default () => {
         return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
     };
 
-    const jsonSrc = useMemo(
+    const src = useMemo(
         () =>
             `//${userIsOwner ? process.env.apiHost : process.env.cacheHost}/locations/${padZeros(
                 `${id}`,
@@ -348,7 +131,7 @@ export default () => {
                       credentials: 'omit',
                       mode: 'cors',
                   };
-            window.fetch(jsonSrc, opt).then((response) => {
+            window.fetch(src, opt).then((response) => {
                 if (response.ok) {
                     response.json().then((obj) => {
                         setData(obj);
@@ -369,39 +152,6 @@ export default () => {
             if (inputRef.current) inputRef.current.focus();
         }
     }
-
-    const TdDate = ({ m, d }) => {
-        const td = Moment([selectedDate.year, m, d]);
-        const sd = Moment(selectedDate);
-        const isValid = td.isValid() && td.isSameOrBefore(Moment(), 'day');
-        const isActive = isValid && sd.isValid() && td.isSame(sd, 'day');
-        const status = modified[JSON.stringify([selectedDate.year, m, d])];
-        const measurement = isValid ? getMeasurement(selectedDate.year, m, d) : undefined;
-        return (
-            <td
-                onClick={tdOnClick.bind(
-                    isValid ? { year: selectedDate.year, month: m, day: d } : null,
-                )}
-                className={clsx(isValid ? 'date' : 'no-date', status, { active: isActive })}
-            >
-                {measurement !== undefined ? measurement : ' '}
-            </td>
-        );
-    };
-
-    const DownloadButton = ({ ext }) => (
-        <Button
-            component="a"
-            size="small"
-            variant="outlined"
-            target="_blank"
-            title={`Download ${ext.toUpperCase()} File`}
-            href={jsonSrc.replace('.json', `.${ext}`)}
-            download
-        >
-            {ext}
-        </Button>
-    );
 
     return (
         <Layout title={cleanStr(data.title || 'Loading...')}>
@@ -427,19 +177,8 @@ export default () => {
                         </>
                     )}
                 </div>
-                <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }} ref={yearTabsRef}>
-                    <ButtonGroup size="small">
-                        {yearLabels.map((y) => (
-                            <Button
-                                key={y}
-                                onClick={() => setSelectedDate({ ...selectedDate, year: y })}
-                                variant={y === selectedDate.year ? 'contained' : 'outlined'}
-                                disabled={data.records[y] === undefined}
-                            >
-                                {y}
-                            </Button>
-                        ))}
-                    </ButtonGroup>
+                <Box mt={3}>
+                    <YearTabs {...{ data, yearLabels, selectedDate, setSelectedDate }} />
                 </Box>
                 {(id === 0 ||
                     (user && user.locations && user.locations.map((i) => i.id).includes(id))) && (
@@ -456,66 +195,26 @@ export default () => {
                         />
                     </Box>
                 )}
-                <Box mt={3} style={{ overflowX: 'auto' }}>
-                    <table className="calendar-table">
-                        <thead>
-                            <tr>
-                                <th className="month-label">{selectedDate.year}</th>
-                                {[...Array(31).keys()].map((d) => (
-                                    <th key={`th.day.${d}`}>{d + 1}</th>
-                                ))}
-                                <th className="total-month">∑</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {[...Array(12).keys()].map((m) => (
-                                <tr key={`tr.month${m}`}>
-                                    <th className="month-label">
-                                        {Moment({ month: m }).format('MMM')}
-                                    </th>
-                                    {[...Array(31).keys()].map((d) => (
-                                        <TdDate key={`td.month.${m}.day.${d}`} m={m} d={d + 1} />
-                                    ))}
-                                    <td className="total-month">{monthlyTotals[m].toFixed(2)}</td>
-                                </tr>
-                            ))}
-                            <tr>
-                                <td
-                                    colSpan="32"
-                                    style={{ textAlign: 'right', border: 0, fontWeight: 'bold' }}
-                                >
-                                    &nbsp;
-                                </td>
-                                <td style={{ textAlign: 'right' }}>{yearTotal.toFixed(2)}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <Box mt={3}>
+                    <CalendarTable
+                        {...{
+                            selectedDate,
+                            monthlyTotals,
+                            yearTotal,
+                            modified,
+                            getMeasurement,
+                            onClick: tdOnClick,
+                        }}
+                    />
                 </Box>
                 <Box mt={3}>
-                    <div
-                        style={{
-                            position: 'relative',
-                            height: '285px',
-                            // maxHeight: '80vh',
-                        }}
-                    >
-                        <canvas id="yearChart" />
-                    </div>
+                    <YearChart {...{ data, getMeasurement, monthlyTotals, selectedDate }} />
                 </Box>
                 <Box mt={3}>
-                    <div
-                        style={{
-                            position: 'relative',
-                            height: '285px',
-                            // maxHeight: '80vh',
-                        }}
-                    >
-                        <canvas id="allYearsChart" />
-                    </div>
+                    {yearLabels.length > 1 && <AllYearsChart {...{ data, yearLabels }} />}
                 </Box>
-                <Box mt={3} style={{ textAlign: 'center', overflowX: 'auto' }}>
-                    Data download: <DownloadButton ext="csv" /> <DownloadButton ext="json" />{' '}
-                    <DownloadButton ext="xml" />
+                <Box mt={3} style={{ textAlign: 'center' }}>
+                    <DownloadButtons src={src} />
                     {userIsOwner && (
                         <Box component="span" ml={2}>
                             <ButtonGroup size="small">

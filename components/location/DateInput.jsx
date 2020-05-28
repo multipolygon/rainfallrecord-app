@@ -40,21 +40,23 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
     const submit = () => {
         const v =
             inputRef.current.value === '' ? undefined : parseFloat(inputRef.current.value, 10);
-        setData({
-            ...data,
-            records: {
-                ...data.records,
-                [date.year]: {
-                    ...(data.records[date.year] || {}),
-                    [date.month + 1]: {
-                        ...((data.records[date.year] || {})[date.month + 1] || {}),
-                        [date.day]: v,
+        if (getValue(date) !== v) {
+            setData({
+                ...data,
+                records: {
+                    ...data.records,
+                    [date.year]: {
+                        ...(data.records[date.year] || {}),
+                        [date.month + 1]: {
+                            ...((data.records[date.year] || {})[date.month + 1] || {}),
+                            [date.day]: v,
+                        },
                     },
                 },
-            },
-        });
-        if (id !== 0) {
-            setModified({ key: [date.year, date.month, date.day], status: 'pending' });
+            });
+            if (id !== 0) {
+                setModified({ key: [date.year, date.month, date.day], status: 'pending' });
+            }
         }
         nextDate();
     };
