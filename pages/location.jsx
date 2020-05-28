@@ -317,8 +317,16 @@ export default () => {
         [user, id],
     );
 
+    const padZeros = (n, width) => {
+        return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+    };
+
     const jsonSrc = useMemo(
-        () => `//${userIsOwner ? process.env.apiHost : process.env.cacheHost}/locations/${id}.json`,
+        () =>
+            `//${userIsOwner ? process.env.apiHost : process.env.cacheHost}/locations/${padZeros(
+                `${id}`,
+                8,
+            )}.json`,
         [user, id],
     );
 
@@ -333,10 +341,12 @@ export default () => {
                 ? {
                       cache: 'no-cache',
                       credentials: 'include',
+                      mode: 'cors',
                   }
                 : {
                       cache: 'default',
                       credentials: 'omit',
+                      mode: 'cors',
                   };
             window.fetch(jsonSrc, opt).then((response) => {
                 if (response.ok) {

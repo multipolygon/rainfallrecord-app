@@ -19,6 +19,7 @@ export default () => {
                 .fetch(src, {
                     cache: 'default',
                     credentials: 'omit',
+                    mode: 'cors',
                 })
                 .then((response) => {
                     if (response.ok) {

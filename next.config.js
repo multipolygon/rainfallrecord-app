@@ -9,8 +9,8 @@ const nextConfig = {
                 : 'api.rainfallrecord.info',
         cacheHost:
             process.env.NODE_ENV === 'development'
-                ? 'cache.rainfallrecord.localhost'
-                : 'cache.rainfallrecord.info',
+                ? 'api.rainfallrecord.localhost'
+                : 'data.rainfallrecord.info',
     },
     exportTrailingSlash: true,
     exportPathMap() {
