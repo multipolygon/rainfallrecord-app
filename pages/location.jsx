@@ -396,7 +396,7 @@ export default () => {
             variant="outlined"
             target="_blank"
             title={`Download ${ext.toUpperCase()} File`}
-            href={jsonSrc.replace('.json', `.${ext}?download=1`)}
+            href={jsonSrc.replace('.json', `.${ext}`)}
             download
         >
             {ext}
