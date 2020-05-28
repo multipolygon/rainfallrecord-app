@@ -34,8 +34,8 @@ export default ({ center, locations }) => {
             );
 
             const baseLayers = {
+                Streetmap: osmBaseLayer,
                 Landscape: thuderforestBaseLayer,
-                Streets: osmBaseLayer,
             };
 
             const featureLayers = {};
@@ -64,7 +64,7 @@ export default ({ center, locations }) => {
                 fullscreenControl: {
                     pseudoFullscreen: true,
                 },
-                layers: [thuderforestBaseLayer, ...Object.values(featureLayers)],
+                layers: [osmBaseLayer, ...Object.values(featureLayers)],
             });
 
             lMap.fitBounds(bounds, {
