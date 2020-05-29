@@ -13,8 +13,8 @@ import LocationFormDialog from '../components/LocationFormDialog';
 import Link from '../components/Link';
 import ActionButton from '../components/ActionButton';
 import CalendarTable from '../components/location/CalendarTable';
-import YearChart from '../components/location/YearChart';
-import AllYearsChart from '../components/location/AllYearsChart';
+import MonthsChart from '../components/location/MonthsChart';
+import YearsChart from '../components/location/YearsChart';
 import YearTabs from '../components/location/YearTabs';
 import DownloadButtons from '../components/location/DownloadButtons';
 
@@ -208,10 +208,10 @@ export default () => {
                     />
                 </Box>
                 <Box mt={3}>
-                    <YearChart {...{ data, getMeasurement, monthlyTotals, selectedDate }} />
+                    <MonthsChart {...{ data, getMeasurement, monthlyTotals, selectedDate }} />
                 </Box>
                 <Box mt={3}>
-                    {yearLabels.length > 1 && <AllYearsChart {...{ data, yearLabels }} />}
+                    {yearLabels.length > 1 && <YearsChart {...{ data, yearLabels }} />}
                 </Box>
                 <Box mt={3} style={{ textAlign: 'center' }}>
                     <DownloadButtons src={src} />
