@@ -69,7 +69,10 @@ export default () => {
         [data],
     );
 
-    const yearTotal = useMemo(() => monthlyTotals.reduce((acc, val) => (typeof val === 'number' ? acc + val : acc), null), [monthlyTotals]);
+    const yearTotal = useMemo(
+        () => monthlyTotals.reduce((acc, val) => (typeof val === 'number' ? acc + val : acc), null),
+        [monthlyTotals],
+    );
 
     const yearLabels = useMemo(
         () => [...Array(Moment().year() - yearMin + 1).keys()].map((y) => yearMin + y),

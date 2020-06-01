@@ -50,7 +50,9 @@ export default ({ selectedDate, monthlyTotals, modified, getMeasurement, onClick
                     <tr>
                         <th>&nbsp;</th>
                         {[...Array(12).keys()].map((m) => (
-                            <td key={m} className="total">{monthlyTotals[m]}</td>
+                            <td key={m} className="total">
+                                {monthlyTotals[m]}
+                            </td>
                         ))}
                     </tr>
                 </tfoot>

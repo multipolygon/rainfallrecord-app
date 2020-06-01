@@ -36,7 +36,7 @@ export default ({ selectedDate, monthlyTotals, yearTotal, modified, getMeasureme
             </tbody>
             <tfoot>
                 <tr>
-                    <td colSpan="32" style={{ border: 0, background: "inherit" }}>
+                    <td colSpan="32" style={{ border: 0, background: 'inherit' }}>
                         &nbsp;
                     </td>
                     <td className="total total-right">{yearTotal}</td>
