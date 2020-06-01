@@ -17,6 +17,7 @@ import MonthsChart from '../components/location/MonthsChart';
 import YearsChart from '../components/location/YearsChart';
 import YearTabs from '../components/location/YearTabs';
 import DownloadButtons from '../components/location/DownloadButtons';
+import UserFeedbackFormDialog from '../components/UserFeedbackFormDialog';
 
 export default () => {
     const router = useRouter();
@@ -172,10 +173,18 @@ export default () => {
                         <P>{[data.town_suburb, data.region].filter(Boolean).join(', ')}</P>
                     )}
                     {userIsOwner && (
-                        <>
-                            <LocationFormDialog id={id} source={data} setSource={setData} />
-                        </>
+                        <LocationFormDialog id={id} source={data} setSource={setData} />
                     )}
+                    {userIsOwner &&
+                        user.feedback_rating === null &&
+                        data.created_at &&
+                        Moment(data.created_at).isBefore(Moment().subtract(7, 'days')) && (
+                            <Box mt={1} component="div" style={{ display: 'block' }}>
+                                <small>Feedback?</small>
+                                <br />
+                                <UserFeedbackFormDialog />
+                            </Box>
+                        )}
                 </div>
                 <Box mt={3}>
                     <YearTabs {...{ data, yearLabels, selectedDate, setSelectedDate }} />

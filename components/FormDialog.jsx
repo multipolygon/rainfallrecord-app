@@ -28,6 +28,7 @@ export default ({
     source,
     setSource,
     onSave,
+    saveButtonText = 'Save',
 }) => {
     const [data, updateData] = useReducer((obj1, obj2) => ({ ...obj1, ...obj2 }), {});
     const [active, setActive] = useState(false);
@@ -244,10 +245,15 @@ export default ({
                                                 ? errors[k][0]
                                                 : fields[k].helperText
                                         }
+                                        placeholder={fields[k].placeholder}
+                                        autoFocus={fields[k].autoFocus}
+                                        multiline={fields[k].multiline}
+                                        InputLabelProps={fields[k].InputLabelProps}
                                         required={fields[k].required}
                                         variant="outlined"
                                         size="small"
                                         style={{ width: '100%' }}
+                                        fullWidth
                                     />
                                     {fields[k].markerMap && (
                                         <Box
@@ -291,7 +297,7 @@ export default ({
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={cancel}>Cancel</Button>
-                    <Button onClick={save}>Save</Button>
+                    <Button onClick={save}>{saveButtonText}</Button>
                 </DialogActions>
             </Dialog>
             <Backdrop open={active} style={{ zIndex: 1 }}>

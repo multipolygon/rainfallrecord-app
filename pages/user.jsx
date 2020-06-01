@@ -10,6 +10,7 @@ import { ContentBox, H2, H3, P } from '../components/Typography';
 import { UserContext } from '../components/User';
 import LocationFormDialog from '../components/LocationFormDialog';
 import UserFormDialog from '../components/UserFormDialog';
+import UserFeedbackFormDialog from '../components/UserFeedbackFormDialog';
 import LogInFormDialog from '../components/LogInFormDialog';
 import ForgotUserDialog from '../components/ForgotUserDialog';
 import ActionButton from '../components/ActionButton';
@@ -107,6 +108,8 @@ export default () => {
                                 <LocationsTable locations={user.locations} />
                             </>
                         )}
+                        <H3>Feedback</H3>
+                        <UserFeedbackFormDialog />
                         <br />
                         <br />
                         <br />

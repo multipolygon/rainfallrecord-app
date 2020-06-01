@@ -26,7 +26,7 @@ export default ({ title, windowTitle, children }) => (
                     container
                     direction="row"
                     justify="space-between"
-                    alignItems="center"
+                    alignItems="flex-start"
                     spacing={1}
                 >
                     <Grid item>
