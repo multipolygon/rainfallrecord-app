@@ -29,6 +29,7 @@ export default () => {
         day: Moment().date(),
     });
     const [data, setData] = useState({ title: '[Loading]', records: {} });
+    const [showFeedback, setShowFeedback] = useState(false);
     const inputRef = useRef();
 
     const [modified, setModified] = useReducer((state, item) => {
@@ -100,6 +101,18 @@ export default () => {
         () => user && user.locations && user.locations.map((i) => i.id).includes(id),
         [user, id],
     );
+
+    useEffect(() => {
+        if (
+            !showFeedback &&
+            userIsOwner &&
+            user.feedback_rating === null &&
+            user.created_at &&
+            Moment(user.created_at).isBefore(Moment().subtract(7, 'days'))
+        ) {
+            setShowFeedback(true);
+        }
+    }, [user, id]);
 
     const padZeros = (n, width) => {
         return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
@@ -175,16 +188,13 @@ export default () => {
                     {userIsOwner && (
                         <LocationFormDialog id={id} source={data} setSource={setData} />
                     )}
-                    {userIsOwner &&
-                        user.feedback_rating === null &&
-                        data.created_at &&
-                        Moment(data.created_at).isBefore(Moment().subtract(7, 'days')) && (
-                            <Box mt={1} component="div" style={{ display: 'block' }}>
-                                <small>Feedback?</small>
-                                <br />
-                                <UserFeedbackFormDialog />
-                            </Box>
-                        )}
+                    {showFeedback && (
+                        <Box mt={1} component="div" style={{ display: 'block' }}>
+                            <small>Feedback?</small>
+                            <br />
+                            <UserFeedbackFormDialog />
+                        </Box>
+                    )}
                 </div>
                 <Box mt={3}>
                     <YearTabs {...{ data, yearLabels, selectedDate, setSelectedDate }} />
