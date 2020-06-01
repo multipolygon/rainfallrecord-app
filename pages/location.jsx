@@ -53,8 +53,8 @@ export default () => {
         () =>
             [...Array(12).keys()].map((m) =>
                 Object.values((data.records[selectedDate.year] || {})[m + 1] || {}).reduce(
-                    (acc, val) => acc + (val ? parseFloat(val) : 0),
-                    0,
+                    (acc, val) => (typeof val === 'number' ? acc + val : acc),
+                    null,
                 ),
             ),
         [data, selectedDate.year],
@@ -69,7 +69,7 @@ export default () => {
         [data],
     );
 
-    const yearTotal = useMemo(() => monthlyTotals.reduce((sum, d) => sum + d, 0), [monthlyTotals]);
+    const yearTotal = useMemo(() => monthlyTotals.reduce((acc, val) => (typeof val === 'number' ? acc + val : acc), null), [monthlyTotals]);
 
     const yearLabels = useMemo(
         () => [...Array(Moment().year() - yearMin + 1).keys()].map((y) => yearMin + y),
