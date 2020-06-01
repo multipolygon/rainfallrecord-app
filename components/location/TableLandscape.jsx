@@ -6,11 +6,11 @@ export default ({ selectedDate, monthlyTotals, yearTotal, modified, getMeasureme
         <table className="calendar-table calendar-table-landscape">
             <thead>
                 <tr>
-                    <th>{selectedDate.year}</th>
+                    <th>&nbsp;</th>
                     {[...Array(31).keys()].map((d) => (
                         <th key={d}>{d + 1}</th>
                     ))}
-                    <th className="total-month">∑</th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,16 +30,16 @@ export default ({ selectedDate, monthlyTotals, yearTotal, modified, getMeasureme
                                 }}
                             />
                         ))}
-                        <td className="total-month">{monthlyTotals[m].toFixed(2)}</td>
+                        <td className="total total-right">{monthlyTotals[m]}</td>
                     </tr>
                 ))}
             </tbody>
             <tfoot>
                 <tr>
-                    <td colSpan="32" style={{ textAlign: 'right', border: 0, fontWeight: 'bold' }}>
+                    <td colSpan="32" style={{ border: 0, background: "inherit" }}>
                         &nbsp;
                     </td>
-                    <td style={{ textAlign: 'right' }}>{yearTotal.toFixed(2)}</td>
+                    <td className="total total-right">{yearTotal}</td>
                 </tr>
             </tfoot>
         </table>

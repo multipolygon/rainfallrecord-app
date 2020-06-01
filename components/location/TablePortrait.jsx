@@ -20,7 +20,7 @@ export default ({ selectedDate, monthlyTotals, modified, getMeasurement, onClick
             <table className="calendar-table calendar-table-portrait">
                 <thead>
                     <tr>
-                        <th>{selectedDate.year}</th>
+                        <th>&nbsp;</th>
                         {[...Array(12).keys()].map((m) => (
                             <th key={m}>{Moment({ month: m }).format('MMM')}</th>
                         ))}
@@ -50,7 +50,7 @@ export default ({ selectedDate, monthlyTotals, modified, getMeasurement, onClick
                     <tr>
                         <th>&nbsp;</th>
                         {[...Array(12).keys()].map((m) => (
-                            <td key={m}>{Math.round(monthlyTotals[m] * 10) / 10}</td>
+                            <td key={m} className="total">{monthlyTotals[m]}</td>
                         ))}
                     </tr>
                 </tfoot>

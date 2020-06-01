@@ -47,11 +47,15 @@ a {
 
 .calendar-table { font-size: 0.75rem; width: 100%; min-width: 475px; padding: 0 !important; margin: 0 !important; border-collapse: collapse; }
 .calendar-table th, .calendar-table td { border: 1px solid #DDD; text-align: center; border: 1px solid #e5e5e5; }
+.calendar-table th { background: #F9F9F9; }
 .calendar-table.calendar-table-portrait tr > * { width: 7.8947%; }
 .calendar-table.calendar-table-portrait tr > *:first-child { width: 5.2631%; }
 .calendar-table.calendar-table-landscape tr > * { width: 2.941%; }
 .calendar-table.calendar-table-landscape tr > *:first-child { width: 4.4115%; }
 .calendar-table.calendar-table-landscape tr > *:last-child { width: 4.4115%; }
+.calendar-table thead th:first-child { background: #fff; border-top: 1px solid #fff; border-left: 1px solid #fff; }
+.calendar-table.calendar-table-landscape thead th:last-child { background: #fff; border-top: 1px solid #fff; border-right: 1px solid #fff; }
+.calendar-table.calendar-table-portrait tfoot th:first-child { background: #fff; border-bottom: 1px solid #fff; border-left: 1px solid #fff; }
 .calendar-table td.no-date { background: #F5F5F5; }
 .calendar-table td.date { cursor: pointer; }
 .calendar-table td.date:hover { background: #FCF8E3; }
@@ -59,4 +63,5 @@ a {
 .calendar-table td.date.pending { background: #CCF; }
 .calendar-table td.date.sending { background: #99F; }
 .calendar-table td.date.error { background: #FCC; }
-.calendar-table td.total-month { text-align: right; padding-right: 3px; }
+.calendar-table td.total { background: #F9F9F9; }
+.calendar-table td.total.total-right { text-align: right; padding-right: 3px; }
