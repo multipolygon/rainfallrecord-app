@@ -3,8 +3,8 @@
 const nextConfig = {
     distDir: 'build',
     env: {
-        appName: process.env.APP_NAME
-        apiHost:  process.env.API_HOST,
+        appName: process.env.APP_NAME,
+        apiHost: process.env.API_HOST,
         cacheHost: process.env.CACHE_HOST,
         osmHost: process.env.OSM_HOST,
     },
