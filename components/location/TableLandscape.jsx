@@ -1,27 +1,15 @@
-import { useMemo } from 'react';
 import Moment from 'moment';
 import TableCell from './TableCell';
 
-export default ({ selectedDate, monthlyTotals, yearTotal, modified, getMeasurement, onClick }) => {
-    const digits = useMemo(
-        () =>
-            monthlyTotals.reduce((acc, val) => {
-                if (acc !== 2 && typeof val === 'number') {
-                    let n = (`${val}`.split('.')[1] || []).length;
-                    if (n > 2) {
-                        n = 2;
-                    }
-                    if (n > (acc || 0)) {
-                        return n;
-                    }
-                }
-                return acc;
-            }, null),
-        [monthlyTotals],
-    );
-
-    const toFixed = (val) => (typeof val === 'number' ? val.toFixed(digits) : <>&nbsp;</>);
-
+export default ({
+    selectedDate,
+    monthlyTotals,
+    toFixed,
+    yearTotal,
+    modified,
+    getMeasurement,
+    onClick,
+}) => {
     return (
         <div style={{ overflowX: 'auto' }}>
             <table className="calendar-table calendar-table-landscape">

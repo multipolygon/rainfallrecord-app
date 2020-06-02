@@ -49,6 +49,26 @@ export default () => {
         data.records[y][m + 1] !== undefined &&
         data.records[y][m + 1][d];
 
+    const decimals = useMemo(
+        () =>
+            Object.values(data.records[selectedDate.year] || []).reduce(
+                (a, m) =>
+                    a === 3
+                        ? a
+                        : Object.values(m).reduce((b, v) => {
+                              if (b < 3 && typeof v === 'number') {
+                                  const n = Math.min((`${v}`.split('.')[1] || []).length, 3);
+                                  if (n > b) return n;
+                              }
+                              return b;
+                          }, a),
+                0,
+            ),
+        [data, selectedDate.year],
+    );
+
+    const toFixed = (val) => (typeof val === 'number' ? val.toFixed(decimals) : <>&nbsp;</>);
+
     const monthlyTotals = useMemo(
         () =>
             [...Array(12).keys()].map((m) =>
@@ -222,6 +242,7 @@ export default () => {
                         {...{
                             selectedDate,
                             monthlyTotals,
+                            toFixed,
                             yearTotal,
                             modified,
                             getMeasurement,

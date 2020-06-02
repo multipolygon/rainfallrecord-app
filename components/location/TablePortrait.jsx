@@ -2,7 +2,7 @@ import Moment from 'moment';
 import { useRef, useEffect } from 'react';
 import TableCell from './TableCell';
 
-export default ({ selectedDate, monthlyTotals, modified, getMeasurement, onClick }) => {
+export default ({ selectedDate, monthlyTotals, toFixed, modified, getMeasurement, onClick }) => {
     const table = useRef(null);
 
     useEffect(() => {
@@ -51,7 +51,7 @@ export default ({ selectedDate, monthlyTotals, modified, getMeasurement, onClick
                         <th>&nbsp;</th>
                         {[...Array(12).keys()].map((m) => (
                             <td key={m} className="total">
-                                {monthlyTotals[m]}
+                                {toFixed(monthlyTotals[m])}
                             </td>
                         ))}
                     </tr>
