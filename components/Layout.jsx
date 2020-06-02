@@ -31,7 +31,7 @@ export default ({ title, windowTitle, children }) => (
                 >
                     <Grid item>
                         <Typography variant="h1" style={{ color: '#c2c4d9', fontWeight: 'bold' }}>
-                            RainfallRecord.info
+                            ClimateLog
                         </Typography>
                     </Grid>
                     <Grid item>
