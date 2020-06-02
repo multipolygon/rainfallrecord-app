@@ -79,7 +79,7 @@ export default ({
             );
 
             const osmBaseLayer = window.L.tileLayer(
-                'https://osm-tiles.rainfallrecord.info/{z}/{x}/{y}.png',
+                `https://${process.env.osmHost}/{z}/{x}/{y}.png`,
                 {
                     attribution:
                         'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',

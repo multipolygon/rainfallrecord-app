@@ -9,7 +9,7 @@ import Nav from './Nav';
 export default ({ title, windowTitle, children }) => (
     <>
         <Head>
-            <title>{[windowTitle || title, 'RainfallRecord'].filter(Boolean).join(' - ')}</title>
+            <title>{[windowTitle || title, process.env.appName].filter(Boolean).join(' - ')}</title>
             <meta property="og:title" content={windowTitle || title} />
         </Head>
         <Container maxWidth="md">
@@ -31,7 +31,7 @@ export default ({ title, windowTitle, children }) => (
                 >
                     <Grid item>
                         <Typography variant="h1" style={{ color: '#c2c4d9', fontWeight: 'bold' }}>
-                            ClimateLog
+                            {process.env.appName}
                         </Typography>
                     </Grid>
                     <Grid item>
