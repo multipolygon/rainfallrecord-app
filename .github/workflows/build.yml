@@ -21,9 +21,15 @@ jobs:
         
       - name: Next.js build
         run: npm run build
+        env:
+          API_HOST: ${{ secrets.API_HOST }}
+          CACHE_HOST: ${{ secrets.CACHE_HOST }}
         
       - name: Next.js export
         run: npm run export
+        env:
+          API_HOST: ${{ secrets.API_HOST }}
+          CACHE_HOST: ${{ secrets.CACHE_HOST }}
         
       - name: Git Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3

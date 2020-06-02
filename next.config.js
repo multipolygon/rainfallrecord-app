@@ -3,14 +3,8 @@
 const nextConfig = {
     distDir: 'build',
     env: {
-        apiHost:
-            process.env.NODE_ENV === 'development'
-                ? 'api.climatelog.localhost'
-                : 'api.rainfallrecord.info',
-        cacheHost:
-            process.env.NODE_ENV === 'development'
-                ? 'api.climatelog.localhost'
-                : 'data.climatelog.app',
+        apiHost:  process.env.API_HOST,
+        cacheHost: process.env.CACHE_HOST,
     },
     exportTrailingSlash: true,
     exportPathMap() {
