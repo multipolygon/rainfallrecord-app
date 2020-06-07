@@ -1,7 +1,8 @@
 import { useRef, useEffect, useMemo, useCallback } from 'react';
 import Chart from 'chart.js';
+import { P } from '../Typography';
 
-export default ({ data, yearLabels }) => {
+export default ({ data, yearLabels, toFixed }) => {
     const chart = useRef(null);
 
     const yearlyTotals = useMemo(
@@ -13,6 +14,21 @@ export default ({ data, yearLabels }) => {
                 ),
             ),
         [data, yearLabels],
+    );
+
+    const yearlyTotalsNonZero = useMemo(
+        () => (yearlyTotals || []).filter((i) => typeof i === 'number' && i > 0),
+        [yearlyTotals],
+    );
+
+    const yearlyAverage = useMemo(
+        () =>
+            toFixed(
+                yearlyTotalsNonZero.length === 0
+                    ? 0
+                    : yearlyTotalsNonZero.reduce((a, b) => a + b, 0) / yearlyTotalsNonZero.length,
+            ),
+        [yearlyTotalsNonZero],
     );
 
     const chartRef = useCallback((canvas) => {
@@ -67,13 +83,20 @@ export default ({ data, yearLabels }) => {
     }, [yearlyTotals]);
 
     return (
-        <div
-            style={{
-                position: 'relative',
-                height: '285px',
-            }}
-        >
-            <canvas ref={chartRef} />
-        </div>
+        <>
+            <div
+                style={{
+                    position: 'relative',
+                    height: '285px',
+                }}
+            >
+                <canvas ref={chartRef} />
+            </div>
+            <div style={{ textAlign: 'center' }}>
+                <P>
+                    <small>Annual average: {yearlyAverage}</small>
+                </P>
+            </div>
+        </>
     );
 };

@@ -254,9 +254,9 @@ export default () => {
                     <MonthsChart {...{ data, getMeasurement, monthlyTotals, selectedDate }} />
                 </Box>
                 <Box mt={3}>
-                    {yearLabels.length > 1 && <YearsChart {...{ data, yearLabels }} />}
+                    {yearLabels.length > 1 && <YearsChart {...{ data, yearLabels, toFixed }} />}
                 </Box>
-                <Box mt={3} style={{ textAlign: 'center' }}>
+                <Box mt={3} style={{ textAlign: 'center' }} className="hidden-print">
                     <DownloadButtons src={src} />
                     {userIsOwner && (
                         <Box component="span" ml={2}>
