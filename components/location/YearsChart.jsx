@@ -24,8 +24,11 @@ export default ({ data, yearLabels }) => {
                     datasets: [
                         {
                             data: yearlyTotals,
-                            backgroundColor: '#f7e6b1ee',
-                            borderColor: '#edc240',
+                            // backgroundColor: '#f7e6b1ee',
+                            // borderColor: '#edc240',
+                            backgroundColor: '#bbbdd2',
+                            borderColor: '#828193',
+                            borderWidth: 1,
                             barPercentage: 1.0,
                         },
                     ],
