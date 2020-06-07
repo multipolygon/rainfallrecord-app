@@ -17,7 +17,10 @@ export default ({ data, yearLabels, toFixed }) => {
     );
 
     const yearlyTotalsNonZero = useMemo(
-        () => (yearlyTotals || []).filter((i) => typeof i === 'number' && i > 0),
+        () =>
+            (yearlyTotals || [])
+                .slice(0, -1) // remove current year
+                .filter((n) => typeof n === 'number' && n > 0),
         [yearlyTotals],
     );
 
