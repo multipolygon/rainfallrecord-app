@@ -31,7 +31,10 @@ export default ({ title, windowTitle, children }) => (
                         spacing={1}
                     >
                         <Grid item>
-                            <Typography variant="h1" style={{ color: '#c2c4d9', fontWeight: 'bold' }}>
+                            <Typography
+                                variant="h1"
+                                style={{ color: '#c2c4d9', fontWeight: 'bold' }}
+                            >
                                 {process.env.appName}
                             </Typography>
                         </Grid>

@@ -122,6 +122,7 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
                     error={!isValid}
                     variant="outlined"
                     size="small"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '7em' }}
                 />
             </Grid>
@@ -135,6 +136,7 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
                     error={!isValid}
                     variant="outlined"
                     size="small"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '7em' }}
                 />
             </Grid>
@@ -148,6 +150,7 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
                     error={!isValid}
                     variant="outlined"
                     size="small"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '7em' }}
                 />
             </Grid>
@@ -162,6 +165,7 @@ export default ({ id, inputRef, date, setDate, data, setData, modified, setModif
                     error={!isValid}
                     variant="outlined"
                     size="small"
+                    InputLabelProps={{ shrink: true }}
                     style={{ width: '10em' }}
                 />
             </Grid>
