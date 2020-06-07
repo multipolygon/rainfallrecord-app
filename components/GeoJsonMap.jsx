@@ -1,22 +1,12 @@
 import Paper from '@material-ui/core/Paper';
 import { useRef, useEffect, useCallback } from 'react';
 
-export default ({ center, locations }) => {
+export default ({ locations }) => {
+    const lMap = useRef();
     const geoBaseLayer = useRef();
 
     const drawMap = useCallback((container) => {
         if (container !== null && typeof window === 'object' && typeof window.L === 'object') {
-            const bounds = window.L.latLngBounds(
-                {
-                    lat: -8.6710393,
-                    lng: 156.185245,
-                },
-                {
-                    lat: -45.277108,
-                    lng: 110.48212,
-                },
-            );
-
             const osmBaseLayer = window.L.tileLayer(
                 `https://${process.env.osmHost}/{z}/{x}/{y}.png`,
                 {
@@ -57,9 +47,9 @@ export default ({ center, locations }) => {
 
             featureLayers.Locations = geoBaseLayer.current;
 
-            const lMap = window.L.map(container, {
-                center,
-                zoom: 4,
+            lMap.current = window.L.map(container, {
+                center: [0, 0],
+                zoom: 0,
                 scrollWheelZoom: false,
                 fullscreenControl: {
                     pseudoFullscreen: true,
@@ -67,14 +57,9 @@ export default ({ center, locations }) => {
                 layers: [osmBaseLayer, ...Object.values(featureLayers)],
             });
 
-            lMap.fitBounds(bounds, {
-                animate: false,
-                padding: [10, 10],
-            });
-
             window.L.control
                 .layers(baseLayers, featureLayers, { autoZIndex: false, hideSingleBase: true })
-                .addTo(lMap);
+                .addTo(lMap.current);
         }
     }, []);
 
@@ -91,7 +76,7 @@ export default ({ center, locations }) => {
                     iconSize: [20, 20],
                 });
 
-                window.L.geoJSON(locations, {
+                const geoLayer = window.L.geoJSON(locations, {
                     pointToLayer: (feature, latlng) => {
                         return window.L.marker(latlng, {
                             icon: divIcon,
@@ -115,7 +100,14 @@ export default ({ center, locations }) => {
                             },
                         );
                     },
-                }).addTo(geoBaseLayer.current);
+                });
+
+                geoLayer.addTo(geoBaseLayer.current);
+
+                lMap.current.fitBounds(geoLayer.getBounds(), {
+                    animate: true,
+                    padding: [10, 10],
+                });
             }
         }
     }, [locations]);

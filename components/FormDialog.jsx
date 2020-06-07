@@ -67,17 +67,6 @@ export default ({
 
     const markerMapContainerRef = useCallback((container) => {
         if (container !== null && typeof window === 'object' && typeof window.L === 'object') {
-            const bounds = window.L.latLngBounds(
-                {
-                    lat: -8.6710393,
-                    lng: 156.185245,
-                },
-                {
-                    lat: -45.277108,
-                    lng: 110.48212,
-                },
-            );
-
             const osmBaseLayer = window.L.tileLayer(
                 `https://${process.env.osmHost}/{z}/{x}/{y}.png`,
                 {
@@ -86,16 +75,13 @@ export default ({
                 },
             );
 
+            const center = [-28.076, 134.003];
+
             const lMap = window.L.map(container, {
-                center: bounds.getCenter(),
-                zoom: 4,
+                center,
+                zoom: 1,
                 scrollWheelZoom: true,
                 layers: [osmBaseLayer],
-            });
-
-            lMap.fitBounds(bounds, {
-                animate: false,
-                padding: [10, 10],
             });
 
             const divIcon = window.L.divIcon({
@@ -104,7 +90,7 @@ export default ({
                 iconSize: [20, 20],
             });
 
-            const marker = window.L.marker(bounds.getCenter(), {
+            const marker = window.L.marker(center, {
                 icon: divIcon,
                 draggable: true,
                 autoPan: true,

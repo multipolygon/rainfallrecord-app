@@ -40,9 +40,8 @@ export default function Index() {
                             sharing of personal rainfall data.
                         </P>
                         <P>
-                            At the same time there is the hope of collecting valuable rainfall
-                            information from across Australia by means of collaborative and
-                            distributed public effort – termed{' '}
+                            At the same time there is the hope of collecting valuable rainfall by
+                            means of collaborative and distributed public effort – termed{' '}
                             <a href="http://en.wikipedia.org/wiki/Crowd_sourcing">crowd-sourcing</a>
                         </P>
                         <H2>Creative Commons license</H2>

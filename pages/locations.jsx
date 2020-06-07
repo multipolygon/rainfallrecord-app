@@ -35,7 +35,7 @@ export default () => {
         <Layout title="Locations">
             <ContentBox>
                 <H2>Locations</H2>
-                <GeoJsonMap center={[-28.076922, 134.003202]} locations={locations} />
+                <GeoJsonMap locations={locations} />
                 <Box mt={3}>
                     <LocationsTable
                         locations={locations.features.map(({ properties }) => properties)}
