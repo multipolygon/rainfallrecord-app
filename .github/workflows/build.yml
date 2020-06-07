@@ -26,6 +26,7 @@ jobs:
           API_HOST: ${{ secrets.API_HOST }}
           CACHE_HOST: ${{ secrets.CACHE_HOST }}
           OSM_HOST: ${{ secrets.OSM_HOST }}
+          TF_API_KEY: ${{ secrets.TF_API_KEY }}
         
       - name: Git Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3

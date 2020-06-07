@@ -7,6 +7,7 @@ const nextConfig = {
         apiHost: process.env.API_HOST,
         cacheHost: process.env.CACHE_HOST,
         osmHost: process.env.OSM_HOST,
+        tfApiKey: process.env.TF_API_KEY,
     },
     exportTrailingSlash: true,
     exportPathMap() {

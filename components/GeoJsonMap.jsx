@@ -16,7 +16,7 @@ export default ({ locations }) => {
             );
 
             const thuderforestBaseLayer = window.L.tileLayer(
-                'https://thunderforest-tiles.rainfallrecord.info/{z}/{x}/{y}.png',
+                `https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=${process.env.tfApiKey}`,
                 {
                     attribution:
                         '<a href="https://www.thunderforest.com/maps/landscape/">thunderforest.com</a>',
