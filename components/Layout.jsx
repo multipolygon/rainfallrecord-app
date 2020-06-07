@@ -22,26 +22,28 @@ export default ({ title, windowTitle, children }) => (
                 className="fogBackground"
                 style={{ minHeight: '90vh' }}
             >
-                <Grid
-                    container
-                    direction="row"
-                    justify="space-between"
-                    alignItems="flex-start"
-                    spacing={1}
-                >
-                    <Grid item>
-                        <Typography variant="h1" style={{ color: '#c2c4d9', fontWeight: 'bold' }}>
-                            {process.env.appName}
-                        </Typography>
+                <div className="hidden-print">
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="flex-start"
+                        spacing={1}
+                    >
+                        <Grid item>
+                            <Typography variant="h1" style={{ color: '#c2c4d9', fontWeight: 'bold' }}>
+                                {process.env.appName}
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Nav />
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Nav />
-                    </Grid>
-                </Grid>
+                </div>
                 {children}
             </Box>
             <Container maxWidth="md">
-                <Box mt={2} mb={3} style={{ textAlign: 'center' }}>
+                <Box mt={2} mb={3} style={{ textAlign: 'center' }} className="hidden-print">
                     <footer>
                         <small>
                             This service and all software are provided on an &quot;as is&quot; basis

@@ -23,6 +23,9 @@
     body {
         background: white !important;
     }
+    .hidden-print {
+        display: none;
+    }
 }
 
 a {
