@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     typography: {
         h1: {
             fontSize: '1.8rem',

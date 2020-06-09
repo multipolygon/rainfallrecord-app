@@ -8,7 +8,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import App from 'next/app';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from './_theme';
+import theme from './theme.cjs';
 import { UserContextProvider } from '../components/User';
 import { FeedbackContextProvider } from '../components/Feedback';
 
@@ -26,7 +26,6 @@ export default class CustomApp extends App {
 
         return (
             <ThemeProvider theme={responsiveFontSizes(createMuiTheme(theme))}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
                 <UserContextProvider>
                     <FeedbackContextProvider>

@@ -1,57 +1,55 @@
 import Box from '@material-ui/core/Box';
-import { useRef, useState, useEffect, useMemo, useContext, useReducer } from 'react';
+import { useState, useEffect, useMemo, useContext } from 'react';
 import Moment from 'moment';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
 import queryString from 'query-string';
 import cleanStr from 'underscore.string/clean';
+import _get from 'lodash/get';
+import _mapValues from 'lodash/mapValues';
+import _range from 'lodash/range';
 import { ContentBox, H2, P } from '../components/Typography';
 import Layout from '../components/Layout';
-import DateInput from '../components/location/DateInput';
 import { UserContext } from '../components/User';
 import LocationFormDialog from '../components/LocationFormDialog';
 import Link from '../components/Link';
 import ActionButton from '../components/ActionButton';
-import CalendarTable from '../components/location/CalendarTable';
+import Table from '../components/location/Table';
 import MonthsChart from '../components/location/MonthsChart';
 import YearsChart from '../components/location/YearsChart';
 import YearTabs from '../components/location/YearTabs';
 import DownloadButtons from '../components/location/DownloadButtons';
 import UserFeedbackFormDialog from '../components/UserFeedbackFormDialog';
 
+const modes = {
+    precipitation: 'Rainfall',
+    temperatureMin: 'Min Temp',
+    temperatureMax: 'Max Temp',
+};
+
+const numberOnly = (fn) => (acc, val) => (typeof val !== 'number' ? acc : fn(acc, val));
+
+const modeReducer = {
+    precipitation: numberOnly((acc, val) => acc + val),
+    temperatureMin: numberOnly((acc, val) => (acc === null ? val : Math.min(acc, val))),
+    temperatureMax: numberOnly((acc, val) => (acc === null ? val : Math.max(acc, val))),
+};
+
 export default () => {
     const router = useRouter();
     const [id, setId] = useState(null);
     const [user, setUser] = useContext(UserContext);
-    const [selectedDate, setSelectedDate] = useState({
-        year: Moment().year(),
-        month: Moment().month(),
-        day: Moment().date(),
+    const [mode, setMode] = useState('precipitation');
+    const [year, setYear] = useState(Moment().year());
+    const [data, setData] = useState({
+        title: '[Loading]',
     });
-    const [data, setData] = useState({ title: '[Loading]', records: {} });
     const [showFeedback, setShowFeedback] = useState(false);
-    const inputRef = useRef();
-
-    const [modified, setModified] = useReducer((state, item) => {
-        const key = JSON.stringify(item.key);
-        const current = state[key];
-        if ((item.status === 'sent' || item.status === 'error') && current !== 'sending') {
-            return state;
-        }
-        return {
-            ...state,
-            [key]: item.status,
-        };
-    }, {});
-
-    const getMeasurement = (y, m, d) =>
-        data.records[y] !== undefined &&
-        data.records[y][m + 1] !== undefined &&
-        data.records[y][m + 1][d];
 
     const decimals = useMemo(
         () =>
-            Object.values(data.records[selectedDate.year] || []).reduce(
+            Object.values(_get(data, [mode, year], {})).reduce(
                 (a, m) =>
                     a === 3
                         ? a
@@ -64,40 +62,41 @@ export default () => {
                           }, a),
                 0,
             ),
-        [data, selectedDate.year],
+        [data, mode, year],
     );
 
     const toFixed = (val) => (typeof val === 'number' ? val.toFixed(decimals) : <>&nbsp;</>);
 
     const monthlyTotals = useMemo(
         () =>
-            [...Array(12).keys()].map((m) =>
-                Object.values((data.records[selectedDate.year] || {})[m + 1] || {}).reduce(
-                    (acc, val) => (typeof val === 'number' ? acc + val : acc),
-                    null,
+            _mapValues(_get(data, [mode], {}), (months) =>
+                _mapValues(months, (days) =>
+                    Object.values(days || {}).reduce(modeReducer[mode], null),
                 ),
             ),
-        [data, selectedDate.year],
+        [data, mode],
     );
 
-    const yearMin = useMemo(
+    const yearlyTotals = useMemo(
         () =>
-            Math.min(
-                ...Object.keys(data.records || {}).map((y) => parseInt(y, 10)),
-                Moment().year(),
+            _mapValues(monthlyTotals, (months) =>
+                Object.values(months).reduce(modeReducer[mode], null),
             ),
-        [data],
-    );
-
-    const yearTotal = useMemo(
-        () => monthlyTotals.reduce((acc, val) => (typeof val === 'number' ? acc + val : acc), null),
         [monthlyTotals],
     );
 
-    const yearLabels = useMemo(
-        () => [...Array(Moment().year() - yearMin + 1).keys()].map((y) => yearMin + y),
-        [yearMin],
+    const yearMin = useMemo(
+        () => Math.min(year, Moment().year(), ...Object.keys(_get(data, [mode], {}))),
+        [data, year],
     );
+
+    const yearMax = Moment().year();
+    /*     const yearMax = useMemo(
+        () => Math.max(yearMin, ...Object.keys(_get(data, [mode], {}))),
+        [data, yearMin],
+    );
+ */
+    const yearLabels = useMemo(() => _range(yearMin, yearMax + 1), [yearMin, yearMax]);
 
     useEffect(() => {
         const query = queryString.parse(router.asPath.split(/\?/)[1]);
@@ -120,14 +119,17 @@ export default () => {
             };
         }, {});
 
+    const isDemo = useMemo(() => id === 0, [id]);
+
     const userIsOwner = useMemo(
-        () => user && user.locations && user.locations.map((i) => i.id).includes(id),
+        () => isDemo || (user && user.locations && user.locations.map((i) => i.id).includes(id)),
         [user, id],
     );
 
     useEffect(() => {
         if (
             !showFeedback &&
+            !isDemo &&
             userIsOwner &&
             user.feedback_rating === null &&
             user.created_at &&
@@ -151,10 +153,12 @@ export default () => {
     );
 
     useEffect(() => {
-        if (id === 0) {
+        if (isDemo) {
             setData({
                 title: 'Live Demo',
-                records: randomData(Moment()),
+                precipitation: randomData(Moment()),
+                temperatureMin: randomData(Moment()),
+                temperatureMax: randomData(Moment()),
             });
         } else if (user !== null && id !== null && typeof window === 'object') {
             const opt = userIsOwner
@@ -168,34 +172,25 @@ export default () => {
                       credentials: 'omit',
                       mode: 'cors',
                   };
-            window.fetch(src, opt).then((response) => {
-                if (response.ok) {
-                    response.json().then((obj) => {
-                        setData(obj);
-                    });
-                }
-            });
+            window
+                .fetch(src, opt)
+                .then((response) => (response.ok ? response.json() : null))
+                .then((obj) => setData(obj))
+                .catch(() => {});
         }
-    }, [user, id]);
+    }, [id, user]);
 
     const onDelete = () => {
         setUser(null);
         router.push('/user/');
     };
 
-    function tdOnClick() {
-        if (this !== null) {
-            setSelectedDate(this);
-            if (inputRef.current) inputRef.current.focus();
-        }
-    }
-
     return (
         <Layout title={cleanStr(data.title || 'Loading...')}>
             <ContentBox>
                 <div style={{ textAlign: 'center' }}>
                     <H2>{cleanStr(data.title)}</H2>
-                    {id === 0 && (
+                    {isDemo && (
                         <P>
                             Data will not be saved!
                             <br />
@@ -205,10 +200,10 @@ export default () => {
                             to start your own location record.
                         </P>
                     )}
-                    {id !== null && id !== 0 && (
+                    {id !== null && !isDemo && (
                         <P>{[data.town_suburb, data.region].filter(Boolean).join(', ')}</P>
                     )}
-                    {userIsOwner && (
+                    {!isDemo && userIsOwner && (
                         <LocationFormDialog id={id} source={data} setSource={setData} />
                     )}
                     {showFeedback && (
@@ -219,46 +214,50 @@ export default () => {
                         </Box>
                     )}
                 </div>
-                <Box mt={3}>
-                    <YearTabs {...{ data, yearLabels, selectedDate, setSelectedDate }} />
+                <Box mt={3} style={{ textAlign: 'center' }}>
+                    <ButtonGroup size="small">
+                        {Object.keys(modes).map((m) => (
+                            <Button
+                                key={m}
+                                onClick={() => setMode(m)}
+                                variant={m === mode ? 'contained' : 'outlined'}
+                            >
+                                {modes[m]}
+                            </Button>
+                        ))}
+                    </ButtonGroup>
                 </Box>
-                {(id === 0 ||
-                    (user && user.locations && user.locations.map((i) => i.id).includes(id))) && (
-                    <Box mt={3}>
-                        <DateInput
-                            id={id}
-                            inputRef={inputRef}
-                            date={selectedDate}
-                            setDate={setSelectedDate}
-                            data={data}
-                            setData={setData}
-                            modified={modified}
-                            setModified={setModified}
-                        />
-                    </Box>
-                )}
                 <Box mt={3}>
-                    <CalendarTable
+                    <YearTabs {...{ data, mode, yearLabels, year, setYear }} />
+                </Box>
+                <Box mt={3}>
+                    <Table
                         {...{
-                            selectedDate,
+                            id,
+                            data,
+                            setData,
+                            mode,
+                            year,
                             monthlyTotals,
+                            yearlyTotals,
                             toFixed,
-                            yearTotal,
-                            modified,
-                            getMeasurement,
-                            onClick: tdOnClick,
+                            userIsOwner,
                         }}
                     />
                 </Box>
                 <Box mt={3}>
-                    <MonthsChart {...{ data, getMeasurement, monthlyTotals, selectedDate }} />
+                    <MonthsChart {...{ data, mode, year, monthlyTotals, modeReducer }} />
                 </Box>
                 <Box mt={3}>
-                    {yearLabels.length > 1 && <YearsChart {...{ data, yearLabels, toFixed }} />}
+                    {yearLabels.length > 1 && (
+                        <YearsChart
+                            {...{ data, mode, modeReducer, yearlyTotals, yearLabels, toFixed }}
+                        />
+                    )}
                 </Box>
                 <Box mt={3} style={{ textAlign: 'center' }} className="hidden-print">
                     <DownloadButtons src={src} />
-                    {userIsOwner && (
+                    {!isDemo && userIsOwner && (
                         <Box component="span" ml={2}>
                             <ButtonGroup size="small">
                                 <ActionButton

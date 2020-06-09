@@ -1,33 +1,40 @@
 import { useRef, useEffect, useMemo, useCallback } from 'react';
 import Chart from 'chart.js';
 import Moment from 'moment';
+import _get from 'lodash/get';
+import _mapValues from 'lodash/mapValues';
+import _range from 'lodash/range';
 
-export default ({ data, monthlyTotals, selectedDate }) => {
+export default ({ year, monthlyTotals }) => {
     const chart = useRef(null);
 
-    const labels = useMemo(
-        () => [...Array(12).keys()].map((m) => Moment({ month: m }).format('MMM')),
-        [],
+    const labels = useMemo(() => _range(12).map((m) => Moment({ month: m }).format('MMM')), []);
+
+    const monthlyTotalsAry = useMemo(
+        () => _range(12).map((m) => _get(monthlyTotals, [year, m + 1], 0)),
+        [monthlyTotals, year],
     );
 
-    const years = useMemo(() => {
-        const y = Moment().format('Y');
-        return Object.keys(data.records).filter((i) => i !== y);
-    }, [data]);
+    const monthlyAverages = useMemo(
+        () =>
+            _mapValues(
+                Object.values(monthlyTotals).reduce(
+                    (acc, months) =>
+                        Object.keys(months).reduce(
+                            (acc2, m) => ({ ...acc2, [m]: (acc2[m] || 0) + months[m] }),
+                            acc,
+                        ),
+                    {},
+                ),
+                (v) => v / Object.keys(monthlyTotals).length,
+            ),
+        [monthlyTotals],
+    );
 
-    const monthlyAverages = useMemo(() => {
-        const arr = Array(12).fill(0);
-        const l = years.length;
-        if (l > 0) {
-            years.forEach((y) => {
-                Object.keys(data.records[y]).forEach((m) => {
-                    arr[m - 1] += Object.values(data.records[y][m]).reduce((sum, d) => sum + d, 0);
-                });
-            });
-            return arr.map((i) => Math.round((i / l) * 100) / 100);
-        }
-        return arr;
-    }, [years]);
+    const monthlyAveragesAry = useMemo(
+        () => _range(12).map((m) => _get(monthlyAverages, [m + 1], 0)),
+        [monthlyAverages],
+    );
 
     const chartRef = useCallback((canvas) => {
         if (canvas) {
@@ -37,8 +44,8 @@ export default ({ data, monthlyTotals, selectedDate }) => {
                     labels,
                     datasets: [
                         {
-                            label: selectedDate.year,
-                            data: monthlyTotals,
+                            label: year,
+                            data: monthlyTotalsAry,
                             // backgroundColor: '#f7e6b1ee',
                             // borderColor: '#edc240',
                             backgroundColor: '#bbbdd2',
@@ -49,7 +56,7 @@ export default ({ data, monthlyTotals, selectedDate }) => {
                         },
                         {
                             label: 'Average',
-                            data: monthlyAverages,
+                            data: monthlyAveragesAry,
                             // backgroundColor: '#bcdbed',
                             // borderColor: '#afd8f8',
                             backgroundColor: '#f7e6b1ee',
@@ -107,12 +114,12 @@ export default ({ data, monthlyTotals, selectedDate }) => {
 
     useEffect(() => {
         if (chart.current) {
-            chart.current.config.data.datasets[0].label = selectedDate.year;
-            chart.current.config.data.datasets[0].data = monthlyTotals;
-            chart.current.config.data.datasets[1].data = monthlyAverages;
+            chart.current.config.data.datasets[0].label = year;
+            chart.current.config.data.datasets[0].data = monthlyTotalsAry;
+            chart.current.config.data.datasets[1].data = monthlyAveragesAry;
             chart.current.update();
         }
-    }, [monthlyTotals]);
+    }, [year, monthlyTotalsAry, monthlyAveragesAry]);
 
     return (
         <div

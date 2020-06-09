@@ -1,14 +1,19 @@
 import Moment from 'moment';
+import _get from 'lodash/get';
+import _range from 'lodash/range';
 import TableCell from './TableCell';
 
 export default ({
-    selectedDate,
-    monthlyTotals,
-    toFixed,
-    yearTotal,
+    today,
+    year,
+    data,
+    mode,
     modified,
-    getMeasurement,
-    onClick,
+    onBlur,
+    monthlyTotals,
+    yearlyTotals,
+    toFixed,
+    userIsOwner,
 }) => {
     return (
         <div style={{ overflowX: 'auto' }}>
@@ -23,23 +28,28 @@ export default ({
                     </tr>
                 </thead>
                 <tbody>
-                    {[...Array(12).keys()].map((m) => (
+                    {_range(12).map((m) => (
                         <tr key={m}>
                             <th>{Moment({ month: m }).format('MMM')}</th>
-                            {[...Array(31).keys()].map((d) => (
+                            {_range(31).map((d) => (
                                 <TableCell
                                     {...{
                                         key: `${m}-${d}`,
-                                        selectedDate,
+                                        data,
+                                        mode,
                                         modified,
-                                        getMeasurement,
-                                        m,
+                                        today,
+                                        year,
+                                        m: m + 1,
                                         d: d + 1,
-                                        onClick,
+                                        onBlur,
+                                        userIsOwner,
                                     }}
                                 />
                             ))}
-                            <td className="total total-right">{toFixed(monthlyTotals[m])}</td>
+                            <td className="total total-right">
+                                {toFixed(_get(monthlyTotals, [year, m + 1]))}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -48,7 +58,7 @@ export default ({
                         <td colSpan="32" style={{ border: 0, background: 'inherit' }}>
                             &nbsp;
                         </td>
-                        <td className="total total-right">{toFixed(yearTotal)}</td>
+                        <td className="total total-right">{toFixed(_get(yearlyTotals, [year]))}</td>
                     </tr>
                 </tfoot>
             </table>

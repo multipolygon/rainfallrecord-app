@@ -1,37 +1,24 @@
 import { useRef, useEffect, useMemo, useCallback } from 'react';
 import Chart from 'chart.js';
+import _get from 'lodash/get';
 import { P } from '../Typography';
 
-export default ({ data, yearLabels, toFixed }) => {
+export default ({ yearlyTotals, yearLabels, toFixed }) => {
     const chart = useRef(null);
 
-    const yearlyTotals = useMemo(
-        () =>
-            yearLabels.map((y) =>
-                Object.keys(data.records[y] || {}).reduce(
-                    (acc, m) => acc + Object.values(data.records[y][m]).reduce((a, b) => a + b, 0),
-                    0,
-                ),
-            ),
-        [data, yearLabels],
-    );
-
-    const yearlyTotalsNonZero = useMemo(
-        () =>
-            (yearlyTotals || [])
-                .slice(0, -1) // remove current year
-                .filter((n) => typeof n === 'number' && n > 0),
-        [yearlyTotals],
-    );
+    const yearlyTotalsAry = useMemo(() => yearLabels.map((y) => _get(yearlyTotals, [y], 0)), [
+        yearLabels,
+        yearlyTotals,
+    ]);
 
     const yearlyAverage = useMemo(
         () =>
             toFixed(
-                yearlyTotalsNonZero.length === 0
+                yearlyTotalsAry.length === 0
                     ? 0
-                    : yearlyTotalsNonZero.reduce((a, b) => a + b, 0) / yearlyTotalsNonZero.length,
+                    : yearlyTotalsAry.reduce((a, b) => a + b, 0) / yearlyTotalsAry.length,
             ),
-        [yearlyTotalsNonZero],
+        [yearlyTotalsAry],
     );
 
     const chartRef = useCallback((canvas) => {
@@ -42,7 +29,7 @@ export default ({ data, yearLabels, toFixed }) => {
                     labels: yearLabels,
                     datasets: [
                         {
-                            data: yearlyTotals,
+                            data: yearlyTotalsAry,
                             // backgroundColor: '#f7e6b1ee',
                             // borderColor: '#edc240',
                             backgroundColor: '#bbbdd2',
@@ -80,10 +67,10 @@ export default ({ data, yearLabels, toFixed }) => {
     useEffect(() => {
         if (chart.current) {
             chart.current.config.data.labels = yearLabels;
-            chart.current.config.data.datasets[0].data = yearlyTotals;
+            chart.current.config.data.datasets[0].data = yearlyTotalsAry;
             chart.current.update();
         }
-    }, [yearlyTotals]);
+    }, [yearlyTotalsAry]);
 
     return (
         <>
