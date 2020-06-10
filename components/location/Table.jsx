@@ -123,8 +123,8 @@ export default ({
             {alert && userIsOwner && (
                 <Box mb={3} className="no-print">
                     <Alert severity="info" onClose={() => setAlert(false)}>
-                        Select a table-cell below to edit. Use [tab] and [shift]+[tab] to move
-                        forward and back.
+                        Select a table-cell below to edit in place (just like a spreadsheet). Use
+                        [tab] to move forward and [shift]+[tab] to go back.
                     </Alert>
                 </Box>
             )}

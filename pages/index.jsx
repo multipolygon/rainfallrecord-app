@@ -14,8 +14,8 @@ export default function Index() {
                     <Grid item xs={12} sm={8}>
                         <H2>Free and No Ads!</H2>
                         <P>
-                            You can create a record sheet on this website for your own rain gauge
-                            measurements.
+                            You can create a record sheet on this website for your own rainfall and
+                            temperature measurements.
                         </P>
                         <ContentBox>
                             <Link
@@ -24,24 +24,24 @@ export default function Index() {
                                 href="/location"
                                 as="/location/?id=0"
                             >
-                                Try a Live Demo
+                                Try a Live Demo Now
                             </Link>
                         </ContentBox>
                         <H2>Easy to Use</H2>
                         <P>
                             There is no software to download or install. Simply register and start
-                            entering data on this website.
+                            entering data directly on this website.
                         </P>
-                        <P>Graphs are automatically displayed for your data.</P>
+                        <P>Charts are automatically displayed and updated for your data.</P>
                         <P>You will get a direct, shareable, public URL linking to your records.</P>
                         <H2>Crowd-Sourcing and Web 2.0</H2>
                         <P>
                             This service aims to assist individuals in the recording, analysis and
-                            sharing of personal rainfall data.
+                            sharing of their own climate data.
                         </P>
                         <P>
-                            At the same time there is the hope of collecting valuable rainfall by
-                            means of collaborative and distributed public effort – termed{' '}
+                            At the same time there is the hope of collecting valuable climate
+                            records by means of collaborative and distributed public effort – termed{' '}
                             <a href="http://en.wikipedia.org/wiki/Crowd_sourcing">crowd-sourcing</a>
                         </P>
                         <H2>Creative Commons license</H2>
@@ -60,8 +60,8 @@ export default function Index() {
                             in most spread sheet software.
                         </P>
                         <P>
-                            You should regularly back-up your own data clicking the buttons found at
-                            the bottom of the record page (below the charts).
+                            You should regularly back-up your own data by printing it or using the
+                            buttons found at the bottom of the record page (below the charts).
                         </P>
                         <P>
                             A daily backup is available at{' '}
