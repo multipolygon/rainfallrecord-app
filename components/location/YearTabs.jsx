@@ -28,13 +28,7 @@ export default ({ data, mode, yearLabels, year, setYear }) => {
         <>
             <div className="hidden-print">
                 <Grid container direction="row" justify="center" alignItems="baseline">
-                    <Grid
-                        item
-                        xs={2}
-                        sm={1}
-                        md="auto"
-                        style={{ textAlign: 'right', overflowX: 'hidden' }}
-                    >
+                    <Grid item xs={2} sm={1} style={{ textAlign: 'right', overflowX: 'hidden' }}>
                         <IconButton onClick={() => setYear(year - 1)}>
                             <ChevronLeftIcon />
                         </IconButton>
@@ -43,7 +37,6 @@ export default ({ data, mode, yearLabels, year, setYear }) => {
                         item
                         xs={8}
                         sm={10}
-                        md="auto"
                         style={{ textAlign: 'center', overflowX: 'auto' }}
                         ref={yearTabsRef}
                     >
@@ -65,13 +58,7 @@ export default ({ data, mode, yearLabels, year, setYear }) => {
                             ))}
                         </ButtonGroup>
                     </Grid>
-                    <Grid
-                        item
-                        xs={2}
-                        sm={1}
-                        md="auto"
-                        style={{ textAlign: 'left', overflowX: 'hidden' }}
-                    >
+                    <Grid item xs={2} sm={1} style={{ textAlign: 'left', overflowX: 'hidden' }}>
                         <IconButton
                             onClick={() => (Moment().year() > year ? setYear(year + 1) : null)}
                         >
