@@ -10,6 +10,8 @@ import TablePortrait from './TablePortrait';
 
 const patchReducer = (state, patch) => ({ ...state, ...patch });
 
+const today = Moment();
+
 export default ({
     id,
     data,
@@ -21,7 +23,6 @@ export default ({
     toFixed,
     userIsOwner,
 }) => {
-    const [today, setToday] = useState(Moment());
     const [modified, setModified] = useReducer(patchReducer, {});
     const [alert, setAlert] = useState(true);
 
@@ -103,10 +104,6 @@ export default ({
                 });
         }
     }, [modified]);
-
-    useEffect(() => {
-        setInterval(() => setToday(Moment()), 6 * 60 * 60 * 1000);
-    }, []);
 
     const props = {
         today,

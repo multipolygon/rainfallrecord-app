@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Moment from 'moment';
+import { H3 } from '../Typography';
 
 export default ({ data, mode, yearLabels, year, setYear }) => {
     const yearTabsRef = useRef();
@@ -24,41 +25,64 @@ export default ({ data, mode, yearLabels, year, setYear }) => {
     }, [year, yearLabels, yearTabsRef.current]);
 
     return (
-        <Grid container>
-            <Grid item xs={2} sm={1} style={{ textAlign: 'right' }}>
-                <IconButton onClick={() => setYear(year - 1)}>
-                    <ChevronLeftIcon />
-                </IconButton>
-            </Grid>
-            <Grid item xs={8} sm={10}>
-                <div
-                    style={{ textAlign: 'center', width: '100%', overflowX: 'auto' }}
-                    ref={yearTabsRef}
-                >
-                    <ButtonGroup size="small">
-                        {yearLabels.map((y) => (
-                            <Button
-                                key={y}
-                                onClick={() => setYear(y)}
-                                variant={y === year ? 'contained' : 'outlined'}
-                                style={{
-                                    opacity:
-                                        data[mode] === undefined || data[mode][y] === undefined
-                                            ? 0.5
-                                            : 1,
-                                }}
-                            >
-                                {y}
-                            </Button>
-                        ))}
-                    </ButtonGroup>
-                </div>
-            </Grid>
-            <Grid item xs={2} sm={1} style={{ textAlign: 'left' }}>
-                <IconButton onClick={() => (Moment().year() > year ? setYear(year + 1) : null)}>
-                    <ChevronRightIcon />
-                </IconButton>
-            </Grid>
-        </Grid>
+        <>
+            <div className="hidden-print">
+                <Grid container direction="row" justify="center" alignItems="baseline">
+                    <Grid
+                        item
+                        xs={2}
+                        sm={1}
+                        md="auto"
+                        style={{ textAlign: 'right', overflowX: 'hidden' }}
+                    >
+                        <IconButton onClick={() => setYear(year - 1)}>
+                            <ChevronLeftIcon />
+                        </IconButton>
+                    </Grid>
+                    <Grid
+                        item
+                        xs={8}
+                        sm={10}
+                        md="auto"
+                        style={{ textAlign: 'center', overflowX: 'auto' }}
+                        ref={yearTabsRef}
+                    >
+                        <ButtonGroup size="small" style={{ margin: '3px' }}>
+                            {yearLabels.map((y) => (
+                                <Button
+                                    key={y}
+                                    onClick={() => setYear(y)}
+                                    variant={y === year ? 'contained' : 'outlined'}
+                                    style={{
+                                        opacity:
+                                            data[mode] === undefined || data[mode][y] === undefined
+                                                ? 0.5
+                                                : 1,
+                                    }}
+                                >
+                                    {y}
+                                </Button>
+                            ))}
+                        </ButtonGroup>
+                    </Grid>
+                    <Grid
+                        item
+                        xs={2}
+                        sm={1}
+                        md="auto"
+                        style={{ textAlign: 'left', overflowX: 'hidden' }}
+                    >
+                        <IconButton
+                            onClick={() => (Moment().year() > year ? setYear(year + 1) : null)}
+                        >
+                            <ChevronRightIcon />
+                        </IconButton>
+                    </Grid>
+                </Grid>
+            </div>
+            <div className="print-only" style={{ textAlign: 'center' }}>
+                <H3>{year}</H3>
+            </div>
+        </>
     );
 };

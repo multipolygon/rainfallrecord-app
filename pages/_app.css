@@ -17,6 +17,10 @@
         /* background: linear-gradient(160deg, #D2D4ED00 0%, #D2D4ED11 50%, #D2D4EDFF 100%); */
         background: linear-gradient(135deg, #FDFDFD 0%, #FDFDFD 60%, #D2D4ED 100%);
     }
+
+    .print-only {
+        display: none;
+    }
 }
 
 @media print {
@@ -25,6 +29,10 @@
     }
     .hidden-print {
         display: none;
+    }
+
+    .print-only {
+        display: block;
     }
 }
 

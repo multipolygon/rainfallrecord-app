@@ -8,6 +8,7 @@ const nextConfig = {
         cacheHost: process.env.CACHE_HOST,
         osmHost: process.env.OSM_HOST,
         tfApiKey: process.env.TF_API_KEY,
+        showTemperature: process.env.SHOW_TEMPERATURE,
     },
     exportTrailingSlash: true,
     exportPathMap() {

@@ -152,6 +152,9 @@ export default () => {
         [user, id],
     );
 
+    const legacyFix = ({ measurements, ...other }) =>
+        measurements !== undefined ? { precipitation: measurements, ...other } : other;
+
     useEffect(() => {
         if (isDemo) {
             setData({
@@ -175,7 +178,7 @@ export default () => {
             window
                 .fetch(src, opt)
                 .then((response) => (response.ok ? response.json() : null))
-                .then((obj) => setData(obj))
+                .then((obj) => setData(legacyFix(obj)))
                 .catch(() => {});
         }
     }, [id, user]);
@@ -214,19 +217,21 @@ export default () => {
                         </Box>
                     )}
                 </div>
-                <Box mt={3} style={{ textAlign: 'center' }}>
-                    <ButtonGroup size="small">
-                        {Object.keys(modes).map((m) => (
-                            <Button
-                                key={m}
-                                onClick={() => setMode(m)}
-                                variant={m === mode ? 'contained' : 'outlined'}
-                            >
-                                {modes[m]}
-                            </Button>
-                        ))}
-                    </ButtonGroup>
-                </Box>
+                {process.env.showTemperature && (
+                    <Box mt={3} style={{ textAlign: 'center' }}>
+                        <ButtonGroup size="small">
+                            {Object.keys(modes).map((m) => (
+                                <Button
+                                    key={m}
+                                    onClick={() => setMode(m)}
+                                    variant={m === mode ? 'contained' : 'outlined'}
+                                >
+                                    {modes[m]}
+                                </Button>
+                            ))}
+                        </ButtonGroup>
+                    </Box>
+                )}
                 <Box mt={3}>
                     <YearTabs {...{ data, mode, yearLabels, year, setYear }} />
                 </Box>
