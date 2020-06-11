@@ -45,6 +45,7 @@ export default ({ data, mode, yearLabels, year, setYear }) => {
                                 <Button
                                     key={y}
                                     onClick={() => setYear(y)}
+                                    tabIndex="-1"
                                     variant={y === year ? 'contained' : 'outlined'}
                                     style={{
                                         opacity:

@@ -1,6 +1,5 @@
 import Hidden from '@material-ui/core/Hidden';
 import { useState, useEffect, useReducer } from 'react';
-import Moment from 'moment';
 import _get from 'lodash/get';
 import _set from 'lodash/set';
 import Alert from '@material-ui/lab/Alert';
@@ -9,8 +8,6 @@ import TableLandscape from './TableLandscape';
 import TablePortrait from './TablePortrait';
 
 const patchReducer = (state, patch) => ({ ...state, ...patch });
-
-const today = Moment();
 
 export default ({
     id,
@@ -40,14 +37,16 @@ export default ({
     };
 
     const setMeasurement = (y, m, d, t) => {
-        let v = t === '' ? undefined : parseFloat(t) || 0;
-        if (typeof v === 'number' && mode === 'precipitation' && v < 0) {
-            v *= -1;
-        }
-        if (_get(data, [mode, year, m, d]) !== v) {
-            setData(_set({ ...data }, [mode, y, m, d], v));
-            if (id !== 0) {
-                updateModified(y, m, d, 'pending');
+        if (y && m && d) {
+            let v = t === '' ? undefined : parseFloat(t) || 0;
+            if (typeof v === 'number' && mode === 'precipitation' && v < 0) {
+                v *= -1;
+            }
+            if (_get(data, [mode, year, m, d]) !== v) {
+                setData(_set({ ...data }, [mode, y, m, d], v));
+                if (id !== 0) {
+                    updateModified(y, m, d, 'pending');
+                }
             }
         }
     };
@@ -105,13 +104,41 @@ export default ({
         }
     }, [modified]);
 
+    // https://stackoverflow.com/a/58153867/5165
+    const onKeyPress = (e) => {
+        const x = e.charCode || e.keyCode;
+        /* eslint-disable no-restricted-globals */
+        if (
+            (isNaN(String.fromCharCode(e.which)) && x !== 45 && x !== 46) ||
+            x === 32 ||
+            x === 13 ||
+            (x === 46 && e.target.innerText.includes('.'))
+        )
+            e.preventDefault();
+        if (x === 13) {
+            const ti = parseInt(e.target.getAttribute('tabindex'), 10);
+            const e2 = document.getElementById(`td${ti + 1}`);
+            if (e2) {
+                e2.focus();
+            } else {
+                e.target.blur();
+            }
+        }
+        /* eslint-enable no-restricted-globals */
+    };
+
+    // https://stackoverflow.com/a/3805897/5165
+    const onFocus = () => {
+        if (document && document.execCommand) {
+            setTimeout(() => document.execCommand('selectAll', false, null), 1);
+        }
+    };
+
     const props = {
-        today,
         year,
         data,
         mode,
         modified,
-        onBlur,
         monthlyTotals,
         yearlyTotals,
         toFixed,
@@ -128,12 +155,14 @@ export default ({
                     </Alert>
                 </Box>
             )}
-            <Hidden mdUp>
-                <TablePortrait {...props} />
-            </Hidden>
-            <Hidden smDown>
-                <TableLandscape {...props} />
-            </Hidden>
+            <div onKeyPress={onKeyPress} onFocus={onFocus} onBlur={onBlur}>
+                <Hidden mdUp>
+                    <TablePortrait {...props} />
+                </Hidden>
+                <Hidden smDown>
+                    <TableLandscape {...props} />
+                </Hidden>
+            </div>
         </>
     );
 };

@@ -152,9 +152,6 @@ export default () => {
         [user, id],
     );
 
-    const legacyFix = ({ measurements, ...other }) =>
-        measurements !== undefined ? { precipitation: measurements, ...other } : other;
-
     useEffect(() => {
         if (isDemo) {
             setData({
@@ -178,7 +175,7 @@ export default () => {
             window
                 .fetch(src, opt)
                 .then((response) => (response.ok ? response.json() : null))
-                .then((obj) => setData(legacyFix(obj)))
+                .then((obj) => setData(obj))
                 .catch(() => {});
         }
     }, [id, user]);

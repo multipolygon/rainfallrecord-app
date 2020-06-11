@@ -4,17 +4,9 @@ import _range from 'lodash/range';
 import _get from 'lodash/get';
 import TableCell from './TableCell';
 
-export default ({
-    today,
-    year,
-    data,
-    mode,
-    modified,
-    onBlur,
-    monthlyTotals,
-    toFixed,
-    userIsOwner,
-}) => {
+const today = Moment();
+
+export default ({ year, data, mode, modified, monthlyTotals, toFixed, userIsOwner }) => {
     const table = useRef(null);
 
     // Scroll table to show today:
@@ -50,11 +42,9 @@ export default ({
                                         data,
                                         mode,
                                         modified,
-                                        today,
                                         year,
                                         m: m + 1,
                                         d: d + 1,
-                                        onBlur,
                                         userIsOwner,
                                     }}
                                 />

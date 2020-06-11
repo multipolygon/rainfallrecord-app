@@ -4,12 +4,10 @@ import _range from 'lodash/range';
 import TableCell from './TableCell';
 
 export default ({
-    today,
     year,
     data,
     mode,
     modified,
-    onBlur,
     monthlyTotals,
     yearlyTotals,
     toFixed,
@@ -38,11 +36,9 @@ export default ({
                                         data,
                                         mode,
                                         modified,
-                                        today,
                                         year,
                                         m: m + 1,
                                         d: d + 1,
-                                        onBlur,
                                         userIsOwner,
                                     }}
                                 />

@@ -72,8 +72,7 @@ a {
 .calendar-table.calendar-table-portrait tfoot th:first-child { background: transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; }
 .calendar-table td.no-date { background: #F5F5F5; }
 .calendar-table td.date { cursor: pointer; }
-.calendar-table td.date:hover { background: #FCF8E3; }
-.calendar-table td.date.pending { background: #E3FCE3; }
+.calendar-table td.date.pending { background: #FCF8E3; }
 .calendar-table td.date.sending { background: #E3FFE3; }
 .calendar-table td.date.error { background: #FCE3E3; }
 .calendar-table td.total { background: #F9F9F9; }
