@@ -8,19 +8,24 @@ export const UserContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (user === null && typeof window === 'object') {
-            window.fetch(src, { credentials: 'include' }).then((response) => {
+            window.fetch(src, { credentials: 'include' })
+            .then((response) => {
                 if (response.ok) {
                     response.json().then((obj) => {
-                        if (typeof obj === 'object' && typeof obj.username === 'string') {
+                        if (obj && typeof obj === 'object') {
                             setUser(obj);
                         } else {
-                            setUser(null);
+                            setUser(false);
                         }
                     });
-                } else {
+                } else if (response.status === 403) {
+                    // not logged in
                     setUser({});
+                } else {
+                    setUser(false);
                 }
-            });
+            })
+            .catch(() => setUser(false));
         }
     }, [user]);
 

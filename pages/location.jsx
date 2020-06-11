@@ -131,6 +131,7 @@ export default () => {
             !showFeedback &&
             !isDemo &&
             userIsOwner &&
+            user &&
             user.feedback_rating === null &&
             user.created_at &&
             Moment(user.created_at).isBefore(Moment().subtract(7, 'days'))
@@ -149,7 +150,7 @@ export default () => {
                 `${id}`,
                 8,
             )}.json`,
-        [user, id],
+        [userIsOwner, id],
     );
 
     useEffect(() => {
@@ -178,7 +179,7 @@ export default () => {
                 .then((obj) => setData(obj))
                 .catch(() => {});
         }
-    }, [id, user]);
+    }, [id, user, userIsOwner]);
 
     const onDelete = () => {
         setUser(null);
