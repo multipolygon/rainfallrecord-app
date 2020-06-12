@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import Button from '@material-ui/core/Button';
 import Layout from '../components/Layout';
 import { ContentBox, H2, H3, P } from '../components/Typography';
 import { UserContext } from '../components/User';
@@ -14,7 +15,12 @@ export default () => {
                 <H2>User Options</H2>
                 {user === null && <H3>Loading...</H3>}
                 {user === false && (
-                    <P>There was an error contacting the server. Please try again later.</P>
+                    <>
+                        <P>There was an error contacting the server. Please try again later.</P>
+                        <Button variant="outlined" size="small" onClick={() => setUser(null)}>
+                            Refresh
+                        </Button>
+                    </>
                 )}
                 {user && user.id === undefined && <NewUser />}
                 {user && user.id !== undefined && <ShowUser {...{ user, setUser }} />}

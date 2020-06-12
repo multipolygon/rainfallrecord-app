@@ -16,9 +16,13 @@ export default ({ data, mode, yearLabels, year, setYear }) => {
         if (div) {
             const i = yearLabels.indexOf(year);
             if (i !== -1) {
-                const left = (div.scrollWidth / yearLabels.length) * i;
-                if (left < div.scrollLeft || left > div.scrollLeft + div.offsetWidth) {
-                    yearTabsRef.current.scrollLeft = left;
+                if (yearLabels.length === i + 1) {
+                    div.scrollLeft = div.scrollWidth;
+                } else {
+                    const left = (div.scrollWidth / yearLabels.length) * i;
+                    if (left < div.scrollLeft || left > div.scrollLeft + div.offsetWidth) {
+                        div.scrollLeft = left;
+                    }
                 }
             }
         }

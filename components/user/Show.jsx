@@ -70,10 +70,12 @@ export default ({ user, setUser }) => {
             <br />
             <br />
             <br />
-            <small>
-                <P>API Key:</P>
-                <code>{user.api_key}</code>
-            </small>
+            <div style={{ overflowX: 'auto' }}>
+                <small>
+                    <P>API Key:</P>
+                    <code>{user.api_key}</code>
+                </small>
+            </div>
         </>
     );
 };
