@@ -14,7 +14,7 @@ export default ({ data, mode, modified, year, m, d, userIsOwner }) => {
         <td
             suppressContentEditableWarning
             contentEditable={userIsOwner && isValid}
-            inputMode='decimal'
+            inputMode="decimal"
             id={userIsOwner && isValid ? `td${ymd.dayOfYear()}` : undefined}
             tabIndex={userIsOwner && isValid ? ymd.dayOfYear() : undefined}
             data-m={m}
