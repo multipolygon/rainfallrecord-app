@@ -258,24 +258,26 @@ export default () => {
                         />
                     )}
                 </Box>
-                <Box mt={3} style={{ textAlign: 'center' }} className="hidden-print">
-                    <DownloadButtons src={src} />
-                    {!isDemo && userIsOwner && (
-                        <Box component="span" ml={2}>
-                            <ButtonGroup size="small">
-                                <ActionButton
-                                    confirm="Really delete?"
-                                    url={`/locations/${id}.json`}
-                                    method="DELETE"
-                                    onSuccess={onDelete}
-                                    color="secondary"
-                                >
-                                    Delete Location
-                                </ActionButton>
-                            </ButtonGroup>
-                        </Box>
-                    )}
-                </Box>
+                {!isDemo && (
+                    <Box mt={3} style={{ textAlign: 'center' }} className="hidden-print">
+                        <DownloadButtons src={src} />
+                        {userIsOwner && (
+                            <Box component="span" ml={2}>
+                                <ButtonGroup size="small">
+                                    <ActionButton
+                                        confirm="Really delete?"
+                                        url={`/locations/${id}.json`}
+                                        method="DELETE"
+                                        onSuccess={onDelete}
+                                        color="secondary"
+                                    >
+                                        Delete Location
+                                    </ActionButton>
+                                </ButtonGroup>
+                            </Box>
+                        )}
+                    </Box>
+                )}
             </ContentBox>
         </Layout>
     );
