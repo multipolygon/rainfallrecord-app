@@ -22,6 +22,7 @@ export default () => {
     const fields = {
         feedback_text: {
             label: 'Message',
+            placeholder: '(optional)',
             helperText: 'Any requests or feedback?',
             autoFocus: true,
             inputLabelProps: { shrink: true },
@@ -52,18 +53,6 @@ export default () => {
 
     return (
         <>
-            <ButtonGroup>
-                {icons.map((i, n) => (
-                    <Button
-                        key={n}
-                        variant={user.feedback_rating === n ? 'contained' : 'outlined'}
-                        size="small"
-                        onClick={() => onClick(n)}
-                    >
-                        {i}
-                    </Button>
-                ))}
-            </ButtonGroup>
             <FormDialog
                 open={open}
                 setOpen={setOpen}
@@ -76,6 +65,17 @@ export default () => {
                 setSource={setUser}
                 saveButtonText="Send"
             />
+            <ButtonGroup size="small">
+                {icons.map((i, n) => (
+                    <Button
+                        key={n}
+                        variant={user.feedback_rating === n ? 'contained' : 'outlined'}
+                        onClick={() => onClick(n)}
+                    >
+                        {i}
+                    </Button>
+                ))}
+            </ButtonGroup>
         </>
     );
 };

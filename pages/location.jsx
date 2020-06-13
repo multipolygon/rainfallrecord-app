@@ -14,13 +14,11 @@ import Layout from '../components/Layout';
 import { UserContext } from '../components/User';
 import LocationFormDialog from '../components/LocationFormDialog';
 import Link from '../components/Link';
-import ActionButton from '../components/ActionButton';
 import Table from '../components/location/Table';
 import MonthsChart from '../components/location/MonthsChart';
 import YearsChart from '../components/location/YearsChart';
 import YearTabs from '../components/location/YearTabs';
-import DownloadButtons from '../components/location/DownloadButtons';
-import UserFeedbackFormDialog from '../components/UserFeedbackFormDialog';
+import Footer from '../components/location/Footer';
 
 const modes = {
     precipitation: 'Rainfall',
@@ -39,13 +37,12 @@ const modeReducer = {
 export default () => {
     const router = useRouter();
     const [id, setId] = useState(null);
-    const [user, setUser] = useContext(UserContext);
+    const [user] = useContext(UserContext);
     const [mode, setMode] = useState('precipitation');
     const [year, setYear] = useState(Moment().year());
     const [data, setData] = useState({
         title: '[Loading]',
     });
-    const [showFeedback, setShowFeedback] = useState(false);
 
     const decimals = useMemo(
         () =>
@@ -126,20 +123,6 @@ export default () => {
         [user, id],
     );
 
-    useEffect(() => {
-        if (
-            !showFeedback &&
-            !isDemo &&
-            userIsOwner &&
-            user &&
-            user.feedback_rating === null &&
-            user.created_at &&
-            Moment(user.created_at).isBefore(Moment().subtract(7, 'days'))
-        ) {
-            setShowFeedback(true);
-        }
-    }, [user, id]);
-
     const padZeros = (n, width) => {
         return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
     };
@@ -181,11 +164,6 @@ export default () => {
         }
     }, [id, user, userIsOwner]);
 
-    const onDelete = () => {
-        setUser(null);
-        router.push('/user/');
-    };
-
     return (
         <Layout title={cleanStr(data.title || 'Loading...')}>
             <ContentBox>
@@ -206,13 +184,6 @@ export default () => {
                     )}
                     {!isDemo && userIsOwner && (
                         <LocationFormDialog id={id} source={data} setSource={setData} />
-                    )}
-                    {showFeedback && (
-                        <Box mt={1} component="div" style={{ display: 'block' }}>
-                            <small>Feedback?</small>
-                            <br />
-                            <UserFeedbackFormDialog />
-                        </Box>
                     )}
                 </div>
                 {process.env.showTemperature && (
@@ -258,26 +229,7 @@ export default () => {
                         />
                     )}
                 </Box>
-                {!isDemo && (
-                    <Box mt={3} style={{ textAlign: 'center' }} className="hidden-print">
-                        <DownloadButtons src={src} />
-                        {userIsOwner && (
-                            <Box component="span" ml={2}>
-                                <ButtonGroup size="small">
-                                    <ActionButton
-                                        confirm="Really delete?"
-                                        url={`/locations/${id}.json`}
-                                        method="DELETE"
-                                        onSuccess={onDelete}
-                                        color="secondary"
-                                    >
-                                        Delete Location
-                                    </ActionButton>
-                                </ButtonGroup>
-                            </Box>
-                        )}
-                    </Box>
-                )}
+                {!isDemo && <Footer {...{ id, src, userIsOwner }} />}
             </ContentBox>
         </Layout>
     );
