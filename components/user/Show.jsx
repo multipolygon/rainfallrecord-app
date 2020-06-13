@@ -20,7 +20,7 @@ export default ({ user, setUser }) => {
     return (
         <>
             <ContentBox>
-                <ActionButton url="logout" onSuccess={() => setUser(null)}>
+                <ActionButton url="logout.json" onSuccess={() => setUser(null)}>
                     Log Out
                 </ActionButton>{' '}
                 <Button variant="outlined" size="small" onClick={() => setUser(null)}>
