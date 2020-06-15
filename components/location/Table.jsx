@@ -4,6 +4,7 @@ import _get from 'lodash/get';
 import _set from 'lodash/set';
 import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
+import Moment from 'moment';
 import TableLandscape from './TableLandscape';
 import TablePortrait from './TablePortrait';
 
@@ -104,27 +105,79 @@ export default ({
         }
     }, [modified]);
 
-    // https://stackoverflow.com/a/58153867/5165
-    const onKeyPress = (e) => {
-        const x = e.charCode || e.keyCode;
-        /* eslint-disable no-restricted-globals */
-        if (
-            (isNaN(String.fromCharCode(e.which)) && x !== 45 && x !== 46) ||
-            x === 32 ||
-            x === 13 ||
-            (x === 46 && e.target.innerText.includes('.'))
-        )
-            e.preventDefault();
-        if (x === 13) {
-            const ti = parseInt(e.target.getAttribute('tabindex'), 10);
-            const e2 = document.getElementById(`td${ti + 1}`);
+    const focusNext = (e, step) => {
+        const ti = parseInt(e.target.getAttribute('tabindex'), 10);
+        if (ti && ti + step !== 0) {
+            const e2 = document.getElementById(`td${ti + step}`);
             if (e2) {
                 e2.focus();
-            } else {
-                e.target.blur();
             }
         }
-        /* eslint-enable no-restricted-globals */
+    };
+
+    const focusNextMonth = (e, step) => {
+        const m = parseInt(e.target.getAttribute('data-m'), 10);
+        const d = parseInt(e.target.getAttribute('data-d'), 10);
+        if (m && d) {
+            const date = Moment([year, m + step - 1, d]);
+            if (date.isValid()) {
+                const e2 = document.getElementById(`td${date.dayOfYear()}`);
+                if (e2) {
+                    e2.focus();
+                }
+            }
+        }
+    };
+
+    const onKeyDown = (e) => {
+        if (e.defaultPrevented || e.isComposing) {
+            return;
+        }
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
+        switch (e.key) {
+            case 'Down':
+            case 'ArrowDown':
+                focusNextMonth(e, 1);
+                break;
+            case 'Up':
+            case 'ArrowUp':
+                focusNextMonth(e, -1);
+                break;
+            case 'Left':
+            case 'ArrowLeft':
+                focusNext(e, -1);
+                break;
+            case 'Right':
+            case 'ArrowRight':
+                focusNext(e, 1);
+                break;
+            case 'Tab':
+            case 'Enter':
+                focusNext(e, e.shiftKey ? -1 : 1);
+                break;
+            case 'Esc':
+            case 'Escape':
+                e.target.blur();
+                break;
+            case '-':
+                if (!e.target.innerText.includes('-')) return;
+                break;
+            case '.':
+                if (!e.target.innerText.includes('.')) return;
+                break;
+            case 'Backspace':
+                return;
+            default:
+                if (e.key >= 0 && e.key <= 9) return;
+        }
+
+        e.preventDefault();
+    };
+
+    const onKeyPress = (e) => {
+        const k = e.charCode || e.keyCode || e.which;
+        if (k === 32) e.preventDefault(); // space
     };
 
     // https://stackoverflow.com/a/3805897/5165
@@ -155,7 +208,7 @@ export default ({
                     </Alert>
                 </Box>
             )}
-            <div onKeyPress={onKeyPress} onFocus={onFocus} onBlur={onBlur}>
+            <div {...{ onKeyDown, onKeyPress, onFocus, onBlur }}>
                 <Hidden mdUp>
                     <TablePortrait {...props} />
                 </Hidden>
