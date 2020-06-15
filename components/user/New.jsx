@@ -1,9 +1,9 @@
 import Button from '@material-ui/core/Button';
-import UserFormDialog from '../UserFormDialog';
+import UserFormDialog from './UserFormDialog';
 import { ContentBox, H3, P } from '../Typography';
 import Link from '../Link';
-import LogInFormDialog from '../LogInFormDialog';
-import ForgotUserDialog from '../ForgotUserDialog';
+import LogInFormDialog from './LogInFormDialog';
+import ForgotUserDialog from './ForgotUserDialog';
 
 export default () => (
     <>

@@ -1,29 +1,36 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
-import FormDialog from './FormDialog';
+import FormDialog from '../FormDialog';
+import { UserContext } from '../User';
 
 export default () => {
+    const [, setUser] = useContext(UserContext);
     const [open, setOpen] = useState(false);
 
     const fields = {
-        email: {
-            type: 'email',
-            helperText: 'an email will be sent to the address on your account',
+        username: {},
+        password: {
+            type: 'password',
         },
+    };
+
+    const onSave = () => {
+        setUser(null); // force reload
     };
 
     return (
         <>
             <Button variant="outlined" size="small" onClick={() => setOpen(true)}>
-                Reset by Email
+                Log In
             </Button>
             <FormDialog
                 open={open}
                 setOpen={setOpen}
-                title="Reset by Email"
+                title="Log In"
                 fields={fields}
                 method="POST"
-                url="password_resets.json"
+                url="login.json"
+                onSave={onSave}
             />
         </>
     );

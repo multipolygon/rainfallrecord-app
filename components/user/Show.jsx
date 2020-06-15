@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
 import LocationsTable from '../LocationsTable';
 import LocationFormDialog from '../LocationFormDialog';
-import UserFormDialog from '../UserFormDialog';
+import UserFormDialog from './UserFormDialog';
 import UserFeedbackFormDialog from '../UserFeedbackFormDialog';
 import ActionButton from '../ActionButton';
 import { ContentBox, H3, P } from '../Typography';

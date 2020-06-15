@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
-import FormDialog from './FormDialog';
-import { UserContext } from './User';
+import FormDialog from '../FormDialog';
+import { UserContext } from '../User';
 
 export default ({ newUser }) => {
     const [user, setUser] = useContext(UserContext);

@@ -49,7 +49,7 @@ export default ({ locations }) => {
 
             lMap.current = window.L.map(container, {
                 center: [0, 0],
-                zoom: 0,
+                zoom: 1,
                 scrollWheelZoom: false,
                 fullscreenControl: {
                     pseudoFullscreen: true,

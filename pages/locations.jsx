@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
 import { useState, useEffect } from 'react';
-import GeoJsonMap from '../components/GeoJsonMap';
+import GeoJsonMap from '../components/locations/GeoJsonMap';
 import { ContentBox, H2 } from '../components/Typography';
 import Layout from '../components/Layout';
 import LocationsTable from '../components/LocationsTable';
