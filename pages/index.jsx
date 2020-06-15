@@ -64,15 +64,17 @@ export default function Index() {
                             buttons found at the bottom of the record page (below the charts).
                         </P>
                         <P>
-                            A daily backup is available at{' '}
+                            An daily, external backup is available at{' '}
                             <a href="https://github.com/multipolygon/rainfallrecord_data/tree/master/locations">
                                 GitHub
                             </a>
                             .
                         </P>
+                        <H2>Feedback and Support</H2>
+                        <P>Please email rainfallrecord.info@gmail.com</P>
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                        <H2>Demo:</H2>
+                        <H2>Example:</H2>
                         <NextLink href="/location" as="/location/?id=0">
                             <Paper
                                 component="img"
