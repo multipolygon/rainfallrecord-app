@@ -71,7 +71,7 @@ export default function Index() {
                             .
                         </P>
                         <H2>Feedback and Support</H2>
-                        <P>Please email rainfallrecord.info@gmail.com</P>
+                        <P>Please email <em>multipolygon@gmail.com</em></P>
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <H2>Example:</H2>

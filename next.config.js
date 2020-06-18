@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 const nextConfig = {
-    distDir: 'build',
     env: {
         appName: process.env.APP_NAME,
         apiHost: process.env.API_HOST,
@@ -11,30 +10,6 @@ const nextConfig = {
         showTemperature: process.env.SHOW_TEMPERATURE,
     },
     exportTrailingSlash: true,
-    exportPathMap() {
-        const paths = {
-            '/': { page: '/' },
-            '/about/': {
-                page: '/about',
-            },
-            '/privacy/': {
-                page: '/privacy',
-            },
-            '/location/': {
-                page: '/location',
-            },
-            '/locations/': {
-                page: '/locations',
-            },
-            '/user/': {
-                page: '/user',
-            },
-        };
-
-        console.log(paths);
-
-        return paths;
-    },
 };
 
 module.exports = nextConfig;
