@@ -16,7 +16,7 @@ export default () => (
                 variant="outlined"
                 size="small"
                 href="/location"
-                as="/location/?id=0"
+                as="/location?id=0"
             >
                 Try a Live Demo
             </Link>

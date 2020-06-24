@@ -173,7 +173,7 @@ export default () => {
                         <P>
                             Data will not be saved!
                             <br />
-                            <Link href="/user" as="/user/">
+                            <Link href="/user" as="/user">
                                 Log in or sign up
                             </Link>{' '}
                             to start your own location record.

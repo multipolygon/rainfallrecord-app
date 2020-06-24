@@ -9,7 +9,7 @@ const nextConfig = {
         tfApiKey: process.env.TF_API_KEY,
         showTemperature: process.env.SHOW_TEMPERATURE,
     },
-    exportTrailingSlash: true,
+    exportTrailingSlash: false,
 };
 
 module.exports = nextConfig;

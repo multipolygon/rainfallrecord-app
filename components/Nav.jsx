@@ -16,12 +16,12 @@ export default () => {
             <Link
                 component={Button}
                 href="/locations"
-                as="/locations/"
+                as="/locations"
                 variant={variant(['/locations', '/location'])}
             >
                 Locations
             </Link>
-            <Link component={Button} href="/user" as="/user/" variant={variant(['/user'])}>
+            <Link component={Button} href="/user" as="/user" variant={variant(['/user'])}>
                 <UserContext.Consumer>
                     {([user]) =>
                         (user === null && '[Loading]') ||

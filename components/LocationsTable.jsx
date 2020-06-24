@@ -24,13 +24,13 @@ export default ({ locations }) => (
                     <NextLink
                         key={properties.id}
                         href="/location"
-                        as={`/location/?id=${properties.id}`}
+                        as={`/location?id=${properties.id}`}
                     >
                         <TableRow style={{ cursor: 'pointer' }}>
                             <TableCell component="th" scope="row">
                                 <Link
                                     href="/location"
-                                    as={`/location/?id=${properties.id}`}
+                                    as={`/location?id=${properties.id}`}
                                     style={{ fontWeight: 'bold' }}
                                 >
                                     {properties.title}

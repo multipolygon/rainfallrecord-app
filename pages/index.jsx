@@ -22,7 +22,7 @@ export default function Index() {
                                 component={Button}
                                 variant="outlined"
                                 href="/location"
-                                as="/location/?id=0"
+                                as="/location?id=0"
                             >
                                 Try a Live Demo Now
                             </Link>
@@ -75,7 +75,7 @@ export default function Index() {
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <H2>Example:</H2>
-                        <NextLink href="/location" as="/location/?id=0">
+                        <NextLink href="/location" as="/location?id=0">
                             <Paper
                                 component="img"
                                 src="/assets/example.png"

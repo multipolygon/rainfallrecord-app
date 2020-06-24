@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import { ContentBox, H2, P } from '../components/Typography';
 
 export default () => (
-    <Layout title="Privacy" href="/about/">
+    <Layout title="Privacy" href="/about">
         <H2>Privacy</H2>
         <ContentBox>
             <P>This website and app:</P>
