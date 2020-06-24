@@ -3,10 +3,11 @@ import { useRef, useEffect } from 'react';
 import _range from 'lodash/range';
 import _get from 'lodash/get';
 import TableCell from './TableCell';
+import Box from '@material-ui/core/Box';
 
 const today = Moment();
 
-export default ({ year, data, mode, modified, monthlyTotals, toFixed, userIsOwner }) => {
+export default ({ year, data, mode, modified, monthlyTotals, yearlyTotals, toFixed, userIsOwner }) => {
     const table = useRef(null);
 
     // Scroll table to show today:
@@ -21,48 +22,53 @@ export default ({ year, data, mode, modified, monthlyTotals, toFixed, userIsOwne
     }, [table.current]);
 
     return (
-        <div style={{ overflowX: 'auto' }} ref={table}>
-            <table className="calendar-table calendar-table-portrait">
-                <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        {_range(12).map((m) => (
-                            <th key={m}>{Moment({ month: m }).format('MMM')}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {_range(31).map((d) => (
-                        <tr key={d}>
-                            <th>{d + 1}</th>
+        <>
+            <div style={{ overflowX: 'auto' }} ref={table}>
+                <table className="calendar-table calendar-table-portrait">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
                             {_range(12).map((m) => (
-                                <TableCell
-                                    {...{
-                                        key: `${m}-${d}`,
-                                        data,
-                                        mode,
-                                        modified,
-                                        year,
-                                        m: m + 1,
-                                        d: d + 1,
-                                        userIsOwner,
-                                    }}
-                                />
+                                <th key={m}>{Moment({ month: m }).format('MMM')}</th>
                             ))}
                         </tr>
-                    ))}
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>&nbsp;</th>
-                        {_range(12).map((m) => (
-                            <td key={m} className="total">
-                                {toFixed(_get(monthlyTotals, [year, m + 1]))}
-                            </td>
+                    </thead>
+                    <tbody>
+                        {_range(31).map((d) => (
+                            <tr key={d}>
+                                <th>{d + 1}</th>
+                                {_range(12).map((m) => (
+                                    <TableCell
+                                        {...{
+                                            key: `${m}-${d}`,
+                                            data,
+                                            mode,
+                                            modified,
+                                            year,
+                                            m: m + 1,
+                                            d: d + 1,
+                                            userIsOwner,
+                                        }}
+                                    />
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>&nbsp;</th>
+                            {_range(12).map((m) => (
+                                <td key={m} className="total">
+                                    {toFixed(_get(monthlyTotals, [year, m + 1]))}
+                                </td>
+                            ))}
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <Box mt={2} style={{ textAlign: 'center' }}>
+                {year} total: {toFixed(_get(yearlyTotals, [year]))}
+            </Box>
+        </>
     );
 };
