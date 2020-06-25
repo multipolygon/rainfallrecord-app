@@ -11,12 +11,12 @@ export default class CustomDocument extends Document {
                     <link rel="manifest" href="/manifest.json" />
 
                     <meta property="og:type" content="website" />
-                    <meta property="og:site_name" content="RainfallRecord" />
+                    <meta property="og:site_name" content={process.env.appName} />
 
-                    <meta name="application-name" content="RainfallRecord" />
+                    <meta name="application-name" content={process.env.appName} />
                     <meta name="apple-mobile-web-app-capable" content="yes" />
                     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-                    <meta name="apple-mobile-web-app-title" content="RainfallRecord" />
+                    <meta name="apple-mobile-web-app-title" content={process.env.appName} />
                     <meta name="description" content="-" />
                     <meta name="format-detection" content="telephone=no" />
                     <meta name="mobile-web-app-capable" content="yes" />

@@ -6,10 +6,13 @@ import { P } from '../Typography';
 export default ({ yearlyTotals, yearLabels, toFixed }) => {
     const chart = useRef(null);
 
-    const yearlyTotalsAry = useMemo(() => yearLabels.map((y) => _get(yearlyTotals, [y], 0)), [
-        yearLabels,
-        yearlyTotals,
-    ]);
+    const yearlyTotalsAry = useMemo(
+        () => yearLabels.map((y) => _get(yearlyTotals, [y], 0)),
+        [
+            yearLabels,
+            yearlyTotals,
+        ]
+    );
 
     const yearlyAverage = useMemo(
         () =>
@@ -58,6 +61,13 @@ export default ({ yearlyTotals, yearLabels, toFixed }) => {
                                 },
                             },
                         ],
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return toFixed(tooltipItem.yLabel);
+                            }
+                        }
                     },
                 },
             });

@@ -5,7 +5,7 @@ import _get from 'lodash/get';
 import _mapValues from 'lodash/mapValues';
 import _range from 'lodash/range';
 
-export default ({ year, monthlyTotals }) => {
+export default ({ year, monthlyTotals, toFixed }) => {
     const chart = useRef(null);
 
     const labels = useMemo(() => _range(12).map((m) => Moment({ month: m }).format('MMM')), []);
@@ -106,6 +106,13 @@ export default ({ year, monthlyTotals }) => {
                                 display: false,
                             },
                         ],
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return toFixed(tooltipItem.yLabel);
+                            }
+                        }
                     },
                 },
             });
