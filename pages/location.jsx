@@ -220,7 +220,9 @@ export default () => {
                     />
                 </Box>
                 <Box mt={3}>
-                    <MonthsChart {...{ data, mode, year, monthlyTotals, modeReducer }} />
+                    <MonthsChart
+                        {...{ data, mode, year, monthlyTotals, modeReducer, yearLabels }}
+                    />
                 </Box>
                 <Box mt={3}>
                     {yearLabels.length > 1 && (
