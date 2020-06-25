@@ -16,7 +16,7 @@ export default ({ yearlyTotals, yearLabels, toFixed }) => {
             toFixed(
                 yearlyTotalsAry.length === 0
                     ? 0
-                    : yearlyTotalsAry.reduce((a, b) => a + b, 0) / yearlyTotalsAry.length,
+                    : yearlyTotalsAry.reduce((a, b) => a + b, 0) / Object.keys(yearlyTotals).length,
             ),
         [yearlyTotalsAry],
     );

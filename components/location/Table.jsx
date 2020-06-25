@@ -204,7 +204,8 @@ export default ({
                 <Box mb={3} className="no-print">
                     <Alert severity="info" onClose={() => setAlert(false)}>
                         Select a table-cell below to edit in place (just like a spreadsheet). Use
-                        [tab] to move forward and [shift]+[tab] to go back.
+                        [tab] to move to the next date (and [shift]+[tab] to go back). Averages are
+                        calculated from years with data recorded (even just a single zero entry).
                     </Alert>
                 </Box>
             )}

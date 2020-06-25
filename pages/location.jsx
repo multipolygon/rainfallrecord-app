@@ -9,6 +9,7 @@ import cleanStr from 'underscore.string/clean';
 import _get from 'lodash/get';
 import _mapValues from 'lodash/mapValues';
 import _range from 'lodash/range';
+import _pickBy from 'lodash/pickBy';
 import { ContentBox, H2, P } from '../components/Typography';
 import Layout from '../components/Layout';
 import { UserContext } from '../components/User';
@@ -66,10 +67,16 @@ export default () => {
 
     const monthlyTotals = useMemo(
         () =>
-            _mapValues(_get(data, [mode], {}), (months) =>
-                _mapValues(months, (days) =>
-                    Object.values(days || {}).reduce(modeReducer[mode], null),
+            _pickBy(
+                _mapValues(_get(data, [mode], {}), (months) =>
+                    _pickBy(
+                        _mapValues(months, (days) =>
+                            Object.values(days || {}).reduce(modeReducer[mode], null),
+                        ),
+                        (v) => v !== null,
+                    ),
                 ),
+                (v) => Object.keys(v).length !== 0,
             ),
         [data, mode],
     );
@@ -82,17 +89,13 @@ export default () => {
         [monthlyTotals],
     );
 
-    const yearMin = useMemo(
-        () => Math.min(year, Moment().year(), ...Object.keys(_get(data, [mode], {}))),
-        [data, year],
-    );
+    const yearMin = useMemo(() => Math.min(year, Moment().year(), ...Object.keys(monthlyTotals)), [
+        year,
+        monthlyTotals,
+    ]);
 
     const yearMax = Moment().year();
-    /*     const yearMax = useMemo(
-      () => Math.max(yearMin, ...Object.keys(_get(data, [mode], {}))),
-      [data, yearMin],
-      );
-    */
+
     const yearLabels = useMemo(() => _range(yearMin, yearMax + 1), [yearMin, yearMax]);
 
     useEffect(() => {
@@ -111,7 +114,7 @@ export default () => {
                 ...obj,
                 [y]: {
                     ...(obj[y] || {}),
-                    [m]: { ...(obj[m] || {}), [d]: parseFloat((Math.random() * 50).toFixed(1)) },
+                    [m]: { ...(obj[m] || {}), [d]: parseFloat((Math.random() * 9.9).toFixed(1)) },
                 },
             };
         }, {});
@@ -202,7 +205,7 @@ export default () => {
                     </Box>
                 )}
                 <Box mt={3}>
-                    <YearTabs {...{ data, mode, yearLabels, year, setYear }} />
+                    <YearTabs {...{ yearLabels, year, setYear, monthlyTotals }} />
                 </Box>
                 <Box mt={3}>
                     <Table
@@ -220,9 +223,7 @@ export default () => {
                     />
                 </Box>
                 <Box mt={3}>
-                    <MonthsChart
-                        {...{ data, mode, year, monthlyTotals, modeReducer, yearLabels }}
-                    />
+                    <MonthsChart {...{ data, mode, year, monthlyTotals, modeReducer }} />
                 </Box>
                 <Box mt={3}>
                     {yearLabels.length > 1 && (

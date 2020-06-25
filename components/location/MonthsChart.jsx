@@ -5,7 +5,7 @@ import _get from 'lodash/get';
 import _mapValues from 'lodash/mapValues';
 import _range from 'lodash/range';
 
-export default ({ year, monthlyTotals, yearLabels }) => {
+export default ({ year, monthlyTotals }) => {
     const chart = useRef(null);
 
     const labels = useMemo(() => _range(12).map((m) => Moment({ month: m }).format('MMM')), []);
@@ -26,9 +26,9 @@ export default ({ year, monthlyTotals, yearLabels }) => {
                         ),
                     {},
                 ),
-                (v) => v / yearLabels.length,
+                (v) => v / Object.keys(monthlyTotals).length,
             ),
-        [monthlyTotals, yearLabels],
+        [monthlyTotals],
     );
 
     const monthlyAveragesAry = useMemo(

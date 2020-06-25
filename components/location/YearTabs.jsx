@@ -8,7 +8,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Moment from 'moment';
 import { H3 } from '../Typography';
 
-export default ({ data, mode, yearLabels, year, setYear }) => {
+export default ({ yearLabels, year, setYear, monthlyTotals }) => {
     const yearTabsRef = useRef();
 
     useEffect(() => {
@@ -52,10 +52,7 @@ export default ({ data, mode, yearLabels, year, setYear }) => {
                                     tabIndex="-1"
                                     variant={y === year ? 'contained' : 'outlined'}
                                     style={{
-                                        opacity:
-                                            data[mode] === undefined || data[mode][y] === undefined
-                                                ? 0.5
-                                                : 1,
+                                        opacity: monthlyTotals[y] === undefined ? 0.5 : 1,
                                     }}
                                 >
                                     {y}
