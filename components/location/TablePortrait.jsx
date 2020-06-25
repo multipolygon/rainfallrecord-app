@@ -2,12 +2,21 @@ import Moment from 'moment';
 import { useRef, useEffect } from 'react';
 import _range from 'lodash/range';
 import _get from 'lodash/get';
-import TableCell from './TableCell';
 import Box from '@material-ui/core/Box';
+import TableCell from './TableCell';
 
 const today = Moment();
 
-export default ({ year, data, mode, modified, monthlyTotals, yearlyTotals, toFixed, userIsOwner }) => {
+export default ({
+    year,
+    data,
+    mode,
+    modified,
+    monthlyTotals,
+    yearlyTotals,
+    toFixed,
+    userIsOwner,
+}) => {
     const table = useRef(null);
 
     // Scroll table to show today:

@@ -89,10 +89,10 @@ export default () => {
 
     const yearMax = Moment().year();
     /*     const yearMax = useMemo(
-        () => Math.max(yearMin, ...Object.keys(_get(data, [mode], {}))),
-        [data, yearMin],
-    );
- */
+      () => Math.max(yearMin, ...Object.keys(_get(data, [mode], {}))),
+      [data, yearMin],
+      );
+    */
     const yearLabels = useMemo(() => _range(yearMin, yearMax + 1), [yearMin, yearMax]);
 
     useEffect(() => {
@@ -220,7 +220,7 @@ export default () => {
                     />
                 </Box>
                 <Box mt={3}>
-                    <MonthsChart {...{ data, mode, year, monthlyTotals, modeReducer, toFixed }} />
+                    <MonthsChart {...{ data, mode, year, monthlyTotals, modeReducer }} />
                 </Box>
                 <Box mt={3}>
                     {yearLabels.length > 1 && (
