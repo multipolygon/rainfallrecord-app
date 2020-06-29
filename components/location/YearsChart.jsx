@@ -1,6 +1,7 @@
 import { useRef, useEffect, useMemo, useCallback } from 'react';
 import Chart from 'chart.js';
 import _get from 'lodash/get';
+import Moment from 'moment';
 import { P } from '../Typography';
 
 export default ({ yearlyTotals, yearLabels, toFixed }) => {
@@ -16,7 +17,11 @@ export default ({ yearlyTotals, yearLabels, toFixed }) => {
             toFixed(
                 yearlyTotalsAry.length === 0
                     ? 0
-                    : yearlyTotalsAry.reduce((a, b) => a + b, 0) / Object.keys(yearlyTotals).length,
+                    : Object.keys(yearlyTotals)
+                          .filter((y) => y < Moment().year())
+                          .reduce((acc, y) => acc + yearlyTotals[y], 0) /
+                          (Object.keys(yearlyTotals).filter((y) => y < Moment().year()).length ||
+                              1),
             ),
         [yearlyTotalsAry],
     );

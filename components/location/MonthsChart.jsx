@@ -18,15 +18,21 @@ export default ({ year, monthlyTotals }) => {
     const monthlyAverages = useMemo(
         () =>
             _mapValues(
-                Object.values(monthlyTotals).reduce(
-                    (acc, months) =>
-                        Object.keys(months).reduce(
-                            (acc2, m) => ({ ...acc2, [m]: (acc2[m] || 0) + months[m] }),
-                            acc,
-                        ),
-                    {},
-                ),
-                (v) => v / Object.keys(monthlyTotals).length,
+                Object.keys(monthlyTotals)
+                    .filter((y) => y < Moment().year())
+                    .reduce(
+                        (acc, y) =>
+                            Object.keys(monthlyTotals[y]).reduce(
+                                (acc2, m) => ({
+                                    ...acc2,
+                                    [m]: (acc2[m] || 0) + monthlyTotals[y][m],
+                                }),
+                                acc,
+                            ),
+                        {},
+                    ),
+                (v) =>
+                    v / (Object.keys(monthlyTotals).filter((y) => y < Moment().year()).length || 1),
             ),
         [monthlyTotals],
     );
