@@ -34,7 +34,8 @@ export default ({ newUser }) => {
             <FormDialog
                 open={open}
                 setOpen={setOpen}
-                title="Private User Details"
+                title={newUser ? 'Sign Up' : 'Edit Details'}
+                description="These private user details are never visible on the site or shared elsewhere."
                 fields={fields}
                 namespace="user"
                 method={newUser ? 'POST' : 'PATCH'}

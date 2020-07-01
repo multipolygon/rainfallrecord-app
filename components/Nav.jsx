@@ -25,7 +25,7 @@ export default () => {
                 <UserContext.Consumer>
                     {([user]) =>
                         (user === null && '[Loading]') ||
-                        (user === false && 'User') ||
+                        (user === false && '[Error]') ||
                         (user && user.username) ||
                         'Log In / Sign Up'
                     }

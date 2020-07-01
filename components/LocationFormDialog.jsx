@@ -8,7 +8,6 @@ export default ({ id, title, buttonText, source, setSource, onSave }) => {
     const fields = {
         title: {
             required: true,
-            helperText: 'please note, title and all location fields will be visible to the public',
         },
         town_suburb: { required: true, label: 'Town', helperText: 'or suburb, city, etc.' },
         region: { required: true, helperText: 'or state, territory, etc.' },
@@ -45,6 +44,7 @@ export default ({ id, title, buttonText, source, setSource, onSave }) => {
                 open={open}
                 setOpen={setOpen}
                 title={title || (id && 'Location Details') || 'New Location'}
+                description="Please note, title and all other fields will be visible to the public."
                 fields={fields}
                 namespace="location"
                 method={id ? 'PUT' : 'POST'}

@@ -7,7 +7,7 @@ import LocationFormDialog from '../LocationFormDialog';
 import UserFormDialog from './UserFormDialog';
 import UserFeedbackFormDialog from '../UserFeedbackFormDialog';
 import ActionButton from '../ActionButton';
-import { ContentBox, H3, P } from '../Typography';
+import { ContentBox, H2, H3, P } from '../Typography';
 
 export default ({ user, setUser }) => {
     const router = useRouter();
@@ -19,6 +19,7 @@ export default ({ user, setUser }) => {
 
     return (
         <>
+            <H2>Hi {user.username}</H2>
             <ContentBox>
                 <ActionButton url="logout.json" onSuccess={() => setUser(null)}>
                     Log Out

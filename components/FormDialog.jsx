@@ -15,12 +15,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { FeedbackContext } from './Feedback';
 
 export default ({
     open,
     setOpen,
     title,
+    description,
     fields,
     namespace,
     method,
@@ -214,6 +216,11 @@ export default ({
             >
                 <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
+                    {description && (
+                        <Box mb={3}>
+                            <Typography variant="body2">{description}</Typography>
+                        </Box>
+                    )}
                     {Object.keys(fields).map((k, i) => (
                         <Box key={k} mt={i === 0 ? 0 : 3}>
                             {fields[k].type !== 'checkbox' && (

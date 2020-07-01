@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import Layout from '../components/Layout';
-import { ContentBox, H2, H3, P } from '../components/Typography';
+import { ContentBox, H2, P } from '../components/Typography';
 import { UserContext } from '../components/User';
 import NewUser from '../components/user/New';
 import ShowUser from '../components/user/Show';
@@ -12,11 +12,15 @@ export default () => {
     return (
         <Layout>
             <ContentBox>
-                <H2>User Options</H2>
-                {user === null && <H3>Loading...</H3>}
+                {user === null && <H2>Loading...</H2>}
                 {user === false && (
                     <>
-                        <P>There was an error contacting the server. Please try again later.</P>
+                        <H2>Temporarily Unavailable</H2>
+                        <P>There was an error when connecting to the server.</P>
+                        <P>
+                            This may happen occasionally as the server is hosted on free resources.
+                        </P>
+                        <P>Please try again soon!</P>
                         <Button variant="outlined" size="small" onClick={() => setUser(null)}>
                             Refresh
                         </Button>
