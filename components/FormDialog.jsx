@@ -295,7 +295,7 @@ export default ({
                             )}
                         </Box>
                     ))}
-                    <Box mb={1} style={{ textAlign: 'right' }}>
+                    <Box mb={3} style={{ textAlign: 'right' }}>
                         <Button onClick={cancel}>Cancel</Button>{' '}
                         <Button onClick={save}>{saveButtonText}</Button>
                     </Box>

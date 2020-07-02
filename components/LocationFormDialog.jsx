@@ -13,7 +13,7 @@ export default ({ id, title, buttonText, source, setSource, onSave }) => {
                       type: 'checkbox',
                       required: true,
                       label:
-                          'I agree that to provide data under the Creative Commons Attribution-Share Alike 2.5 Australia License',
+                          'I agree to provide data under the Creative Commons Attribution-Share Alike 2.5 Australia License',
                   },
               }),
         title: {
