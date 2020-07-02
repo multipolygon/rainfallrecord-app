@@ -6,6 +6,16 @@ export default ({ id, title, buttonText, source, setSource, onSave }) => {
     const [open, setOpen] = useState(false);
 
     const fields = {
+        ...(id
+            ? {}
+            : {
+                  i_agree_to_creative_commons: {
+                      type: 'checkbox',
+                      required: true,
+                      label:
+                          'I agree that to provide data under the Creative Commons Attribution-Share Alike 2.5 Australia License',
+                  },
+              }),
         title: {
             required: true,
         },
@@ -23,16 +33,6 @@ export default ({ id, title, buttonText, source, setSource, onSave }) => {
             helperText: 'as decimal degrees (optional)',
             markerMap: true,
         },
-        ...(id
-            ? {}
-            : {
-                  i_agree_to_creative_commons: {
-                      type: 'checkbox',
-                      required: true,
-                      label:
-                          'I agree that to provide data under the Creative Commons Attribution-Share Alike 2.5 Australia License',
-                  },
-              }),
     };
 
     return (

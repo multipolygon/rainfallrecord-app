@@ -1,7 +1,7 @@
+/* eslint-disable no-alert */
 import { withStyles } from '@material-ui/core/styles';
 import { useState, useEffect, useContext, useRef, useCallback, useReducer } from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
@@ -216,13 +216,21 @@ export default ({
             >
                 <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
+                    {errors && Object.keys(errors).length > 0 && (
+                        <Box mb={3}>
+                            <Typography variant="body2" color="secondary">
+                                Please review and correct these fields:{' '}
+                                {Object.keys(errors).join(', ')}.
+                            </Typography>
+                        </Box>
+                    )}
                     {description && (
                         <Box mb={3}>
                             <Typography variant="body2">{description}</Typography>
                         </Box>
                     )}
-                    {Object.keys(fields).map((k, i) => (
-                        <Box key={k} mt={i === 0 ? 0 : 3}>
+                    {Object.keys(fields).map((k) => (
+                        <Box key={k} mb={3}>
                             {fields[k].type !== 'checkbox' && (
                                 <>
                                     <TextField
@@ -287,11 +295,11 @@ export default ({
                             )}
                         </Box>
                     ))}
+                    <Box mb={1} style={{ textAlign: 'right' }}>
+                        <Button onClick={cancel}>Cancel</Button>{' '}
+                        <Button onClick={save}>{saveButtonText}</Button>
+                    </Box>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={cancel}>Cancel</Button>
-                    <Button onClick={save}>{saveButtonText}</Button>
-                </DialogActions>
             </Dialog>
             <Backdrop open={active} style={{ zIndex: 1 }}>
                 <WhiteCircularProgress />
