@@ -109,7 +109,9 @@ export default () => {
         [...Array(50).keys()].reduce((obj) => {
             const y = Math.ceil(Math.random() * 3) + max.year() - 3;
             const m = Math.ceil(Math.random() * (max.year() === y ? max.month() + 1 : 12));
-            const d = Math.ceil(Math.random() * (max.year() === y ? max.date() : 30));
+            const d = Math.ceil(
+                Math.random() * (max.year() === y && max.month() + 1 === m ? max.date() : 30),
+            );
             return {
                 ...obj,
                 [y]: {
