@@ -1,0 +1,18 @@
+version: '3'
+
+networks:
+  www:
+    external:
+      name: www
+
+services:
+  nginx:
+    image: nginx
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./out:/usr/share/nginx/html:ro
+    networks:
+      - default
+      - www

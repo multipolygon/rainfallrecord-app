@@ -28,10 +28,11 @@ jobs:
           OSM_HOST: ${{ secrets.OSM_HOST }}
           TF_API_KEY: ${{ secrets.TF_API_KEY }}
           SHOW_TEMPERATURE: ${{ secrets.SHOW_TEMPERATURE }}
+          DONATE_BUTTON: ${{ secrets.DONATE_BUTTON }}
         
       - name: Git Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           BRANCH: gh-pages
           FOLDER: out
-          CLEAN: true
+          CLEAN: false

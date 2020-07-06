@@ -8,6 +8,7 @@ const nextConfig = {
         osmHost: process.env.OSM_HOST,
         tfApiKey: process.env.TF_API_KEY,
         showTemperature: process.env.SHOW_TEMPERATURE,
+        donateButton: process.env.DONATE_BUTTON,
     },
     exportTrailingSlash: false,
 };

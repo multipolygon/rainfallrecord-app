@@ -1,5 +1,6 @@
 import Alert from '@material-ui/lab/Alert';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
 import LocationsTable from '../LocationsTable';
@@ -68,14 +69,22 @@ export default ({ user, setUser }) => {
             )}
             <H3>Feedback</H3>
             <UserFeedbackFormDialog />
-            <br />
-            <br />
-            <br />
-            <div style={{ overflowX: 'auto' }}>
-                <small>
-                    <P>API Key:</P>
-                    <code>{user.api_key}</code>
-                </small>
+            {process.env.donateButton && (
+                <Box mt={3}>
+                    <P>
+                        $5 donation: <small>(totally optional, no obligation)</small>
+                    </P>
+                    <div dangerouslySetInnerHTML={{ __html: process.env.donateButton }} />
+                    <P>
+                        <small>
+                            (Donations will go towards website maintenance and server costs.)
+                        </small>
+                    </P>
+                </Box>
+            )}
+            <H3>API Key</H3>
+            <div style={{ overflowX: 'auto', fontSize: '12px' }}>
+                <code>{user.api_key}</code>
             </div>
         </>
     );
