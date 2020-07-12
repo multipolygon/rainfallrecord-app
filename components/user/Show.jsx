@@ -48,6 +48,23 @@ export default ({ user, setUser }) => {
                     Please verify your email address.
                 </Alert>
             )}
+            {user.system_message && user.system_message.length > 0 && (
+                <Alert
+                    severity="info"
+                    action={
+                        <ActionButton
+                            url="user.json"
+                            method='PATCH'
+                            body={{ user: { system_message: '' } }}
+                            onSuccess={() => setUser(null)}
+                        >
+                            Ok
+                        </ActionButton>
+                    }
+                >
+                    {user.system_message}
+                </Alert>
+            )}
             <H3>Location Records</H3>
             <ContentBox>
                 <LocationFormDialog onSave={onSaveLocation} />
