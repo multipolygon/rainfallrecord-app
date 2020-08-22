@@ -78,7 +78,7 @@ export default ({
                 },
             };
             window
-                .fetch(`//${process.env.apiHost}/locations/${id}/record.json`, {
+                .fetch(`${process.env.API_HOST}/locations/${id}/record.json`, {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',

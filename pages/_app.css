@@ -6,7 +6,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background: #B8BAD0 url('/assets/background.jpg') no-repeat center center fixed; 
+        background: #B8BAD0 url('/images/background.jpg') no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;

@@ -16,7 +16,7 @@ services:
       - ./.next:/app/.next:delegated
       - ./out:/app/out:delegated
     ports:
-      - "3000:3000"
+      - 3000
     working_dir: /app
     networks:
       - www

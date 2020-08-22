@@ -69,13 +69,10 @@ export default ({
 
     const markerMapContainerRef = useCallback((container) => {
         if (container !== null && typeof window === 'object' && typeof window.L === 'object') {
-            const osmBaseLayer = window.L.tileLayer(
-                `https://${process.env.osmHost}/{z}/{x}/{y}.png`,
-                {
-                    attribution:
-                        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-                },
-            );
+            const osmBaseLayer = window.L.tileLayer(`${process.env.OSM_HOST}/{z}/{x}/{y}.png`, {
+                attribution:
+                    'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            });
 
             const center = [-28.076, 134.003];
 
@@ -148,7 +145,7 @@ export default ({
         setActive(true);
         setErrors({});
         window
-            .fetch(`//${process.env.apiHost}/${url}`, {
+            .fetch(`${process.env.API_HOST}/${url}`, {
                 method: method || 'POST',
                 mode: 'cors',
                 cache: 'no-cache',

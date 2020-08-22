@@ -4,7 +4,7 @@ export const UserContext = createContext([null, () => null]);
 
 export const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const src = `//${process.env.apiHost}/user.json`;
+    const src = `${process.env.API_HOST}/user.json`;
 
     useEffect(() => {
         if (user === null) {

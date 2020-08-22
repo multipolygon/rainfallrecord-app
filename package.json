@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "dev": "next dev -H 0.0.0.0",
-        "build": "webpack --config leaflet.webpack.config.cjs && next build",
+        "build": "webpack --config lib/leaflet.webpack.config.cjs && next build",
         "export": "next export",
         "serve": "serve -l 3000 out",
         "prod": "next start",

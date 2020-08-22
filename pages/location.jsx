@@ -134,7 +134,7 @@ export default () => {
 
     const src = useMemo(
         () =>
-            `//${userIsOwner ? process.env.apiHost : process.env.cacheHost}/locations/${padZeros(
+            `${userIsOwner ? process.env.API_HOST : process.env.CACHE_HOST}/locations/${padZeros(
                 `${id}`,
                 8,
             )}.json`,
@@ -191,7 +191,7 @@ export default () => {
                         <LocationFormDialog id={id} source={data} setSource={setData} />
                     )}
                 </div>
-                {process.env.showTemperature && (
+                {process.env.SHOW_TEMPERATURE && (
                     <Box mt={3} style={{ textAlign: 'center' }}>
                         <ButtonGroup size="small">
                             {Object.keys(modes).map((m) => (

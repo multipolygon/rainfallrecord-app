@@ -7,16 +7,13 @@ export default ({ locations }) => {
 
     const drawMap = useCallback((container) => {
         if (container !== null && typeof window === 'object' && typeof window.L === 'object') {
-            const osmBaseLayer = window.L.tileLayer(
-                `https://${process.env.osmHost}/{z}/{x}/{y}.png`,
-                {
-                    attribution:
-                        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-                },
-            );
+            const osmBaseLayer = window.L.tileLayer(`${process.env.OSM_HOST}/{z}/{x}/{y}.png`, {
+                attribution:
+                    'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            });
 
             const thuderforestBaseLayer = window.L.tileLayer(
-                `https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=${process.env.tfApiKey}`,
+                `https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=${process.env.TF_API_KEY}`,
                 {
                     attribution:
                         '<a href="https://www.thunderforest.com/maps/landscape/">thunderforest.com</a>',

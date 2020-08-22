@@ -2,6 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import NextLink from 'next/link';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import Link from '../components/Link';
 import Layout from '../components/Layout';
 import { ContentBox, H2, P } from '../components/Typography';
@@ -11,6 +12,18 @@ export default function Index() {
         <Layout>
             <ContentBox>
                 <Grid container spacing={3}>
+                    <Grid item xs={12} sm={4}>
+                        <Box mt={2.5}>
+                            <NextLink href="/location" as="/location?id=0">
+                                <Paper
+                                    component="img"
+                                    src="/images/example.png"
+                                    style={{ maxWidth: '100%', cursor: 'pointer' }}
+                                    alt="demo screen shot"
+                                />
+                            </NextLink>
+                        </Box>
+                    </Grid>
                     <Grid item xs={12} sm={8}>
                         <H2>Free and No Ads!</H2>
                         <P>
@@ -27,6 +40,11 @@ export default function Index() {
                                 Try a Live Demo Now
                             </Link>
                         </ContentBox>
+                        <H2>Features</H2>
+                        <P>
+                            Spreadsheet-style data entry with live charts, totals, monthly averages
+                            and annual averages.
+                        </P>
                         <H2>Easy to Use</H2>
                         <P>
                             There is no software to download or install. Simply register and start
@@ -70,21 +88,19 @@ export default function Index() {
                             </a>
                             .
                         </P>
+                        <H2>Mobile App</H2>
+                        <P>
+                            Install the app to your home-screen for the full-screen experience. For
+                            iPhone or iPad, open this page in Safari, tap the menu icon (
+                            <span className="mdi mdi-export-variant" />) in the bottom toolbar and
+                            choose <em>Add to Home Screen</em>. For Android, tap the menu icon (
+                            <span className="mdi mdi-dots-vertical" />) at the top-right then choose{' '}
+                            <em>Add To Home screen</em>.
+                        </P>
                         <H2>Feedback and Support</H2>
                         <P>
                             Please email <em>multipolygon@gmail.com</em>
                         </P>
-                    </Grid>
-                    <Grid item xs={12} sm={4}>
-                        <H2>Example:</H2>
-                        <NextLink href="/location" as="/location?id=0">
-                            <Paper
-                                component="img"
-                                src="/assets/example.png"
-                                style={{ maxWidth: '100%', cursor: 'pointer' }}
-                                alt="demo screen shot"
-                            />
-                        </NextLink>
                     </Grid>
                 </Grid>
             </ContentBox>

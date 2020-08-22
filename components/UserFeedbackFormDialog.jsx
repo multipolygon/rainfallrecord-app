@@ -34,7 +34,7 @@ export default () => {
         setUser({ ...user, feedback_rating: n });
         setOpen(true);
         window
-            .fetch(`//${process.env.apiHost}/user.json`, {
+            .fetch(`${process.env.API_HOST}/user.json`, {
                 method: 'PATCH',
                 mode: 'cors',
                 credentials: 'include',

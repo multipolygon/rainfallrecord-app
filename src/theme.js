@@ -1,4 +1,9 @@
-module.exports = {
+// Material UI integration, see:
+// https://github.com/mui-org/material-ui/tree/master/examples/nextjs
+
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
     typography: {
         h1: {
             fontSize: '1.8rem',
@@ -12,6 +17,10 @@ module.exports = {
             fontSize: '1.2rem',
             fontWeight: 500,
         },
+        h4: {
+            fontSize: '1.1rem',
+            fontWeight: 500,
+        },
         body1: {
             fontSize: '1.0rem',
         },
@@ -21,13 +30,12 @@ module.exports = {
     },
     palette: {
         primary: {
-            main: '#504c49',
+            main: process.env.THEME_COLOR,
         },
-        // secondary: {
-        //     main: '#8bc34a',
-        // },
         background: {
-            default: '#fff',
+            default: process.env.BACKGROUND_COLOR,
         },
     },
-};
+});
+
+export default theme;

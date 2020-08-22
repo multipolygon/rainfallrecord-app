@@ -15,21 +15,15 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v2
-        
+
       - name: NPM Install
         run: npm ci --only=production
-        
+
       - name: Next.js build and export
         run: npm run build && npm run export
         env:
-          APP_NAME: ${{ secrets.APP_NAME }}
-          API_HOST: ${{ secrets.API_HOST }}
-          CACHE_HOST: ${{ secrets.CACHE_HOST }}
-          OSM_HOST: ${{ secrets.OSM_HOST }}
-          TF_API_KEY: ${{ secrets.TF_API_KEY }}
-          SHOW_TEMPERATURE: ${{ secrets.SHOW_TEMPERATURE }}
-          DONATE_BUTTON: ${{ secrets.DONATE_BUTTON }}
-        
+          SECRETS_JSON: ${{ toJSON(secrets) }}
+
       - name: Git Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:

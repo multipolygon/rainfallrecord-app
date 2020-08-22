@@ -1,73 +1,17 @@
+// Material UI integration, see:
+// https://github.com/mui-org/material-ui/tree/master/examples/nextjs
+
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
-import theme from './theme.cjs';
+import AppHead from '../components/AppHead';
 
-export default class CustomDocument extends Document {
+export default class MyDocument extends Document {
     render() {
         return (
-            <Html>
+            <Html lang="en">
                 <Head>
-                    <link rel="manifest" href="/manifest.json" />
-
-                    <meta property="og:type" content="website" />
-                    <meta property="og:site_name" content={process.env.appName} />
-
-                    <meta name="application-name" content={process.env.appName} />
-                    <meta name="apple-mobile-web-app-capable" content="yes" />
-                    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-                    <meta name="apple-mobile-web-app-title" content={process.env.appName} />
-                    <meta name="description" content="-" />
-                    <meta name="format-detection" content="telephone=no" />
-                    <meta name="mobile-web-app-capable" content="yes" />
-                    <meta
-                        name="viewport"
-                        content="minimum-scale=1, maximum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
-                    />
-                    <meta name="theme-color" content={theme.palette.primary.main} />
-
-                    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-                    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
-                    <link
-                        rel="apple-touch-icon"
-                        sizes="57x57"
-                        href="/assets/icons/apple-touch-icon-57x57.png"
-                    />
-                    <link
-                        rel="apple-touch-icon"
-                        sizes="72x72"
-                        href="/assets/icons/apple-touch-icon-72x72.png"
-                    />
-                    <link
-                        rel="apple-touch-icon"
-                        sizes="76x76"
-                        href="/assets/icons/apple-touch-icon-76x76.png"
-                    />
-                    <link
-                        rel="apple-touch-icon"
-                        sizes="114x114"
-                        href="/assets/icons/apple-touch-icon-114x114.png"
-                    />
-                    <link
-                        rel="apple-touch-icon"
-                        sizes="120x120"
-                        href="/assets/icons/apple-touch-icon-120x120.png"
-                    />
-                    <link
-                        rel="apple-touch-icon"
-                        sizes="144x144"
-                        href="/assets/icons/apple-touch-icon-144x144.png"
-                    />
-                    <link
-                        rel="apple-touch-icon"
-                        sizes="152x152"
-                        href="/assets/icons/apple-touch-icon-152x152.png"
-                    />
-                    <link
-                        rel="apple-touch-icon"
-                        sizes="180x180"
-                        href="/assets/icons/apple-touch-icon-180x180.png"
-                    />
+                    <AppHead />
                 </Head>
                 <body>
                     <div className="backgroundImage">
@@ -82,7 +26,9 @@ export default class CustomDocument extends Document {
     }
 }
 
-CustomDocument.getInitialProps = async (ctx) => {
+// `getInitialProps` belongs to `_document` (instead of `_app`),
+// it's compatible with server-side generation (SSG).
+MyDocument.getInitialProps = async (ctx) => {
     // Resolution order
     //
     // On the server:

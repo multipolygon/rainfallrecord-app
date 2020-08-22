@@ -1,8 +1,13 @@
 .DS_Store
+
+.next
 /node_modules
-/.next
+
+/.env.local
+/.env.docker
+
 /build
 /out
-/.env
+
 /public/leaflet.js
-tasks.org
+/public/manifest.json

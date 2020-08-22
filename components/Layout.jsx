@@ -9,7 +9,9 @@ import Nav from './Nav';
 export default ({ title, windowTitle, children }) => (
     <>
         <Head>
-            <title>{[windowTitle || title, process.env.appName].filter(Boolean).join(' - ')}</title>
+            <title>
+                {[windowTitle || title, process.env.APP_NAME].filter(Boolean).join(' - ')}
+            </title>
             <meta property="og:title" content={windowTitle || title} />
         </Head>
         <Container maxWidth="md">
@@ -30,16 +32,28 @@ export default ({ title, windowTitle, children }) => (
                         alignItems="flex-start"
                         spacing={1}
                     >
-                        <Grid item>
-                            <Typography
-                                variant="h1"
-                                style={{ color: '#c2c4d9', fontWeight: 'bold' }}
-                            >
-                                {process.env.appName}
-                            </Typography>
+                        <Grid item xs={12} sm="auto">
+                            <Box mb={2} style={{ textAlign: 'center' }}>
+                                <Typography
+                                    variant="h1"
+                                    style={{
+                                        color: '#c2c4d9',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    Rainfall
+                                    <span
+                                        className="mdi mdi-weather-pouring"
+                                        style={{ margin: 'auto 2px auto 2px' }}
+                                    />
+                                    Record
+                                </Typography>
+                            </Box>
                         </Grid>
-                        <Grid item>
-                            <Nav />
+                        <Grid item xs={12} sm="auto">
+                            <Box mb={2} style={{ textAlign: 'center' }}>
+                                <Nav />
+                            </Box>
                         </Grid>
                     </Grid>
                 </div>

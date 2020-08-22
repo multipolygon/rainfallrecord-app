@@ -19,7 +19,7 @@ export default function Index({ body, url, method, onSuccess, confirm, color, ch
     const post = () => {
         setActive(true);
         window
-            .fetch(`//${process.env.apiHost}/${url}`, {
+            .fetch(`${process.env.API_HOST}/${url}`, {
                 method: method || 'POST',
                 mode: 'cors',
                 cache: 'no-cache',

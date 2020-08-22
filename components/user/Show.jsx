@@ -54,7 +54,7 @@ export default ({ user, setUser }) => {
                     action={
                         <ActionButton
                             url="user.json"
-                            method='PATCH'
+                            method="PATCH"
                             body={{ user: { system_message: '' } }}
                             onSuccess={() => setUser(null)}
                         >
@@ -86,12 +86,12 @@ export default ({ user, setUser }) => {
             )}
             <H3>Feedback</H3>
             <UserFeedbackFormDialog />
-            {process.env.donateButton && (
+            {process.env.DONATE_BUTTON && (
                 <Box mt={3}>
                     <P>
                         $5 donation: <small>(totally optional, no obligation)</small>
                     </P>
-                    <div dangerouslySetInnerHTML={{ __html: process.env.donateButton }} />
+                    <div dangerouslySetInnerHTML={{ __html: process.env.DONATE_BUTTON }} />
                     <P>
                         <small>
                             (Donations will go towards website maintenance and server costs.)
