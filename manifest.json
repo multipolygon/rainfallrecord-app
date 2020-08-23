@@ -1,5 +1,6 @@
 {
  "name": "Rainfall Record",
+ "short_name": "Rainfall Record",
  "theme_color": "#504c49",
  "background_color": "#b8bad0",
  "display": "standalone",
