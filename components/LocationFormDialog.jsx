@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import FormDialog from './FormDialog';
 
-export default ({ id, title, buttonText, source, setSource, onSave }) => {
+export default function LocationFormDialog({ id, title, buttonText, source, setSource, onSave }) {
     const [open, setOpen] = useState(false);
 
     const fields = {
@@ -55,4 +55,4 @@ export default ({ id, title, buttonText, source, setSource, onSave }) => {
             />
         </>
     );
-};
+}

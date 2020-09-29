@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import FormDialog from '../FormDialog';
 
-export default () => {
+export default function ForgotUserDialog() {
     const [open, setOpen] = useState(false);
 
     const fields = {
@@ -27,4 +27,4 @@ export default () => {
             />
         </>
     );
-};
+}

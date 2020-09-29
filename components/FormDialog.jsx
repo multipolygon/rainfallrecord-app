@@ -18,7 +18,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { FeedbackContext } from './Feedback';
 
-export default ({
+export default function FormDialog({
     open,
     setOpen,
     title,
@@ -31,7 +31,7 @@ export default ({
     setSource,
     onSave,
     saveButtonText = 'Save',
-}) => {
+}) {
     const [data, updateData] = useReducer((obj1, obj2) => ({ ...obj1, ...obj2 }), {});
     const [active, setActive] = useState(false);
     const [, setFeedback] = useContext(FeedbackContext);
@@ -303,4 +303,4 @@ export default ({
             </Backdrop>
         </>
     );
-};
+}

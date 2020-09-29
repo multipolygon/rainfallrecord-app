@@ -4,7 +4,7 @@ import _get from 'lodash/get';
 import Moment from 'moment';
 import { P } from '../Typography';
 
-export default ({ yearlyTotals, yearLabels, toFixed }) => {
+export default function LocationYearsChart({ yearlyTotals, yearLabels, toFixed }) {
     const chart = useRef(null);
 
     const yearlyTotalsAry = useMemo(() => yearLabels.map((y) => _get(yearlyTotals, [y], 0)), [
@@ -99,4 +99,4 @@ export default ({ yearlyTotals, yearLabels, toFixed }) => {
             </div>
         </>
     );
-};
+}

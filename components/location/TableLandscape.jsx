@@ -3,7 +3,7 @@ import _get from 'lodash/get';
 import _range from 'lodash/range';
 import TableCell from './TableCell';
 
-export default ({
+export default function LocationTableLandscape({
     year,
     data,
     mode,
@@ -12,7 +12,7 @@ export default ({
     yearlyTotals,
     toFixed,
     userIsOwner,
-}) => {
+}) {
     return (
         <div style={{ overflowX: 'auto' }}>
             <table className="calendar-table calendar-table-landscape">
@@ -60,4 +60,4 @@ export default ({
             </table>
         </div>
     );
-};
+}

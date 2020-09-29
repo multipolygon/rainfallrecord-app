@@ -8,7 +8,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Moment from 'moment';
 import { H3 } from '../Typography';
 
-export default ({ yearLabels, year, setYear, monthlyTotals }) => {
+export default function LocationYearTabs({ yearLabels, year, setYear, monthlyTotals }) {
     const yearTabsRef = useRef();
 
     useEffect(() => {
@@ -74,4 +74,4 @@ export default ({ yearLabels, year, setYear, monthlyTotals }) => {
             </div>
         </>
     );
-};
+}

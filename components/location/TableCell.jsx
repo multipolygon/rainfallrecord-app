@@ -4,7 +4,7 @@ import _get from 'lodash/get';
 
 const today = Moment();
 
-export default ({ data, mode, modified, year, m, d, userIsOwner }) => {
+export default function LocationTableCell({ data, mode, modified, year, m, d, userIsOwner }) {
     const ymd = Moment([year, m - 1, d]);
     const isValid = ymd.isValid() && ymd.isSameOrBefore(today, 'day');
     const status = modified[JSON.stringify([year, m, d])];
@@ -24,4 +24,4 @@ export default ({ data, mode, modified, year, m, d, userIsOwner }) => {
             {measurement !== undefined ? measurement : ''}
         </td>
     );
-};
+}

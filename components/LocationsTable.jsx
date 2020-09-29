@@ -8,41 +8,43 @@ import Paper from '@material-ui/core/Paper';
 import NextLink from 'next/link';
 import Link from './Link';
 
-export default ({ locations }) => (
-    <TableContainer component={Paper} size="small" style={{ backgroundColor: 'transparent' }}>
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Location</TableCell>
-                    <TableCell align="right">7 Days</TableCell>
-                    <TableCell align="right">30 Days</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {locations.map((properties) => (
-                    <NextLink
-                        key={properties.id}
-                        href="/location"
-                        as={`/location?id=${properties.id}`}
-                    >
-                        <TableRow style={{ cursor: 'pointer' }}>
-                            <TableCell component="th" scope="row">
-                                <Link
-                                    href="/location"
-                                    as={`/location?id=${properties.id}`}
-                                    style={{ fontWeight: 'bold' }}
-                                >
-                                    {properties.title}
-                                </Link>
-                            </TableCell>
-                            <TableCell>{properties.location}</TableCell>
-                            <TableCell align="right">{properties.total_7_days}</TableCell>
-                            <TableCell align="right">{properties.total_30_days}</TableCell>
-                        </TableRow>
-                    </NextLink>
-                ))}
-            </TableBody>
-        </Table>
-    </TableContainer>
-);
+export default function LocationsTable({ locations }) {
+    return (
+        <TableContainer component={Paper} size="small" style={{ backgroundColor: 'transparent' }}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Title</TableCell>
+                        <TableCell>Location</TableCell>
+                        <TableCell align="right">7 Days</TableCell>
+                        <TableCell align="right">30 Days</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {locations.map((properties) => (
+                        <NextLink
+                            key={properties.id}
+                            href="/location"
+                            as={`/location?id=${properties.id}`}
+                        >
+                            <TableRow style={{ cursor: 'pointer' }}>
+                                <TableCell component="th" scope="row">
+                                    <Link
+                                        href="/location"
+                                        as={`/location?id=${properties.id}`}
+                                        style={{ fontWeight: 'bold' }}
+                                    >
+                                        {properties.title}
+                                    </Link>
+                                </TableCell>
+                                <TableCell>{properties.location}</TableCell>
+                                <TableCell align="right">{properties.total_7_days}</TableCell>
+                                <TableCell align="right">{properties.total_30_days}</TableCell>
+                            </TableRow>
+                        </NextLink>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    );
+}

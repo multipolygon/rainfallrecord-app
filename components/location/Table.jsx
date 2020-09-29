@@ -5,12 +5,13 @@ import _set from 'lodash/set';
 import Alert from '@material-ui/lab/Alert';
 import Box from '@material-ui/core/Box';
 import Moment from 'moment';
+import Popper from '@material-ui/core/Popper';
 import TableLandscape from './TableLandscape';
 import TablePortrait from './TablePortrait';
 
 const patchReducer = (state, patch) => ({ ...state, ...patch });
 
-export default ({
+export default function LocationTable({
     id,
     data,
     setData,
@@ -20,9 +21,11 @@ export default ({
     yearlyTotals,
     toFixed,
     userIsOwner,
-}) => {
+}) {
     const [modified, setModified] = useReducer(patchReducer, {});
     const [alert, setAlert] = useState(true);
+    const [popperAnchor, setPopperAnchor] = useState(null);
+    const [activeDate, setActiveDate] = useState(null);
 
     const modifiedKey = (y, m, d) => JSON.stringify([y, m, d]);
 
@@ -52,13 +55,17 @@ export default ({
         }
     };
 
-    const onBlur = (e) =>
+    const onBlur = (e) => {
+        setPopperAnchor(null);
+        setActiveDate(null);
+
         setMeasurement(
             year,
             parseInt(e.target.getAttribute('data-m'), 10),
             parseInt(e.target.getAttribute('data-d'), 10),
             e.target.innerText.trim(),
         );
+    };
 
     useEffect(() => {
         if (Object.values(modified).includes('sending')) {
@@ -181,10 +188,23 @@ export default ({
     };
 
     // https://stackoverflow.com/a/3805897/5165
-    const onFocus = () => {
+    const onFocus = (e) => {
         if (document && document.execCommand) {
             setTimeout(() => document.execCommand('selectAll', false, null), 1);
         }
+        const d = Moment([
+            year,
+            parseInt(e.target.getAttribute('data-m'), 10) - 1,
+            parseInt(e.target.getAttribute('data-d'), 10),
+        ]);
+        if (Moment().isSame(d, 'day')) {
+            setActiveDate('Today');
+        } else if (Moment().subtract(1, 'days').isSame(d, 'day')) {
+            setActiveDate('Yesterday');
+        } else {
+            setActiveDate(d.format('D MMM'));
+        }
+        setPopperAnchor(e.target);
     };
 
     const props = {
@@ -218,6 +238,12 @@ export default ({
                     <TableLandscape {...props} />
                 </Hidden>
             </div>
+            <Popper open={Boolean(popperAnchor)} anchorEl={popperAnchor} placement="bottom">
+                <div className="tooltip">
+                    {activeDate}
+                    <i />
+                </div>
+            </Popper>
         </>
     );
-};
+}

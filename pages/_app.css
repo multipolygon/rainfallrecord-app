@@ -1,66 +1,98 @@
-@media screen {
-    .backgroundImage {
-        position: fixed;
-        overflow-y: auto;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: #B8BAD0 url('/images/background.jpg') no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-
-    .fogBackground {
-        /* background: linear-gradient(160deg, #D2D4ED00 0%, #D2D4ED11 50%, #D2D4EDFF 100%); */
-        background: linear-gradient(135deg, #FDFDFD 0%, #FDFDFD 60%, #D2D4ED 100%);
-    }
-
-    .print-only {
-        display: none;
-    }
+body {
+  background: #B8BAD0 !important;
 }
 
-@media print {
-    body {
-        background: white !important;
-    }
-    .hidden-print {
-        display: none;
-    }
+p {
+  overflow-wrap: break-word;
+}
 
-    .print-only {
-        display: block;
-    }
+.main-background {
+  background: #B8BAD0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.main-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.status-bar-background {
+  background-color: #B8BAD0;
+  position: fixed;
+  height: 200px;
+  top: -200px;
+  right: 0;
+  left: 0;
+  z-index: 10000;
 }
 
 a {
-    color: #504c49;
+  text-decoration: none !important;
+}
+
+@media only screen and (min-width: 800px) {
+  .main-background {
+    background: #B8BAD0 url('/images/background.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+}
+
+@media screen {
+  .fogBackground {
+    /* background: linear-gradient(160deg, #D2D4ED00 0%, #D2D4ED11 50%, #D2D4EDFF 100%); */
+    background: linear-gradient(135deg, #FDFDFD 0%, #FDFDFD 60%, #D2D4ED 100%);
+  }
+
+  .print-only {
+    display: none;
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .hidden-print {
+    display: none;
+  }
+
+  .print-only {
+    display: block;
+  }
+}
+
+a {
+  color: #504c49;
 }
 
 .mapicon {
-    display: block;
-    box-sizing: border-box;
-    width: 20px;
-    height: 20px;
-    font-size: 14px;
-    line-height: 18px;
-    text-align: center;
-    border: 0px;
-    border-radius: 5px;
-    overflow: hidden;
-    color: #fff;
-    background-color: #f00;
-    transform-origin: center center;
+  display: block;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  border: 0px;
+  border-radius: 5px;
+  overflow: hidden;
+  color: #fff;
+  background-color: #f00;
+  transform-origin: center center;
 }
 
 .calendar-table { font-size: 0.75rem; width: 100%; min-width: 475px; padding: 0 !important; margin: 0 !important; border-collapse: collapse; }
 .calendar-table th, .calendar-table td { border: 1px solid #DDD; text-align: center; border: 1px solid #e5e5e5; }
 .calendar-table th { background: #F9F9F9; }
-
-
 
 .calendar-table.calendar-table-portrait tr > * { width: 7.8947%; }
 .calendar-table.calendar-table-portrait tr > *:first-child { width: 5.2631%; }
@@ -70,7 +102,7 @@ a {
 .calendar-table thead th:first-child { background: transparent; border-top: 1px solid transparent; border-left: 1px solid transparent; }
 .calendar-table.calendar-table-landscape thead th:last-child { background: transparent; border-top: 1px solid transparent; border-right: 1px solid transparent; }
 .calendar-table.calendar-table-portrait tfoot th:first-child { background: transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; }
-.calendar-table td.no-date { background: #F5F5F5; }
+.calendar-table td.no-date { background: #EEEEEE; }
 .calendar-table td.date { cursor: pointer; }
 .calendar-table td.date.pending { background: #E3FFE3; }
 .calendar-table td.date.sending { background: #C0FFC0; }
@@ -78,3 +110,35 @@ a {
 .calendar-table td.date:focus { background: #FCF8E3; }
 .calendar-table td.total { background: #F9F9F9; }
 .calendar-table td.total.total-right { text-align: right; padding-right: 3px; }
+
+.tooltip {
+  position: relative;
+  top: 12px;
+  padding:5px 10px;
+  color:#444444;
+  background-color:#EEEEEE;
+  border-radius:8px;
+  box-sizing:border-box;
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+}
+
+.tooltip i {
+  position:absolute;
+  bottom:100%;
+  left:50%;
+  margin-left:-12px;
+  width:24px;
+  height:12px;
+  overflow:hidden;
+}
+
+.tooltip i::after {
+  content:'';
+  position:absolute;
+  width:12px;
+  height:12px;
+  left:50%;
+  transform:translate(-50%,50%) rotate(45deg);
+  background-color:#EEEEEE;
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+}

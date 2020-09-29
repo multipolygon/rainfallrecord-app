@@ -7,7 +7,7 @@ import DownloadButtons from './DownloadButtons';
 import UserFeedbackFormDialog from '../UserFeedbackFormDialog';
 import { UserContext } from '../User';
 
-export default ({ id, src, userIsOwner }) => {
+export default function LocationFooter({ id, src, userIsOwner }) {
     const [user, setUser] = useContext(UserContext);
     const [showFeedback, setShowFeedback] = useState(false);
     const router = useRouter();
@@ -63,4 +63,4 @@ export default ({ id, src, userIsOwner }) => {
             </Grid>
         </div>
     );
-};
+}

@@ -1,7 +1,7 @@
 import Paper from '@material-ui/core/Paper';
 import { useRef, useEffect, useCallback } from 'react';
 
-export default ({ locations }) => {
+export default function LocationsGeoJsonMap({ locations }) {
     const lMap = useRef();
     const geoBaseLayer = useRef();
 
@@ -110,4 +110,4 @@ export default ({ locations }) => {
     }, [locations]);
 
     return <Paper ref={drawMap} elevation={1} style={{ height: '40vh', minHeight: '240px' }} />;
-};
+}

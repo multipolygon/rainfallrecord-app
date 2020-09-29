@@ -9,7 +9,7 @@ import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfie
 import { UserContext } from './User';
 import FormDialog from './FormDialog';
 
-export default () => {
+export default function UserFeedbackFormDialog() {
     const [user, setUser] = useContext(UserContext);
     const [open, setOpen] = useState(false);
 
@@ -78,4 +78,4 @@ export default () => {
             </ButtonGroup>
         </>
     );
-};
+}

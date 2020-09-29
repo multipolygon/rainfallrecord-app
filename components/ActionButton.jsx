@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import { FeedbackContext } from './Feedback';
 
-export default function Index({ body, url, method, onSuccess, confirm, color, children }) {
+export default function ActionButton({ body, url, method, onSuccess, confirm, color, children }) {
     const [active, setActive] = useState(false);
     const [, setFeedback] = useContext(FeedbackContext);
 

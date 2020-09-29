@@ -10,7 +10,7 @@ import UserFeedbackFormDialog from '../UserFeedbackFormDialog';
 import ActionButton from '../ActionButton';
 import { ContentBox, H2, H3, P } from '../Typography';
 
-export default ({ user, setUser }) => {
+export default function UserShow({ user, setUser }) {
     const router = useRouter();
 
     const onSaveLocation = ({ body }) => {
@@ -105,4 +105,4 @@ export default ({ user, setUser }) => {
             </div>
         </>
     );
-};
+}

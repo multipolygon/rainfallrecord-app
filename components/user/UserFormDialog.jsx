@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import FormDialog from '../FormDialog';
 import { UserContext } from '../User';
 
-export default ({ newUser }) => {
+export default function UserFormDialog({ newUser }) {
     const [user, setUser] = useContext(UserContext);
     const [open, setOpen] = useState(false);
 
@@ -48,4 +48,4 @@ export default ({ newUser }) => {
             />
         </>
     );
-};
+}

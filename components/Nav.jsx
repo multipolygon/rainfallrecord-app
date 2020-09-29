@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { UserContext } from './User';
 import Link from './Link';
 
-export default () => {
+export default function Nav() {
     const router = useRouter();
     const variant = (href) => (href.includes(router.pathname) ? 'contained' : 'outlined');
 
@@ -33,4 +33,4 @@ export default () => {
             </Link>
         </ButtonGroup>
     );
-};
+}

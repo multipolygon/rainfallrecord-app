@@ -7,7 +7,7 @@ import TableCell from './TableCell';
 
 const today = Moment();
 
-export default ({
+export default function LocationTablePortrait({
     year,
     data,
     mode,
@@ -16,7 +16,7 @@ export default ({
     yearlyTotals,
     toFixed,
     userIsOwner,
-}) => {
+}) {
     const table = useRef(null);
 
     // Scroll table to show today:
@@ -80,4 +80,4 @@ export default ({
             </Box>
         </>
     );
-};
+}

@@ -14,9 +14,11 @@ export default class MyDocument extends Document {
                     <AppHead />
                 </Head>
                 <body>
-                    <div className="backgroundImage">
+                    <div className="main-background" />
+                    <div className="main-container">
                         <Main />
                     </div>
+                    <div className="status-bar-background" />
                     {/* See leaflet.webpack.config.js */}
                     <script src="/leaflet.js" />
                     <NextScript />
