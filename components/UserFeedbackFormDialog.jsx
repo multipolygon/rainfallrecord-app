@@ -1,11 +1,12 @@
+/* global process */
 /* eslint-disable react/no-array-index-key */
 
 import { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
-import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAlt';
-import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
+import DissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import NeutralIcon from '@material-ui/icons/SentimentSatisfied';
+import SatisfiedIcon from '@material-ui/icons/SentimentSatisfiedAlt';
 import { UserContext } from './User';
 import FormDialog from './FormDialog';
 
@@ -13,17 +14,19 @@ export default function UserFeedbackFormDialog() {
     const [user, setUser] = useContext(UserContext);
     const [open, setOpen] = useState(false);
 
-    const icons = [
-        <SentimentVeryDissatisfiedIcon />,
-        <SentimentSatisfiedAltIcon />,
-        <SentimentVerySatisfiedIcon />,
-    ];
+    const icons = [<DissatisfiedIcon />, <NeutralIcon />, <SatisfiedIcon />];
+
+    const altText = {
+        0: 'Dissatisfied',
+        1: 'Neutral',
+        2: 'Satisfied',
+    };
 
     const fields = {
         feedback_text: {
             label: 'Message',
             placeholder: '(optional)',
-            helperText: 'Any requests or feedback?',
+            helperText: 'Any further comments or requests?',
             autoFocus: true,
             inputLabelProps: { shrink: true },
             multiline: true,
@@ -71,6 +74,7 @@ export default function UserFeedbackFormDialog() {
                         key={n}
                         variant={user.feedback_rating === n ? 'contained' : 'outlined'}
                         onClick={() => onClick(n)}
+                        title={altText[n]}
                     >
                         {i}
                     </Button>
