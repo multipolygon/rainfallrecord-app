@@ -39,6 +39,8 @@ export default function Index() {
                             >
                                 Try a Live Demo Now
                             </Link>
+                            <br />
+                            <small>No sign-up required.</small>
                         </ContentBox>
                         <H2>Features</H2>
                         <P>

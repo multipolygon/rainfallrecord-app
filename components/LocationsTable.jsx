@@ -8,13 +8,12 @@ import Paper from '@material-ui/core/Paper';
 import NextLink from 'next/link';
 import Link from './Link';
 
-export default function LocationsTable({ locations }) {
+export default function LocationsTable({ locations, showTitle }) {
     return (
         <TableContainer component={Paper} size="small" style={{ backgroundColor: 'transparent' }}>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Title</TableCell>
                         <TableCell>Location</TableCell>
                         <TableCell align="right">7 Days</TableCell>
                         <TableCell align="right">30 Days</TableCell>
@@ -34,10 +33,10 @@ export default function LocationsTable({ locations }) {
                                         as={`/location?id=${properties.id}`}
                                         style={{ fontWeight: 'bold' }}
                                     >
-                                        {properties.title}
+                                        {showTitle && `${properties.title}, `}
+                                        {properties.location}
                                     </Link>
                                 </TableCell>
-                                <TableCell>{properties.location}</TableCell>
                                 <TableCell align="right">{properties.total_7_days}</TableCell>
                                 <TableCell align="right">{properties.total_30_days}</TableCell>
                             </TableRow>

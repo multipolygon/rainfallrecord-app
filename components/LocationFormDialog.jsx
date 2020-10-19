@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import FormDialog from './FormDialog';
+import MapInput from './LocationFormMapInput';
+import CountrySelect from './LocationFormCountrySelect';
+import CitySelect from './LocationFormCitySelect';
 
 export default function LocationFormDialog({ id, title, buttonText, source, setSource, onSave }) {
     const [open, setOpen] = useState(false);
@@ -19,19 +22,25 @@ export default function LocationFormDialog({ id, title, buttonText, source, setS
         title: {
             required: true,
         },
-        town_suburb: { required: true, label: 'Town', helperText: 'or suburb, city, etc.' },
-        region: { required: true, helperText: 'or state, territory, etc.' },
-        country: { required: true },
+        country: {
+            type: 'other',
+            component: CountrySelect,
+        },
+        town_suburb: {
+            type: 'other',
+            component: CitySelect,
+        },
         latitude: {
             type: 'number',
             inputProps: { min: -90, max: 90, step: 0.001 },
-            helperText: 'as decimal degrees (optional)',
         },
         longitude: {
             type: 'number',
             inputProps: { min: -180, max: 180, step: 0.001 },
-            helperText: 'as decimal degrees (optional)',
-            markerMap: true,
+        },
+        map: {
+            type: 'other',
+            component: MapInput,
         },
     };
 

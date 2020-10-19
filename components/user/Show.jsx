@@ -1,3 +1,4 @@
+/* global process */
 import Alert from '@material-ui/lab/Alert';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import Box from '@material-ui/core/Box';
@@ -81,7 +82,7 @@ export default function UserShow({ user, setUser }) {
             {user.locations.length !== 0 && (
                 <>
                     <br />
-                    <LocationsTable locations={user.locations} />
+                    <LocationsTable locations={user.locations} showTitle />
                 </>
             )}
             <H3>Feedback</H3>

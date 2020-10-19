@@ -3,11 +3,11 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "dev": "next dev -H 0.0.0.0",
+        "dev": "next dev -H 0.0.0.0 -p 3050",
         "jsgl": "jsgl --local .",
         "build": "webpack --config lib/leaflet.webpack.config.cjs && next build",
         "export": "next export",
-        "serve": "serve -l 3000 out",
+        "serve": "serve -l 3050 out",
         "routes": "node -e 'require(\"./next.config.js\").exportPathMap()'",
         "prettier": "prettier --write '*.js' '{components,pages,scripts,utils}/**/*.{js,jsx,mjs,cjs}'",
         "linter": "eslint --fix --ext .js,.mjs,.cjs,.jsx --ignore-path .gitignore ."
@@ -47,6 +47,7 @@
     },
     "devDependencies": {
         "babel-eslint": "^10.1.0",
+        "country-city-location": "^1.0.13",
         "eslint": "^6.8.0",
         "eslint-config-airbnb": "^18.1.0",
         "eslint-config-prettier": "^6.11.0",

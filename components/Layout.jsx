@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Nav from './Nav';
+import Link from './Link';
 
 export default function Layout({ title, windowTitle, children }) {
     return (
@@ -35,20 +36,22 @@ export default function Layout({ title, windowTitle, children }) {
                         >
                             <Grid item xs={12} sm="auto">
                                 <Box mb={2} style={{ textAlign: 'center' }}>
-                                    <Typography
-                                        variant="h1"
-                                        style={{
-                                            color: '#c2c4d9',
-                                            fontWeight: 'bold',
-                                        }}
-                                    >
-                                        Rainfall
-                                        <span
-                                            className="mdi mdi-weather-pouring"
-                                            style={{ margin: 'auto 2px auto 2px' }}
-                                        />
-                                        Record
-                                    </Typography>
+                                    <Link href="/">
+                                        <Typography
+                                            variant="h1"
+                                            style={{
+                                                color: '#c2c4d9',
+                                                fontWeight: 'bold',
+                                            }}
+                                        >
+                                            Rainfall
+                                            <span
+                                                className="mdi mdi-weather-pouring"
+                                                style={{ margin: 'auto 2px auto 2px' }}
+                                            />
+                                            Record
+                                        </Typography>
+                                    </Link>
                                 </Box>
                             </Grid>
                             <Grid item xs={12} sm="auto">
