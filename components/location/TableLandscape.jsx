@@ -28,7 +28,7 @@ export default function LocationTableLandscape({
                 <tbody>
                     {_range(12).map((m) => (
                         <tr key={m}>
-                            <th>{Moment({ month: m }).format('MMM')}</th>
+                            <th width="35px">{Moment({ month: m }).format('MMM')}</th>
                             {_range(31).map((d) => (
                                 <TableCell
                                     {...{

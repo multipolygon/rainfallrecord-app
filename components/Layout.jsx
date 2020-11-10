@@ -16,7 +16,7 @@ export default function Layout({ title, windowTitle, children }) {
                 </title>
                 <meta property="og:title" content={windowTitle || title} />
             </Head>
-            <Container maxWidth="md">
+            <Container maxWidth="lg">
                 <Box
                     mt={2}
                     pt={2}

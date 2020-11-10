@@ -45,7 +45,7 @@ export default function LocationTablePortrait({
                     <tbody>
                         {_range(31).map((d) => (
                             <tr key={d}>
-                                <th>{d + 1}</th>
+                                <th width="30px">{d + 1}</th>
                                 {_range(12).map((m) => (
                                     <TableCell
                                         {...{

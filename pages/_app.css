@@ -90,15 +90,11 @@ a {
   transform-origin: center center;
 }
 
-.calendar-table { font-size: 0.75rem; width: 100%; min-width: 475px; padding: 0 !important; margin: 0 !important; border-collapse: collapse; }
-.calendar-table th, .calendar-table td { border: 1px solid #DDD; text-align: center; border: 1px solid #e5e5e5; }
+.calendar-table { font-size: 0.75rem; width: 100%; padding: 0 !important; margin: 0 !important; border-collapse: collapse; }
+.calendar-table th, .calendar-table td { border: 1px solid #DDD; text-align: center; border: 1px solid #e5e5e5; padding-left: 2px; padding-right: 2px; }
 .calendar-table th { background: #F9F9F9; }
-
-.calendar-table.calendar-table-portrait tr > * { width: 7.8947%; }
-.calendar-table.calendar-table-portrait tr > *:first-child { width: 5.2631%; }
-.calendar-table.calendar-table-landscape tr > * { width: 2.941%; }
-.calendar-table.calendar-table-landscape tr > *:first-child { width: 4.4115%; }
-.calendar-table.calendar-table-landscape tr > *:last-child { width: 4.4115%; }
+.calendar-table.calendar-table-portrait tr > * { min-width: 30px; }
+.calendar-table.calendar-table-landscape tr > * { min-width: 30px; }
 .calendar-table thead th:first-child { background: transparent; border-top: 1px solid transparent; border-left: 1px solid transparent; }
 .calendar-table.calendar-table-landscape thead th:last-child { background: transparent; border-top: 1px solid transparent; border-right: 1px solid transparent; }
 .calendar-table.calendar-table-portrait tfoot th:first-child { background: transparent; border-bottom: 1px solid transparent; border-left: 1px solid transparent; }
