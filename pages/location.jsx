@@ -185,7 +185,22 @@ export default () => {
                         </P>
                     )}
                     {id !== null && !isDemo && (
-                        <P>{[data.town_suburb, data.region].filter(Boolean).join(', ')}</P>
+                        <P>
+                            <a
+                                href={`https://www.openstreetmap.org/?mlat=${
+                                    data.latitude || 0.0
+                                }&mlon=${data.longitude || 0.0}#map=11/${data.latitude || 0.0}/${
+                                    data.longitude || 0.0
+                                }`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {data.latitude && data.longitude && (
+                                    <span className="mdi mdi-map-marker" />
+                                )}
+                                {[data.town_suburb, data.country].filter(Boolean).join(', ')}
+                            </a>
+                        </P>
                     )}
                     {!isDemo && userIsOwner && (
                         <LocationFormDialog id={id} source={data} setSource={setData} />

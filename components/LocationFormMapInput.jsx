@@ -104,7 +104,9 @@ export default function MapInput({ data, updateData }) {
                 style={{ height: '160px' }}
                 ref={markerMapContainerRef}
             />
-            <small style={{ color: 'grey' }}>Drag the red marker to your exact location.</small>
+            <small style={{ color: 'grey' }}>
+                Optional: Drag the red marker to your exact location.
+            </small>
         </>
     );
 }

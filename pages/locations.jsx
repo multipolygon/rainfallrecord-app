@@ -1,7 +1,7 @@
 import Box from '@material-ui/core/Box';
 import { useState, useEffect } from 'react';
 import GeoJsonMap from '../components/locations/GeoJsonMap';
-import { ContentBox, H2 } from '../components/Typography';
+import { ContentBox, H2, P } from '../components/Typography';
 import Layout from '../components/Layout';
 import LocationsTable from '../components/LocationsTable';
 
@@ -35,6 +35,11 @@ export default () => {
         <Layout title="Locations">
             <ContentBox>
                 <H2>Locations</H2>
+                <P>
+                    <small style={{ color: 'grey' }}>
+                        Please note, the map and data table are updated once per day only.
+                    </small>
+                </P>
                 <GeoJsonMap locations={locations} />
                 <Box mt={3}>
                     <LocationsTable
