@@ -1,6 +1,7 @@
 // Custom:
 
-import '@mdi/font/css/materialdesignicons.min.css';
+// import '@mdi/font/css/materialdesignicons.min.css';
+import './mdi/css/materialdesignicons.min.css';
 import 'typeface-roboto/index.css';
 import './_app.css';
 import 'leaflet/dist/leaflet.css';
