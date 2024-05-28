@@ -4,7 +4,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 export default function LocationDownloadButtons({ src }) {
     return (
         <ButtonGroup size="small">
-            {['csv', 'json', 'xml'].map((ext) => (
+            {['csv', 'json'].map((ext) => (
                 <Button
                     key={ext}
                     variant="outlined"

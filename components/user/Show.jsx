@@ -87,19 +87,6 @@ export default function UserShow({ user, setUser }) {
             )}
             <H3>Feedback</H3>
             <UserFeedbackFormDialog />
-            {process.env.DONATE_BUTTON && (
-                <Box mt={3}>
-                    <P>
-                        $5 donation: <small>(totally optional, no obligation)</small>
-                    </P>
-                    <div dangerouslySetInnerHTML={{ __html: process.env.DONATE_BUTTON }} />
-                    <P>
-                        <small>
-                            (Donations will go towards website maintenance and server costs.)
-                        </small>
-                    </P>
-                </Box>
-            )}
             <H3>API Key</H3>
             <div style={{ overflowX: 'auto', fontSize: '12px' }}>
                 <code>{user.api_key}</code>
