@@ -5,8 +5,8 @@
     "scripts": {
         "dev": "next dev -H 0.0.0.0 -p 3050",
         "jsgl": "jsgl --local .",
-        "build": "webpack --config lib/leaflet.webpack.config.cjs && next build",
-        "export": "next export",
+        "build": "NODE_OPTIONS=--openssl-legacy-provider webpack --config lib/leaflet.webpack.config.cjs && next build",
+        "export": "NODE_OPTIONS=--openssl-legacy-provider next export",
         "serve": "serve -l 3050 out",
         "routes": "node -e 'require(\"./next.config.js\").exportPathMap()'",
         "prettier": "prettier --write '*.js' '{components,pages,scripts,utils}/**/*.{js,jsx,mjs,cjs}'",
