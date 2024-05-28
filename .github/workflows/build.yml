@@ -4,29 +4,29 @@
 name: Build
 
 on:
-  push:
-    branches:
-      - master
+    push:
+        branches:
+            - master
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-20.04
 
-    steps:
-      - name: Checkout main
-        uses: actions/checkout@v2
+        steps:
+            - name: Checkout main
+              uses: actions/checkout@v2
 
-      - name: NPM Install
-        run: npm ci --only=production
+            - name: NPM Install
+              run: npm ci --only=production
 
-      - name: Next.js build and export
-        run: npm run build && npm run export
-        env:
-          SECRETS_JSON: ${{ toJSON(secrets) }}
+            - name: Next.js build and export
+              run: npm run build && npm run export
+              env:
+                  SECRETS_JSON: ${{ toJSON(secrets) }}
 
-      - name: Git Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          BRANCH: gh-pages
-          FOLDER: out
-          CLEAN: false
+            - name: Git Deploy
+              uses: JamesIves/github-pages-deploy-action@releases/v3
+              with:
+                  BRANCH: gh-pages
+                  FOLDER: out
+                  CLEAN: false
