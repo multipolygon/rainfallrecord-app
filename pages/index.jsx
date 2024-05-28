@@ -27,7 +27,7 @@ export default function Index() {
                     <Grid item xs={12} sm={8}>
                         <H2>Free and No Ads!</H2>
                         <P>
-                            You can create a record sheet on this website for your own rainfall and
+                            You can create a record-sheet on this website for your own rainfall and
                             temperature measurements.
                         </P>
                         <ContentBox>
@@ -54,39 +54,42 @@ export default function Index() {
                         </P>
                         <P>Charts are automatically displayed and updated for your data.</P>
                         <P>You will get a direct, shareable, public URL linking to your records.</P>
-                        <H2>Crowd-Sourcing and Web 2.0</H2>
+                        <H2>Data Backup</H2>
                         <P>
-                            This service aims to assist individuals in the recording, analysis and
-                            sharing of their own climate data.
+                            <strong>You must regularly back-up your own data</strong> by using the
+                            JSON or CSV buttons found at the bottom of your records page (below the
+                            charts). You are solely responsible for keeping your own backups!
                         </P>
                         <P>
-                            At the same time there is the hope of collecting valuable climate
-                            records by means of collaborative and distributed public effort – termed{' '}
-                            <a href="http://en.wikipedia.org/wiki/Crowd_sourcing">crowd-sourcing</a>
+                            The data is provided in JSON or CSV format which can be viewed and
+                            edited in most spread sheet software.
                         </P>
-                        <H2>Creative Commons license</H2>
+                        <P>
+                            A daily, external backup is available at{' '}
+                            <a href="https://github.com/multipolygon/rainfallrecord_data/tree/master/locations">
+                                GitHub
+                            </a>
+                            .
+                        </P>
+                        <H2>No Warranty!</H2>
+                        <P>
+                            This free service and all software are provided on an &quot;as is&quot;
+                            basis without warranties of any kind, either express or implied,
+                            including, without limitation, fitness for a particular purpose. Your
+                            use of the services is at your sole risk. I do not guarantee the
+                            accuracy or timeliness of information available from the service.
+                        </P>
+                        <H2>Open Data and Creative Commons license</H2>
+                        <P>
+                            <strong>
+                                All data is visible and shared with everyone else. This is not a
+                                private service.
+                            </strong>
+                        </P>
                         <P>
                             All data collected by this service is provided under the{' '}
                             <a href="http://creativecommons.org/licenses/by-sa/2.5/au/">
                                 Creative Commons Attribution-Share Alike 2.5 Australia License
-                            </a>
-                            .
-                        </P>
-                        <P>All record sheet data is publicly visible.</P>
-                        <H2>Data Export</H2>
-                        <P>
-                            Its always possible to download your raw data for any year of any record
-                            sheet. The data is provided in CSV format which can be viewed and edited
-                            in most spread sheet software.
-                        </P>
-                        <P>
-                            You should regularly back-up your own data by printing it or using the
-                            buttons found at the bottom of the record page (below the charts).
-                        </P>
-                        <P>
-                            An daily, external backup is available at{' '}
-                            <a href="https://github.com/multipolygon/rainfallrecord_data/tree/master/locations">
-                                GitHub
                             </a>
                             .
                         </P>
